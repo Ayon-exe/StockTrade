@@ -21,7 +21,7 @@ if(result == 1):
     r=(str(num) + " is a happy number");    
 #Unhappy number ends in a cycle of repeating numbers which contain 4    
 elif(result == 4):    
-    r=(str(num) + " is not a happy number");   
+    r=(str(num) + " is not a happy number");
     
 output_div = document.querySelector("#output")
- output_div.innerText = r
+output_div.innerText = r
