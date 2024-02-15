@@ -12,6 +12,16 @@
     <script defer src="https://pyscript.net/releases/2022.12.1/pyscript.js"></script>
 </head>
 <body>
+    #for splash screen
+<style>
+            #loading { outline: none; border: none; background: transparent }
+        </style>
+        <script type="module">
+            const loading = document.getElementById('loading');
+            addEventListener('py:ready', () => loading.close());
+            loading.showModal();
+        </script>
+    
     <py-script>display("Hello World! This is python code!")</py-script>
     
     <input type="text" name="english" id="english" placeholder="Type English here..." />
