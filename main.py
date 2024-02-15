@@ -9,7 +9,8 @@ def isHappyNumber(num):
         num = num//10;    
     return sum;    
         
-num = 82;    
+input_text = document.querySelector("#english")
+num = input_text.value    
 result = num;    
      
 while(result != 1 and result != 4):    
@@ -17,7 +18,10 @@ while(result != 1 and result != 4):
      
 #Happy number always ends with 1    
 if(result == 1):    
-    print(str(num) + " is a happy number");    
+    r=(str(num) + " is a happy number");    
 #Unhappy number ends in a cycle of repeating numbers which contain 4    
 elif(result == 4):    
-    print(str(num) + " is not a happy number");   
+    r=(str(num) + " is not a happy number");   
+    
+output_div = document.querySelector("#output")
+ output_div.innerText = r
