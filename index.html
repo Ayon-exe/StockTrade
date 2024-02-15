@@ -13,6 +13,12 @@
 </head>
 <body>
     <py-script>display("Hello World! This is python code!")</py-script>
+    
+    <input type="text" name="english" id="english" placeholder="Type English here..." />
+  <button py-click="translate_english">Translate</button>
+  <div id="output"></div>
+  <script type="py" src="./main.py" config="./pyscript.json"></script>
+    
     <button type="button">Signin</button>
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
   <div class="container-fluid">
