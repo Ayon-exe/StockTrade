@@ -1,3 +1,4 @@
 def greetings(name):
-    print(f'Hi {name}')
-greetings('Ayon')
+    print(f'Hi, {name}')
+
+greetings('John Doe')
