@@ -25,6 +25,25 @@
     	document.getElementById("demo1").innerHTML="Your username is: "+document.getElementById("password").value;
 }
 </script>
+<div class="card mb-3" style="max-width: 540px;">
+  <div class="row g-0">
+    <div class="col-md-4">
+      <img src="src="./images/loginicon.png"" class="img-fluid rounded-start" alt="Login">
+    </div>
+    <div class="col-md-8">
+      <div class="card-body">
+        <label>UserName</label>
+	<input id= "username" placeholder="Username"></input>
+	<br>
+	<label>Password</label>
+	<input id= "password" type="password" placeholder="Password"></input>
+	<br>    
+	<a href="#" class="btn btn-primary" onclick="signin()">Signin</a></div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div class="card text-center mb-3" style="width: 30rem;">
   
 <div class="card-body">
@@ -85,5 +104,25 @@
     <a href="images/gallery.html">Gallery</a>
 
 </div>
+
+<script type="module">
+  // Import the functions you need from the SDKs you need
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+  // TODO: Add SDKs for Firebase products that you want to use
+  // https://firebase.google.com/docs/web/setup#available-libraries
+
+  // Your web app's Firebase configuration
+  const firebaseConfig = {
+    apiKey: "AIzaSyAy1ueOfG9kVPcPOpDQuZsV23q11lejkLY",
+    authDomain: "trial-ad795.firebaseapp.com",
+    projectId: "trial-ad795",
+    storageBucket: "trial-ad795.appspot.com",
+    messagingSenderId: "670528011169",
+    appId: "1:670528011169:web:ec7b0e35be88050e6969e0"
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+</script>
 </body>
 </html>
