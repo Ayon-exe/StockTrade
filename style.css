@@ -10,7 +10,7 @@ body {
 a {
     color: rgb(255, 111, 111);
 }
-i{
+span{
     .material-icons.md-18 {font-size: 180px; }
 }
 
