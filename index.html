@@ -15,20 +15,25 @@
     
     <link rel="stylesheet" href="https://pyscript.net/releases/2022.12.1/pyscript.css" />
     <script defer src="https://pyscript.net/releases/2022.12.1/pyscript.js"></script>
-    
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 </head>
 <body>    
 
-    <script>
+<script>
 	function signin(){
 	document.getElementById("demo").innerHTML="Your username is: "+document.getElementById("username").value;
     	document.getElementById("demo1").innerHTML="Your username is: "+document.getElementById("password").value;
-}
+	}
 </script>
+	
 <div class="card mb-3" style="max-width: 540px;">
   <div class="row g-0">
     <div class="col-md-4">
-      <img src="./images/loginicon.png" class="img-fluid rounded-start" alt="Login">
+	<span class="material-symbols-outlined">
+	person
+	</span>
+	<!-- <img src="./images/loginicon.png" class="img-fluid rounded-start" alt="Login"> -->
     </div>
     <div class="col-md-8">
       <div class="card-body">
@@ -42,19 +47,6 @@
       </div>
     </div>
   </div>
-</div>
-
-<div class="card text-center mb-3" style="width: 30rem;">
-  
-<div class="card-body">
-    	<img src="./images/loginicon.png" alt="Login">
-	<label>UserName</label>
-	<input id= "username" placeholder="Username"></input>
-	<br>
-	<label>Password</label>
-	<input id= "password" type="password" placeholder="Password"></input>
-	<br>    
-<	a href="#" class="btn btn-primary" onclick="signin()">Signin</a></div>
 </div>
 
 <a id="demo"></a><br>
