@@ -18,13 +18,29 @@
     
 </head>
 <body>    
+
     <script>
-        function myfunction(){
-            document.getElementById("demo").innerHTML="Text changed";
-        }
-    </script>
-    <button type="button" onclick="myfunction()">Signin</button>
-    <a id="demo"> haha </a>
+	function signin(){
+	document.getElementById("demo").innerHTML="Your username is: "+document.getElementById("username").value;
+    document.getElementById("demo1").innerHTML="Your username is: "+document.getElementById("password").value;
+}
+</script>
+<div class="card text-center mb-3" style="width: 30rem;">
+  
+<div class="card-body">
+    
+<label>UserName</label>
+<input id= "username" placeholder="Username"></input>
+<br>
+<label>Password</label>
+<input id= "password" type="password" placeholder="Password"></input>
+<br>    
+<a href="#" class="btn btn-primary" onclick="signin()">Signin</a></div>
+</div>
+
+<a id="demo"></a><br>
+<a id="demo1"></a>
+    
     <py-script src="./main.py"></py-script>
     
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
@@ -67,27 +83,7 @@
 <nav>
     <a href="emoji.html">Emoji</a>
     <a href="images/gallery.html">Gallery</a>
-</nav>
-    <div class="card text-center">
-  <div class="card-header">
-    Featured
-  </div>
-  <div class="card-body">
-    <h5 class="card-title">Special title treatment</h5>
-    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-    <a href="#" class="btn btn-primary">Go somewhere</a>
-  </div>
-  <div class="card-footer text-body-secondary">
-    2 days ago
-  </div>
-</div>
 
- <div class="card text-center mb-3" style="width: 18rem;">
-  <div class="card-body">
-    <h5 class="card-title">Special title treatment</h5>
-    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-    <a href="#" class="btn btn-primary">Go somewhere</a>
-  </div>
 </div>
 </body>
 </html>
