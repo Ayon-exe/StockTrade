@@ -11,4 +11,4 @@ a {
     color: rgb(255, 111, 111);
 }
 .material-icons .md-18 { font-size: 180px; }
-
+.material-icons.md-18 { font-size: 180px; }
