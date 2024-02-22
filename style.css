@@ -10,8 +10,5 @@ body {
 a {
     color: rgb(255, 111, 111);
 }
-
-i{
-    .material-icons.md-180 { font-size: 280px; }
-}
+.material-icons.md-18 { font-size: 180px; }
 
