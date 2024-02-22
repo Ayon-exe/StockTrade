@@ -11,7 +11,5 @@ a {
     color: rgb(255, 111, 111);
 }
 
-i{
-   .material-icons.md-180 { font-size: 180px; }
-}
-
+.card mb-3 .row g-0 .col-md-4 .i{
+    font-size: 180px; }
