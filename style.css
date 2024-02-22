@@ -12,6 +12,6 @@ a {
 }
 
 i{
-    .material-icons .md-180 { font-size: 280px; }
+    .material-icons.md-180 { font-size: 280px; }
 }
 
