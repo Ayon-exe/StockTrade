@@ -13,3 +13,9 @@ a {
 }
 .material-icons .md-18 { font-size: 180px; }
 .material-icons.md-18 { font-size: 180px; }
+.wrapper{
+  
+}
+.wrapper h1{
+  text-align: center;
+}
