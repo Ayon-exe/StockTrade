@@ -11,6 +11,5 @@ a {
     color: rgb(255, 111, 111);
 }
 span{
-    width: 180px;
-    height:180px;
+    font-size:100px;
 }
