@@ -13,7 +13,7 @@
 
 	
 </head>
-<body>
+<body onload="javascript:generate()">
 <nav class="navbar navbar-expand-lg bg-body-tertiary">
   <div class="container-fluid">
     <a class="navbar-brand" href="#">Navbar</a>
@@ -50,5 +50,11 @@
     </div>
   </div>
 </nav>
+
+<button onclick="generate()">generate</button>
+<label>wallet</label> <input id="wallet" type="text" value="0">
+<br> <label>Current price</label> <input id="currprice" type="text" value="0" readonly>
+<button onclick="buy()">buy</button>   <button onclick="sell()">sell</button>
+
 </body>
 </html>
