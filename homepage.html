@@ -9,7 +9,47 @@
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 	<script src="myscript.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>	
+	<script type="text/javascript" src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
+	<script type="text/javascript" src="https://cdn.canvasjs.com/canvasjs.min.js"></script>
+	<script type="text/javascript">
+window.onload = function () {
+	var chart = new CanvasJS.Chart("chartContainer", { 
+		title: {},
+		data: [
+		{
+			type: "spline",
+			dataPoints: []
+		}
+		]
+	});
+	chart.render();	
+
+	$("#buy").click(function () {
+
+	var length = chart.options.data[0].dataPoints.length;
+    var gen= parseInt(document.getElementById("currprice").value);
+	chart.options.data[0].dataPoints.push({ y:gen});
+	chart.render();
+
+	});
+}
+</script>
+<script>
+	function generate(){
+    	document.getElementById("currprice").value= (Math.random() * 100).toFixed(2);
+		document.getElementById("hidden").value=document.getElementById("currprice").value;
+
+
+    }   
+    function buy(){
+    	document.getElementById("wallet").value=(document.getElementById("wallet").value)-(document.getElementById("currprice").value);
+        generate();
+    }
+    
+    function sell(){
+    	(document.getElementById("wallet").value)= parseFloat(document.getElementById("currprice").value)+ parseFloat(document.getElementById("wallet").value);
+    }
+</script>
 </head>
 <body onload="javascript:generate()">
 <nav class="navbar navbar-expand-lg bg-body-tertiary">
@@ -47,14 +87,14 @@
       </form>
     </div>
   </div>
-</nav>
-
+</nav>  
+<div id="chartContainer" style="width:100%; height:280px"></div>  
 <button onclick="generate()">generate</button>
 <label>wallet</label> <input id="wallet" type="text" value="0">
 <br> <label>Current price</label> <input id="currprice" type="text" value="0" readonly>
-<button onclick="buy()">buy</button>   <button onclick="sell()">sell</button>
+<button id="buy" onclick="buy()">buy</button>   <button onclick="sell()">sell</button>
 <a href="index.html">Login</a>
-<canvas id="myChart" style="width:100%;max-width:600px"></canvas>
+
 
 </body>
 </html>
