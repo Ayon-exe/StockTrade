@@ -27,7 +27,16 @@
 	$("#buy").click(function () {
 
 	var length = chart.options.data[0].dataPoints.length;
-    var gen= parseInt(document.getElementById("currprice").value);
+    	var gen= parseInt(document.getElementById("currprice").value);
+	chart.options.data[0].dataPoints.push({ y:gen});
+	chart.render();
+
+	});
+
+	$("#sell").click(function () {
+
+	var length = chart.options.data[0].dataPoints.length;
+    	var gen= parseInt(document.getElementById("currprice").value);
 	chart.options.data[0].dataPoints.push({ y:gen});
 	chart.render();
 
@@ -48,6 +57,7 @@
     
     function sell(){
     	(document.getElementById("wallet").value)= parseFloat(document.getElementById("currprice").value)+ parseFloat(document.getElementById("wallet").value);
+    	generate();
     }
 </script>
 </head>
