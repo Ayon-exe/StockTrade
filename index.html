@@ -30,7 +30,7 @@
 	<h1>Register</h1>
   <div class="row g-0">
     <div class="col-md-4">
-	<span class="material-icons md-18" alt="Login">person</span>
+	<span class="material-icons md-18" alt="Register">how_to_reg</span>
     </div>
     <div class="col-md-8">
       <div class="card-body">
@@ -53,7 +53,7 @@
 	<h1>Login</h1>
   <div class="row g-0">
     <div class="col-md-4">
-	<span class="material-icons md-18" alt="Login">person</span>
+	<span class="material-icons md-18" alt="Login">login</span>
     </div>
     <div class="col-md-8">
       <div class="card-body">
@@ -68,6 +68,7 @@
     </div>
   </div>
 </div>
+<input type="submit" id='logout' class="btn btn-primary" name="logout_submit" value="Logout"/>
 <a href="homepage.html" class="btn btn-primary">Next page</a></div>
 <a id="demo"></a><br>
 <a id="demo1"></a>
@@ -78,9 +79,9 @@
 
 <script type="module">
   // Import the functions you need from the SDKs you need
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
 import { getDatabase, set, ref, update } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
   // TODO: Add SDKs for Firebase products that you want to use
   // https://firebase.google.com/docs/web/setup#available-libraries
@@ -139,6 +140,31 @@ login.addEventListener('click',(e) => {
 		alert('user logged in!');
   	})
   	.catch((error) => {
+    	const errorCode = error.code;
+    	const errorMessage = error.message;
+	alert(errorMessage);
+  	});
+});
+	
+const user = auth.currentUser;
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    // User is signed in, see docs for a list of available properties
+    // https://firebase.google.com/docs/reference/js/auth.user
+    const uid = user.uid;
+    // ...
+  } else {
+    // User is signed out
+    // ...
+  }
+});
+
+logout.addEventListener('click',(e) => {
+	signOut(auth).then(() => {
+  	// Sign-out successful.
+	alert('user Signed out');
+	})
+	.catch((error) => {
     	const errorCode = error.code;
     	const errorMessage = error.message;
 	alert(errorMessage);
