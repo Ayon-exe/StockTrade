@@ -34,12 +34,17 @@
     </div>
     <div class="col-md-8">
       <div class="card-body">
+	<label>Email</label>
+	<input id= "email" placeholder="Email"/>
+	<br>
         <label>UserName</label>
-	<input id= "username" placeholder="Username"></input>
+	<input id= "username" placeholder="Username"/>
 	<br>
 	<label>Password</label>
-	<input id= "password" type="password" placeholder="Password"></input>
-	<br>    
+	<input id= "password" type="password" placeholder="Password"/>
+	<be>    
+	<input type="submit" id='savedata' name="signup_submit" value="remove"/>
+	
 	<a href="#" class="btn btn-primary" onclick="signin()">Signin</a></div>
       </div>
     </div>
@@ -82,7 +87,7 @@ const auth = getAuth();
 signup.addEventListener('click',(e) =>{
 	var email=document.getElementById('email').value;
 	var username=document.getElementById('Username').value;
-	var password=document.getElementById('{assword').value;
+	var password=document.getElementById('password').value;
 	createUserWithEmailAndPassword(auth,email,password).then((userCredential)=>{
 		//signed in
 		const user= userCredential.user;
