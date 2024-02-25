@@ -27,7 +27,7 @@
     
     <!--<py-script src="./main.py"></py-script>-->
 <div class="wrapper">
-	<h1>Login</h1>
+	<h1>Register</h1>
   <div class="row g-0">
     <div class="col-md-4">
 	<span class="material-icons md-18" alt="Login">person</span>
@@ -44,13 +44,31 @@
 	<input id= "password" type="password" placeholder="Password"/>
 	<be>    
 	<input type="submit" id='signup' class="btn btn-primary" name="signup_submit" value="signup"/>
-	
-	<a href="homepage.html" class="btn btn-primary">Next page</a></div>
       </div>
     </div>
   </div>
 </div>
 
+<div class="wrapper">
+	<h1>Login</h1>
+  <div class="row g-0">
+    <div class="col-md-4">
+	<span class="material-icons md-18" alt="Login">person</span>
+    </div>
+    <div class="col-md-8">
+      <div class="card-body">
+	<label>Email</label>
+	<input id= "email" placeholder="Email"/>
+	<br>
+	<label>Password</label>
+	<input id= "password" type="password" placeholder="Password"/>
+	<be>    
+	<input type="submit" id='login' class="btn btn-primary" name="login_submit" value="Login"/>
+      </div>
+    </div>
+  </div>
+</div>
+<a href="homepage.html" class="btn btn-primary">Next page</a></div>
 <a id="demo"></a><br>
 <a id="demo1"></a>
 	
@@ -58,13 +76,11 @@
     <a href="emoji.html">Emoji</a>
     <a href="images/gallery.html">Gallery</a>
 
-</div>
-
 <script type="module">
   // Import the functions you need from the SDKs you need
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-import { getDatabase, set, ref } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
-import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+import { getDatabase, set, ref, update } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
   // TODO: Add SDKs for Firebase products that you want to use
   // https://firebase.google.com/docs/web/setup#available-libraries
@@ -106,6 +122,27 @@ signup.addEventListener('click',(e) => {
 		const errorMessage=error.message;
 		alert(errorMessage);
 	})
+});
+
+login.addEventListener('click',(e) => {
+	var email = document.getElementById('email').value;
+	var password=document.getElementById('password').value;
+	signInWithEmailAndPassword(auth, email, password)
+  	.then((userCredential) => {
+    	// Signed in 
+    	const user = userCredential.user;
+	const dt= new Date();
+		update(ref(database, 'users/' + user.uid),{
+			LastLoginDate: dt
+		})
+		
+		alert('user logged in!');
+  	})
+  	.catch((error) => {
+    	const errorCode = error.code;
+    	const errorMessage = error.message;
+	alert(errorMessage);
+  	});
 });
 </script>
 	
