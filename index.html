@@ -82,23 +82,26 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
 import { getDatabase, set, ref, update } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-database.js";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
-
+import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-analytics.js";
+	
   // TODO: Add SDKs for Firebase products that you want to use
   // https://firebase.google.com/docs/web/setup#available-libraries
 
   // Your web app's Firebase configuration
   const firebaseConfig = {
-  apiKey: "AIzaSyAy1ueOfG9kVPcPOpDQuZsV23q11lejkLY",
-  authDomain: "trial-ad795.firebaseapp.com",
-  databaseURL: "https://trial-ad795-default-rtdb.asia-southeast1.firebasedatabase.app",
-  projectId: "trial-ad795",
-  storageBucket: "trial-ad795.appspot.com",
-  messagingSenderId: "670528011169",
-  appId: "1:670528011169:web:ec7b0e35be88050e6969e0"
-};
+    apiKey: "AIzaSyD4wlA68qZp41M_CfUf1j93oYn41CoN5eo",
+    authDomain: "stocktrade-173c8.firebaseapp.com",
+    projectId: "stocktrade-173c8",
+    storageBucket: "stocktrade-173c8.appspot.com",
+    messagingSenderId: "58004670302",
+    appId: "1:58004670302:web:e942b65ba9ccdaec9d71cf",
+    measurementId: "G-BJTP6ZD69S"
+  };
+
 
   // Initialize Firebase
 const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
 const database = getDatabase(app);
 const auth = getAuth();
 
