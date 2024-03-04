@@ -28,9 +28,9 @@
                     <a href="#" class="icon"><i class="fa-brands fa-google-plus-g"></i></a><a href="#" class="icon"><i class="fa-brands fa-facebook-f"></i></a><a href="#" class="icon"><i class="fa-brands fa-github"></i></a><a href="#" class="icon"><i class="fa-brands fa-linkedin-in"></i></a>
 		</div>
                 <span>or use your email for registeration</span>
-                <input id='name' type="text" placeholder="Name">
-                <input id='email' type="email" placeholder="Email">
-                <input id='password' type="password" placeholder="Password">
+                <input id='regusername' type="text" placeholder="Username">
+                <input id='regemail' type="email" placeholder="Email">
+                <input id='regpassword' type="password" placeholder="Password">
 		<input type="submit" id='register' class="btn btn-primary" name="register_submit" value="Register"/>
             </form>
         </div>
@@ -41,8 +41,8 @@
                     <a href="#" class="icon"><i class="fa-brands fa-google-plus-g"></i></a><a href="#" class="icon"><i class="fa-brands fa-facebook-f"></i></a><a href="#" class="icon"><i class="fa-brands fa-github"></i></a><a href="#" class="icon"><i class="fa-brands fa-linkedin-in"></i></a>
 		</div>
                 <span>or use your email password</span>
-                <input id='email' type="email" placeholder="Email">
-                <input id='password' type="password" placeholder="Password">
+                <input id='logemail' type="email" placeholder="Email">
+                <input id='logpassword' type="password" placeholder="Password">
                 <a href="#">Forget Your Password?</a>
 		<input type="submit" id='login1' class="btn btn-primary" name="login_submit" value="Login"/>
 </form>
@@ -154,9 +154,9 @@ const database = getDatabase(app);
 const auth = getAuth();
 
 register.addEventListener('click',(e) => {
-	var email = document.getElementById('email').value;
-	var username=document.getElementById('username').value;
-	var password=document.getElementById('password').value;
+	var email = document.getElementById('regemail').value;
+	var username=document.getElementById('regusername').value;
+	var password=document.getElementById('regpassword').value;
 	createUserWithEmailAndPassword(auth, email, password)
 		.then((userCredential) => {
 		//signed in
@@ -177,8 +177,8 @@ register.addEventListener('click',(e) => {
 });
 
 login1.addEventListener('click',(e) => {
-	var email = document.getElementById('email').value;
-	var password=document.getElementById('password').value;
+	var email = document.getElementById('logemail').value;
+	var password=document.getElementById('logpassword').value;
 	signInWithEmailAndPassword(auth, email, password)
   	.then((userCredential) => {
     	// Signed in 
