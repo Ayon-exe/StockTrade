@@ -33,7 +33,7 @@
                 <input id='name' type="text" placeholder="Name">
                 <input id='email' type="email" placeholder="Email">
                 <input id='password' type="password" placeholder="Password">
-		<input type="submit" id='signup' class="btn btn-primary" name="signup_submit" value="signup"/>
+		<input type="submit" id='register' class="btn btn-primary" name="register_submit" value="Register"/>
             </form>
         </div>
         <div class="form-container sign-in">
@@ -46,7 +46,7 @@
                 <input id='email' type="email" placeholder="Email">
                 <input id='password' type="password" placeholder="Password">
                 <a href="#">Forget Your Password?</a>
-		<input type="submit" id='login' class="btn btn-primary" name="login_submit" value="Login"/>
+		<input type="submit" id='login1' class="btn btn-primary" name="login_submit" value="Login"/>
 </form>
         </div>
         <div class="toggle-container">
@@ -59,16 +59,16 @@
                 <div class="toggle-panel toggle-right">
                     <h1>Hello, Friend!</h1>
                     <p>Register with your personal details to use all of site features</p>
-                    <button class="hidden" id="register">Sign Up</button>
+                    <button class="hidden" id="signup">Sign Up</button>
                 </div>
             </div>
         </div>
     </div>
 <script>
-	const container = document.getElementById('container');
-const registerBtn = document.getElementById('register');
+const container = document.getElementById('container');
+const signupBtn = document.getElementById('signup');
 const loginBtn = document.getElementById('login');
-registerBtn.addEventListener('click', () => 
+signupBtn.addEventListener('click', () => 
 {
     container.classList.add("active");
 });
@@ -154,7 +154,7 @@ const analytics = getAnalytics(app);
 const database = getDatabase(app);
 const auth = getAuth();
 
-signup.addEventListener('click',(e) => {
+register.addEventListener('click',(e) => {
 	var email = document.getElementById('email').value;
 	var username=document.getElementById('username').value;
 	var password=document.getElementById('password').value;
@@ -177,7 +177,7 @@ signup.addEventListener('click',(e) => {
 	})
 });
 
-login.addEventListener('click',(e) => {
+login1.addEventListener('click',(e) => {
 	var email = document.getElementById('email').value;
 	var password=document.getElementById('password').value;
 	signInWithEmailAndPassword(auth, email, password)
