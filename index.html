@@ -25,97 +25,47 @@
     
     <!--<py-script src="./main.py"></py-script>-->
 <div class="container" id="container">
-
-        <div class="form-container sign-up">
-
-            
+        <div class="form-container sign-up">    
 	<form>
-
                 <h1>Register</h1>
-
                 <div class="social-icons">
-
-                    <a href="#" class="icon"><i class="fa-brands fa-google-plus-g"></i></a><a href="#" class="icon"><i class="fa-brands fa-facebook-f"></i></a><a href="#" class="icon"><i class="fa-brands fa-github"></i></a>
-<a href="#" class="icon"><i class="fa-brands fa-linkedin-in"></i></a>
-
-                </div>
-
+                    <a href="#" class="icon"><i class="fa-brands fa-google-plus-g"></i></a><a href="#" class="icon"><i class="fa-brands fa-facebook-f"></i></a><a href="#" class="icon"><i class="fa-brands fa-github"></i></a><a href="#" class="icon"><i class="fa-brands fa-linkedin-in"></i></a>
+		</div>
                 <span>or use your email for registeration</span>
-
                 <input id='name' type="text" placeholder="Name">
-
                 <input id='email' type="email" placeholder="Email">
-
                 <input id='password' type="password" placeholder="Password">
-
-		<input type="submit" id='signup1' class="btn btn-primary" name="signup_submit" value="signup"/>
-
-
+		<input type="submit" id='signup' class="btn btn-primary" name="signup_submit" value="signup"/>
             </form>
-
         </div>
-
-
-
         <div class="form-container sign-in">
-
             <form>
-
                 <h1>Login</h1>
-
                 <div class="social-icons">
-
-                    <a href="#" class="icon"><i class="fa-brands fa-google-plus-g"></i></a><a href="#" class="icon"><i class="fa-brands fa-facebook-f"></i></a>
-<a href="#" class="icon"><i class="fa-brands fa-github"></i></a>
-<a href="#" class="icon"><i class="fa-brands fa-linkedin-in"></i></a>
-
-                </div>
+                    <a href="#" class="icon"><i class="fa-brands fa-google-plus-g"></i></a><a href="#" class="icon"><i class="fa-brands fa-facebook-f"></i></a><a href="#" class="icon"><i class="fa-brands fa-github"></i></a><a href="#" class="icon"><i class="fa-brands fa-linkedin-in"></i></a>
+		</div>
                 <span>or use your email password</span>
-
                 <input id='email' type="email" placeholder="Email">
-
                 <input id='password' type="password" placeholder="Password">
-
                 <a href="#">Forget Your Password?</a>
-		<input type="submit" id='login1' class="btn btn-primary" name="login_submit" value="Login"/>
-
-            
+		<input type="submit" id='login' class="btn btn-primary" name="login_submit" value="Login"/>
 </form>
-
         </div>
-
-
-
         <div class="toggle-container">
-
             <div class="toggle">
                 <div class="toggle-panel toggle-left">
-
                     <h1>Welcome Back!</h1>
-
                     <p>Enter your personal details to use all of site features</p>
-
                     <button class="hidden" id="login">Sign In</button>
-
                 </div>
-
                 <div class="toggle-panel toggle-right">
-
                     <h1>Hello, Friend!</h1>
-
                     <p>Register with your personal details to use all of site features</p>
-
                     <button class="hidden" id="register">Sign Up</button>
-
                 </div>
-
             </div>
-
         </div>
-
     </div>
-
-
 
 	
 <div id="register" class="wrapper">
@@ -135,7 +85,7 @@
 	<label>Password</label>
 	<input id= "password" type="password" placeholder="Password"/>
 	<be>    
-	<input type="submit" id='signup' class="btn btn-primary" name="signup_submit" value="signup"/>
+	<!--<input type="submit" id='signup' class="btn btn-primary" name="signup_submit" value="signup"/>-->
       </div>
     </div>
   </div>
@@ -155,7 +105,7 @@
 	<label>Password</label>
 	<input id= "password" type="password" placeholder="Password"/>
 	<br>    
-	<input type="submit" id='login' class="btn btn-primary" name="login_submit" value="Login"/>
+	<!--<input type="submit" id='login' class="btn btn-primary" name="login_submit" value="Login"/>-->
       </div>
     </div>
   </div>
@@ -166,7 +116,7 @@
 <nav>
     <a href="emoji.html">Emoji</a>
     <a href="images/gallery.html">Gallery</a>
-
+<script src="myscript.js"></script>
 <script type="module">
   // Import the functions you need from the SDKs you need
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
