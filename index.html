@@ -360,6 +360,7 @@ signup.addEventListener('click',(e) => {
 		})
 		
 		alert('user created!');
+		window.location.href = "./homepage.html";
 	})
 	.catch((error)=> {
 		const errorCode=error.code;
@@ -381,6 +382,7 @@ login.addEventListener('click',(e) => {
 		})
 		
 		alert('user logged in!');
+		window.location.href = "./homepage.html";
   	})
   	.catch((error) => {
     	const errorCode = error.code;
