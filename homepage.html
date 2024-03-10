@@ -53,14 +53,28 @@
 
     }   
     function buy(){
-    	document.getElementById("wallet").value=(document.getElementById("wallet").value)-(document.getElementById("currprice").value);
+    	document.getElementById("wallet").value=((document.getElementById("wallet").value)-((document.getElementById("currprice").value)*parseFloat(document.getElementById("buyamount").value)));
         generate();
     }
     
     function sell(){
-    	(document.getElementById("wallet").value)= parseFloat(document.getElementById("currprice").value)+ parseFloat(document.getElementById("wallet").value);
+    	(document.getElementById("wallet").value)= (parseFloat(document.getElementById("wallet").value)+ (parseFloat(document.getElementById("currprice").value)*parseFloat(document.getElementById("sellamount").value)));
     	generate();
     }
+    
+    function buyplus(){
+    	(document.getElementById("buyamount").value)=(parseInt(document.getElementById("buyamount").value))+1;
+    }
+    function buyminus(){
+    	(document.getElementById("buyamount").value)=(parseInt(document.getElementById("buyamount").value))-1;
+    }
+    function sellplus(){
+    	(document.getElementById("sellamount").value)=(parseInt(document.getElementById("sellamount").value))+1;
+    }
+    function sellminus(){
+    	(document.getElementById("sellamount").value)=(parseInt(document.getElementById("sellamount").value))-1;
+    }
+    
 </script>
 </head>
 <body>
@@ -100,12 +114,6 @@
     </div>
   </div>
 </nav>  
-<div id="chartContainer" style="width:100%; height:280px"></div>  
-<button onclick="generate()">generate</button>
-<label>wallet</label> <input id="wallet" type="text" value="0">
-<br> <label>Current price</label> <input id="currprice" type="text" value="0" readonly>
-<button id="buy" onclick="buy()">buy</button>   <button id="sell" onclick="sell()">sell</button>
-
 <h1>Stock Prices</h1>
   <p id="AAPLstockPrice"></p>
   <p id="GOOGLstockPrice"></p>
@@ -164,5 +172,15 @@
       });
   </script>
 
+<div id="chartContainer" style="width:100%; height:280px"></div>
+
+<label>wallet</label> <input id="wallet" type="text" value="0">
+<br>
+<button onclick="generate()">Generate price</button>  
+<label>Current price</label> <input id="currprice" type="text" value="0" readonly>
+<br><br>
+<button id="buyplus" onclick=buyplus()>+</button> <input id="buyamount" size="4" value="1"> <button id="buyminus" onclick=buyminus()>-</button> <button id="buy" onclick="buy()">buy</button> 
+<br><br>
+<button id="sellplus" onclick=sellplus() >+</button> <input id="sellamount" size="4" value="1"> <button id="sellminus"onclick=sellminus()>-</button> <button id="sell" onclick="sell()">sell</button>
 </body>
 </html>
