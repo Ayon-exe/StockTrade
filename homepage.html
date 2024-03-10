@@ -106,6 +106,63 @@
 <br> <label>Current price</label> <input id="currprice" type="text" value="0" readonly>
 <button id="buy" onclick="buy()">buy</button>   <button id="sell" onclick="sell()">sell</button>
 
+<h1>Stock Prices</h1>
+  <p id="AAPLstockPrice"></p>
+  <p id="GOOGLstockPrice"></p>
+  <p id="AMZNstockPrice"></p>
+  <p id="MSFTstockPrice"></p>
+
+  <script>
+    // Make an HTTP request to the Alpha Vantage API
+    fetch('https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=AAPL&apikey=YOUR_API_KEY')
+      .then(response => response.json())
+      .then(data => {
+        // Extract the stock price from the API response
+        const stockPrice1 = data['Global Quote']['05. price'];
+        
+        // Display the stock price
+        document.getElementById('AAPLstockPrice').textContent = 'Apple Stock Price: ' + stockPrice1;
+      })
+      .catch(error => {
+        console.log('Error fetching stock price:', error);
+      });
+      fetch('https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=GOOGL&apikey=YOUR_API_KEY')
+      .then(response => response.json())
+      .then(data => {
+        // Extract the stock price from the API response
+        const stockPrice2 = data['Global Quote']['05. price'];
+        
+        // Display the stock price
+        document.getElementById('GOOGLstockPrice').textContent = 'Google Stock Price: ' + stockPrice2;
+      })
+      .catch(error => {
+        console.log('Error fetching stock price:', error);
+      });
+      fetch('https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=AMZN&apikey=YOUR_API_KEY')
+      .then(response => response.json())
+      .then(data => {
+        // Extract the stock price from the API response
+        const stockPrice3 = data['Global Quote']['05. price'];
+        
+        // Display the stock price
+        document.getElementById('AMZNstockPrice').textContent = 'Amazon Stock Price: ' + stockPrice3;
+      })
+      .catch(error => {
+        console.log('Error fetching stock price:', error);
+      });
+      fetch('https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=MSFT&apikey=YOUR_API_KEY')
+      .then(response => response.json())
+      .then(data => {
+        // Extract the stock price from the API response
+        const stockPrice4 = data['Global Quote']['05. price'];
+        
+        // Display the stock price
+        document.getElementById('MSFTstockPrice').textContent = 'Microsoft Stock Price: ' + stockPrice4;
+      })
+      .catch(error => {
+        console.log('Error fetching stock price:', error);
+      });
+  </script>
 
 </body>
 </html>
