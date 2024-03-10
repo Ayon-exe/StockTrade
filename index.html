@@ -288,7 +288,7 @@ signup.addEventListener('click',(e) => {
 			wallet: 500
 		})
 		
-		alert('user created!');
+		alert('User Registered!');
 		window.location.href = "./homepage.html";
 	})
 	.catch((error)=> {
@@ -310,7 +310,7 @@ login.addEventListener('click',(e) => {
 			LastLoginDate: dt
 		})
 		
-		alert('user logged in!');
+		alert('User Logged In!');
 		window.location.href = "./homepage.html";
   	})
   	.catch((error) => {
@@ -331,18 +331,6 @@ onAuthStateChanged(auth, (user) => {
     // User is signed out
     // ...
   }
-});
-
-logout.addEventListener('click',(e) => {
-	signOut(auth).then(() => {
-  	// Sign-out successful.
-	alert('user Signed out');
-	})
-	.catch((error) => {
-    	const errorCode = error.code;
-    	const errorMessage = error.message;
-	alert(errorMessage);
-  	});
 });
 </script>
 <script>
