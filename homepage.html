@@ -74,20 +74,6 @@
     }
     
 </script>
-<style>
-	<!-- this is for the API chart -->
-    *{
-margin: 0;
-padding: 0;
-box-sizing: border-box;
-
-}
-#tradingview_1dcca{
-    width: 100%;
-    height: 100vh;
-    
-    }
-    </style>
 </head>
 <body>
 <nav class="navbar navbar-expand-lg bg-body-tertiary">
@@ -233,7 +219,7 @@ logout.addEventListener('click',(e) => {
 <div class="tradingview-widget-container">  
   <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>
   {
-  "width": "980",
+  "width": "100%",
   "height": "610",
   "symbol": "NASDAQ:AAPL",
   "interval": "D",
