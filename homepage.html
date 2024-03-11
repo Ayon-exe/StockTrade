@@ -49,8 +49,6 @@
 	function generate(){
     	document.getElementById("currprice").value= (Math.random() * 100).toFixed(2);
 		document.getElementById("hidden").value=document.getElementById("currprice").value;
-
-
     }   
     function buy(){
     	document.getElementById("wallet").value=((document.getElementById("wallet").value)-((document.getElementById("currprice").value)*parseFloat(document.getElementById("buyamount").value)));
@@ -76,6 +74,20 @@
     }
     
 </script>
+<style>
+	<!-- this is for the API chart -->
+    *{
+margin: 0;
+padding: 0;
+box-sizing: border-box;
+
+}
+#tradingview_1dcca{
+    width: 100%;
+    height: 100vh;
+    
+    }
+    </style>
 </head>
 <body>
 <nav class="navbar navbar-expand-lg bg-body-tertiary">
@@ -111,6 +123,7 @@
         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
         <button class="btn btn-outline-success" type="submit">Search</button>
       </form>
+       <button id="logout" href="./index.html" class="btn btn-outline-success">Logout</button>
     </div>
   </div>
 </nav>  
@@ -183,7 +196,6 @@
 <br><br>
 <button id="sellplus" onclick=sellplus() >+</button> <input id="sellamount" size="4" value="1"> <button id="sellminus"onclick=sellminus()>-</button> <button id="sell" onclick="sell()">sell</button>
 
-<button id="logout" href="./index.html">Logout</button>
 <script type="module">
   // Import the functions you need from the SDKs you need
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
@@ -217,5 +229,34 @@ logout.addEventListener('click',(e) => {
 });
 </script>
 
+
+<div class="tradingview-widget-container">
+  <div class="tradingview-widget-container__widget"></div>
+  <div class="tradingview-widget-copyright"><a href="https://in.tradingview.com/" rel="noopener nofollow" target="_blank">
+  <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>
+  {
+  "width": "980",
+  "height": "610",
+  "symbol": "NASDAQ:AAPL",
+  "interval": "D",
+  "timezone": "Asia/Kolkata",
+  "theme": "light",
+  "style": "2",
+  "locale": "in",
+  "enable_publishing": false,
+  "withdateranges": true,
+  "allow_symbol_change": true,
+  "watchlist": [
+    "NASDAQ:GOOGL",
+    "NASDAQ:AMZN",
+    "NASDAQ:MSFT"
+  ],
+  "details": true,
+  "calendar": false,
+  "support_host": "https://www.tradingview.com"
+}
+  </script>
+  
+  
 </body>
 </html>
