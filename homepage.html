@@ -255,7 +255,73 @@ logout.addEventListener('click',(e) => {
   "support_host": "https://www.tradingview.com"
 }
   </script>
-  
+  <script type="module">
+  // Import the functions you need from the SDKs you need
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+import { getDatabase, set, ref, update, child, get, remove } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasestatic.com/firebasejs/10.8.0/firebase-app.js";
+import { getDatabase, set, ref, update, child, get, remove } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+
+  // TODO: Add SDKs for Firebase products that you want to use
+  // https://firebase.google.com/js/10.8.0/firebase-auth.js";
+
+  // TODO: Add SDKs for Firebase products that you want to use
+  // https://firebase.google.com/docs/web/setup#available-libraries
+
+  // Your web app's Firebase configuration
+  const firebaseConfig = {
+    apiKey: "AIzaSyD4wlA68qZp41M_CfUf1j93oYn41CoN5eo",
+    authDomain: "stocktrade-173c8.firebaseapp.com",
+    databaseURL: "https://stocktrade-173c8-default-rtdb.asia-southeast1.firebasedatabase.app",
+    projectId: "stocktrade-173c8",
+    storageBucket: "stocktrade-173c8.appspot.com",
+    messagingSenderId: "58004670302",
+    appId: "1:58004670302:web:e942b65ba9ccdaec9d71cf",
+    measurementId: "G-BJTP6ZD69S"
+  };
+
+  // Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const auth = getAuth();
+const db = getDatabase();
+
+// Reference to the wallet data in the database
+const walletRef = ref(db, 'users/' + auth.currentUser.uid + '/wallet');
+
+// Function to update the wallet value in the database
+function updateWallet(newWalletValue) {
+  update(walletRef, {
+    wallet: newWalletValue
+  });
+}
+
+// Function to read the wallet value from the database and display it in the textbox
+function readWallet() {
+  get(walletRef).then((snapshot) => {
+    if (snapshot.exists()) {
+      document.getElementById('wallet').value = snapshot.val().wallet;
+    } else {
+      console.log('No data available');
+    }
+  }).catch((error) => {
+    console.error(error);
+  });
+}
+
+// Call the readWallet function when the window loads
+window.onload = readWallet;
+
+// Call the updateWallet function when the buy or sell button is clicked
+buy.addEventListener('click', () => {
+  const newWalletValue = parseFloat(document.getElementById('wallet').value) - parseFloat(document.getElementById('currprice').value) * parseFloat(document.getElementById('buyamount').value);
+  updateWallet(newWalletValue);
+});
+
+sell.addEventListener('click', () => {
+  const newWalletValue = parseFloat(document.getElementById('wallet').value) + parseFloat(document.getElementById('currprice').value) * parseFloat(document.getElementById('sellamount').value);
+  updateWallet(newWalletValue);
+});
   
 </body>
 </html>
