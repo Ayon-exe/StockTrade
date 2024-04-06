@@ -235,9 +235,22 @@ logout.addEventListener('click',(e) => {
   	});
    window.location.replace("https://ayon-exe.github.io/StockTrade/index.html");
 });
+	
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    // User is signed in, see docs for a list of available properties
+    // https://firebase.google.com/docs/reference/js/auth.user
+    const uid = user.uid;
+	  alert('the uid is' + uid);
+    // ...
+  } else {
+    // User is signed out
+    // ...
+  }
+});
 
 
-const walletRef = ref(db, 'users/' + auth.currentUser.uid + '/wallet');
+const walletRef = ref(db, 'users/' + uid + '/wallet');
 
 // Function to update the wallet value in the database
 function updateWallet(newWalletValue) {
