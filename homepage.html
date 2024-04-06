@@ -275,6 +275,11 @@ function readWallet() {
 // Call the readWallet function when the window loads
 window.onload = readWallet;
 
+read.addEventListener('click', () => {
+  readWallet;
+});
+
+	
 // Call the updateWallet function when the buy or sell button is clicked
 buy.addEventListener('click', () => {
   const newWalletValue = parseFloat(document.getElementById('wallet').value) - parseFloat(document.getElementById('currprice').value) * parseFloat(document.getElementById('buyamount').value);
