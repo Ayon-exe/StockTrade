@@ -137,6 +137,7 @@
 <button id="sellplus" class=".btn-default" onclick=sellplus() >+</button> <input id="sellamount" size="4" value="1"> <button id="sellminus" class=".btn-default" onclick=sellminus()>-</button> <button id="sell" onclick="sell()">sell</button>
 
 <script type="module">
+window.onload = function () {
   // Import the functions you need from the SDKs you need
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
 import { getDatabase, set, ref, update } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
@@ -157,20 +158,21 @@ const app = initializeApp(firebaseConfig);
 const database = getDatabase(app);
 const auth = getAuth();
 
-logout.addEventListener('click',(e) => {
-	signOut(auth).then(() => {
-  	// Sign-out successful.
-	alert('user Signed out');
-	})
-	.catch((error) => {
-    	const errorCode = error.code;
-    	const errorMessage = error.message;
-	alert(errorMessage);
-  	});
-   window.location.replace("https://ayon-exe.github.io/StockTrade/index.html");
-});
-window.onload = function () {
-	document.getElementById('greeting').textContent = getGreetingMessage();
+
+
+
+const user = auth.currentUser;
+if (user !== null) {
+  const uid = user.uid;
+  const displayName = user.displayName;
+}
+alert(uid);
+
+
+
+
+	
+	document.getElementById('greeting').textContent = getGreetingMessage() +displayName;
 
 	function getGreetingMessage() {
     	const currentDate = new Date();
@@ -184,6 +186,11 @@ window.onload = function () {
         return "Good evening";
     }
 }
+
+
+
+
+	
 	var chart = new CanvasJS.Chart("chartContainer", { 
 		title: {},
 		data: [
@@ -196,7 +203,6 @@ window.onload = function () {
 	chart.render();	
 
 	$("#buy").click(function () {
-
 	var length = chart.options.data[0].dataPoints.length;
     	var gen= parseInt(document.getElementById("currprice").value);
 	chart.options.data[0].dataPoints.push({ y:gen});
@@ -205,7 +211,6 @@ window.onload = function () {
 	});
 
 	$("#sell").click(function () {
-
 	var length = chart.options.data[0].dataPoints.length;
     	var gen= parseInt(document.getElementById("currprice").value);
 	chart.options.data[0].dataPoints.push({ y:gen});
@@ -240,6 +245,19 @@ function buy(){
     function sellminus(){
     	(document.getElementById("sellamount").value)=(parseInt(document.getElementById("sellamount").value))-1;
     }
+
+	logout.addEventListener('click',(e) => {
+	signOut(auth).then(() => {
+  	// Sign-out successful.
+	alert('user Signed out');
+	})
+	.catch((error) => {
+    	const errorCode = error.code;
+    	const errorMessage = error.message;
+	alert(errorMessage);
+  	});
+	window.location.replace("https://ayon-exe.github.io/StockTrade/index.html");
+});
 // Button interactions
 document.getElementById("generateBtn").addEventListener("click", generate);
 document.getElementById("buyBtn").addEventListener("click", buy);
