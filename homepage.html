@@ -190,7 +190,7 @@
 
 
 
-<label>wallet</label> <input id="wallet" type="text" value="0">  <button id="read">Read</button>  
+<label>wallet</label> <input id="wallet">  <button id="read">Read</button>  
 <br>
 <button onclick="generate()">Generate price</button>  
 <label>Current price</label> <input id="currprice" type="text" value="0" readonly>
@@ -204,6 +204,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
 import { getDatabase, set, ref, update } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+import { onValue } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
   // TODO: Add SDKs for Firebase products that you want to use
   // https://firebase.google.com/docs/web/setup#available-libraries
@@ -240,10 +241,11 @@ logout.addEventListener('click',(e) => {
   onAuthStateChanged(auth, (user) => {
     if (user) {
       // Get the wallet balance from the Firebase database
-      const dbRef = ref(database, 'users/' + user.uid + '/wallet');
-      dbRef.on('value', snap => {
-        // Set the value of the textbox to the wallet balance
-        document.getElementById('wallet').value = snap.val();
+const dbRef = ref(database, 'users/' + user.uid + '/wallet');
+dbRef.onValue(snap => {
+  // Set the value of the textbox to the wallet balance
+  document.getElementById('wallet').value = snap.val();
+});
       });
     } else {
       // User is signed out
