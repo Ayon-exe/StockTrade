@@ -44,7 +44,7 @@
 
 	});
 }
-</script>
+</script>-->
 <script>
 	function generate(){
     	document.getElementById("currprice").value= (Math.random() * 100).toFixed(2);
@@ -73,7 +73,7 @@
     	(document.getElementById("sellamount").value)=(parseInt(document.getElementById("sellamount").value))-1;
     }
     
-</script>-->
+</script>
 </head>
 <body>
 <nav class="navbar navbar-expand-lg bg-body-tertiary">
@@ -187,6 +187,9 @@
 
 <div id="chartContainer" style="width:100%; height:280px"></div>
 
+
+
+
 <label>wallet</label> <input id="wallet" type="text" value="0">  <button id="read">Read</button>  
 <br>
 <button onclick="generate()">Generate price</button>  
@@ -236,20 +239,19 @@ logout.addEventListener('click',(e) => {
    window.location.replace("https://ayon-exe.github.io/StockTrade/index.html");
 });
 	
-onAuthStateChanged(auth, (user) => {
-	if (user) {
-	// User is signed in, see docs for a list of available properties
-	// https://firebase.google.com/docs/reference/js/auth.user
-	uid = user.uid;
-	alert('the uid is' + uid);
-	const walletRef = ref(db, 'users/' + uid + '/wallet');
-	// ...
-	} else {
-	// User is signed out
-	// ...
-	}
-});
-
+window.onload = () => {
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      // User is signed in.
+      const uid = user.uid;
+      alert('The UID is: ' + uid);
+      // You can also access other user properties here, such as user.emailVerified, user.isAnonymous, etc.
+    } else {
+      // User is signed out.
+      // ...
+    }
+  });
+};
 const walletRef = ref(db, 'users/' + uid + '/wallet');
 
 // Function to update the wallet value in the database
