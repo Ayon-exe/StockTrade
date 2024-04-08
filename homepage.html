@@ -14,14 +14,53 @@
     <script type="text/javascript" src="https://cdn.canvasjs.com/canvasjs.min.js"></script>
 </head>
 <body>
-<!-- Navbar -->
-<nav class="navbar navbar-expand-lg bg-body-tertiary">
-  <!-- Navbar content -->
-</nav>
 
-<!-- Marquee -->
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">STOCKS!</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="./about.html">About Us</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="index.html">Login</a>
+        </li>
+	<li class="nav-item">
+          <a class="nav-link" href="howto.html">How to Use</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Dropdown
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="#">A</a></li>
+            <li><a class="dropdown-item" href="#">B</a></li>
+            <!--<li><hr class="dropdown-divider"></li>-->
+            <li><a class="dropdown-item" href="#">C</a></li>
+          </ul>
+        </li>
+        <!--<li class="nav-item">
+          <a class="nav-link disabled" aria-disabled="true">Disabled</a>
+        </li>-->
+      </ul>
+      <form class="d-flex" role="search">
+        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success" type="submit">Search</button>
+      </form>
+       <button id="logout" href="./index.html" class="btn btn-outline-success">Logout</button>
+    </div>
+  </div>
+</nav>  
 <marquee>
-    <!-- Marquee content -->
+	Sensex Today | Market Close Highlights : Sensex ends up 335pts, Nifty over 22,140; Oil & Gas, Metal, IT, top gainers ||
+	An $80 billion crash in smallcaps flashes warning signs|| 
+	Railway stocks bounce back; IRFC, Railtel, RVNL, others surge up to 11%||
+	Adani Green Energy zooms 7% on subsidiary's power purchase deal with SECI|| 
+	Paytm extends losses, falls 3% ahead of payments bank March 15 deadline
 </marquee>
 
 <!-- Account Button -->
@@ -35,8 +74,8 @@
 <p id="AMZNstockPrice"></p>
 <p id="MSFTstockPrice"></p>
 
-<div id="chartContainer" style="width:100%; height:280px"></div>
-
+<!--<div id="chartContainer" style="width:100%; height:280px"></div>-->
+<h3 id="greeting"></h3>
 <label>wallet</label> <input id="wallet" type="text" value="0">
 <br>
 <button onclick="generate()">Generate price</button>  
@@ -71,6 +110,9 @@
 
     window.onload = function () {
         // Fetch the user's data from Firebase and display the wallet value
+        alert("haha");
+        alert(getGreetingMessage() + " " + userData.username);
+
         const user = auth.currentUser;
         if (user) {
             const userRef = database.ref('users/' + user.uid);
@@ -80,11 +122,12 @@
                 const userData = snapshot.val();
                 if (userData) {
                     document.getElementById('wallet').value = userData.wallet;
+                    document.getElementById('greeting').textContent = getGreetingMessage() + " " + userData.username;
                 }
             });
         }
 
-        var chart = new CanvasJS.Chart("chartContainer", {
+            var chart = new CanvasJS.Chart("chartContainer", {
             title: {},
             data: [{
                 type: "spline",
@@ -138,9 +181,22 @@
     function sellminus() {
         (document.getElementById("sellamount").value) = (parseInt(document.getElementById("sellamount").value)) - 1;
     }
+    
+    function getGreetingMessage() {
+        const currentDate = new Date();
+        const currentHour = currentDate.getHours();
+
+        if (currentHour < 12) {
+            return "Good morning";
+        } else if (currentHour < 18) {
+            return "Good afternoon";
+        } else {
+            return "Good evening";
+        }
+    }
 </script>
 
-<div class="tradingview-widget-container">  
+<!--<div class="tradingview-widget-container">  
     <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>
     {
         "width": "100%",
@@ -163,7 +219,7 @@
         "calendar": false,
         "support_host": "https://www.tradingview.com"
     }
-    </script>
+    </script>-->
 </div>
 
 </body>
