@@ -237,7 +237,7 @@ logout.addEventListener('click',(e) => {
    window.location.replace("https://ayon-exe.github.io/StockTrade/index.html");
 });
 	
-window.onload = function() {
+
   onAuthStateChanged(auth, (user) => {
     if (user) {
       // User is signed in, see docs for a list of available properties
@@ -251,7 +251,7 @@ window.onload = function() {
       // ...
     }
   });
-};
+
 
 
 const walletRef = ref(db, 'users/' + uid + '/wallet');
