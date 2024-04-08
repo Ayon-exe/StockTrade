@@ -236,7 +236,13 @@ logout.addEventListener('click',(e) => {
   	});
    window.location.replace("https://ayon-exe.github.io/StockTrade/index.html");
 });
-	
+firebase.auth().onAuthStateChanged(user => {
+			if (user) {
+				uid = user.uid;
+				alert(uid);
+				readWallet();
+			}
+		});
 
   onAuthStateChanged(auth, (user) => {
     if (user) {
