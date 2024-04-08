@@ -1,20 +1,20 @@
+<!-- homepage.html -->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>StockTrade</title>
-    <link rel="icon" type="image/x-icon" href="./images/favicon.ico">
-    <link rel="stylesheet" href="style.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js"></script>
-    <script src="script.js" defer></script>
-    <script type="text/javascript" src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
-    <script type="text/javascript" src="https://cdn.canvasjs.com/canvasjs.min.js"></script>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<title>StockTrade</title>
+        <link rel="icon" type="image/x-icon" href="./images/favicon.ico">
+	<link rel="stylesheet" href="style.css">
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+	<script src="myscript.js"></script>
+	<script type="text/javascript" src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
+	<script type="text/javascript" src="https://cdn.canvasjs.com/canvasjs.min.js"></script>
 </head>
 <body>
-
 <nav class="navbar navbar-expand-lg bg-body-tertiary">
   <div class="container-fluid">
     <a class="navbar-brand" href="#">STOCKS!</a>
@@ -62,45 +62,85 @@
 	Adani Green Energy zooms 7% on subsidiary's power purchase deal with SECI|| 
 	Paytm extends losses, falls 3% ahead of payments bank March 15 deadline
 </marquee>
-
-<!-- Account Button -->
 <a href="./account.html">
-    <button id="account" class="btn btn-default" style="float: right;">Account</button>
-</a>
+    <button id="account" class=".btn-default" style="float: right;">Account</button>
+</a>	
+
 
 <h1>Stock Prices</h1>
-<p id="AAPLstockPrice"></p>
-<p id="GOOGLstockPrice"></p>
-<p id="AMZNstockPrice"></p>
-<p id="MSFTstockPrice"></p>
+  <p id="AAPLstockPrice"></p>
+  <p id="GOOGLstockPrice"></p>
+  <p id="AMZNstockPrice"></p>
+  <p id="MSFTstockPrice"></p>
 
-<!--<div id="chartContainer" style="width:100%; height:280px"></div>-->
+  <script>
+    // Make an HTTP request to the Alpha Vantage API
+    fetch('https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=AAPL&apikey=YOUR_API_KEY')
+      .then(response => response.json())
+      .then(data => {
+        // Extract the stock price from the API response
+        const stockPrice1 = data['Global Quote']['05. price'];
+        
+        // Display the stock price
+        document.getElementById('AAPLstockPrice').textContent = 'Apple Stock Price: ' + stockPrice1;
+      })
+      .catch(error => {
+        console.log('Error fetching stock price:', error);
+      });
+      fetch('https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=GOOGL&apikey=YOUR_API_KEY')
+      .then(response => response.json())
+      .then(data => {
+        // Extract the stock price from the API response
+        const stockPrice2 = data['Global Quote']['05. price'];
+        
+        // Display the stock price
+        document.getElementById('GOOGLstockPrice').textContent = 'Google Stock Price: ' + stockPrice2;
+      })
+      .catch(error => {
+        console.log('Error fetching stock price:', error);
+      });
+      fetch('https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=AMZN&apikey=YOUR_API_KEY')
+      .then(response => response.json())
+      .then(data => {
+        // Extract the stock price from the API response
+        const stockPrice3 = data['Global Quote']['05. price'];
+        
+        // Display the stock price
+        document.getElementById('AMZNstockPrice').textContent = 'Amazon Stock Price: ' + stockPrice3;
+      })
+      .catch(error => {
+        console.log('Error fetching stock price:', error);
+      });
+      fetch('https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=MSFT&apikey=YOUR_API_KEY')
+      .then(response => response.json())
+      .then(data => {
+        // Extract the stock price from the API response
+        const stockPrice4 = data['Global Quote']['05. price'];
+        
+        // Display the stock price
+        document.getElementById('MSFTstockPrice').textContent = 'Microsoft Stock Price: ' + stockPrice4;
+      })
+      .catch(error => {
+        console.log('Error fetching stock price:', error);
+      });
+  </script>
+
+<div id="chartContainer" style="width:100%; height:280px"></div>
 <h3 id="greeting"></h3>
 <label>wallet</label> <input id="wallet" type="text" value="0">
 <br>
 <button onclick="generate()">Generate price</button>  
 <label>Current price</label> <input id="currprice" type="text" value="0" readonly>
 <br><br>
-<button id="buyplus" class="btn btn-default" onclick="buyplus()">+</button> 
-<input id="buyamount" size="4" value="1"> 
-<button id="buyminus" class="btn btn-default" onclick="buyminus()">-</button> 
-<button id="buy" onclick="buy()">buy</button> 
+<button id="buyplus" class=".btn-default" onclick=buyplus()>+</button> <input id="buyamount" size="4" value="1"> <button id="buyminus" class=".btn-default" onclick=buyminus()>-</button> <button id="buy" onclick="buy()">buy</button> 
 <br><br>
-<button id="sellplus" class="btn btn-default" onclick="sellplus()">+</button> 
-<input id="sellamount" size="4" value="1"> 
-<button id="sellminus" class="btn btn-default" onclick="sellminus()">-</button> 
-<button id="sell" onclick="sell()">sell</button>
+<button id="sellplus" class=".btn-default" onclick=sellplus() >+</button> <input id="sellamount" size="4" value="1"> <button id="sellminus" class=".btn-default" onclick=sellminus()>-</button> <button id="sell" onclick="sell()">sell</button>
 
 <script type="module">
   // Import the functions you need from the SDKs you need
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
 import { getDatabase, set, ref, update } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-
-  // TODO: Add SDKs for Firebase products that you want to use
-  // https://firebase.google.com/docs/web/setup#available-libraries
-
-  // Your web app's Firebase configuration
   const firebaseConfig = {
     apiKey: "AIzaSyD4wlA68qZp41M_CfUf1j93oYn41CoN5eo",
     authDomain: "stocktrade-173c8.firebaseapp.com",
@@ -117,118 +157,114 @@ const app = initializeApp(firebaseConfig);
 const database = getDatabase(app);
 const auth = getAuth();
 
-   window.onload = function () {
-    const user = auth.currentUser;
-    
-    if (user) {
-        const userRef = database.ref('users/' + user.uid);
+logout.addEventListener('click',(e) => {
+	signOut(auth).then(() => {
+  	// Sign-out successful.
+	alert('user Signed out');
+	})
+	.catch((error) => {
+    	const errorCode = error.code;
+    	const errorMessage = error.message;
+	alert(errorMessage);
+  	});
+   window.location.replace("https://ayon-exe.github.io/StockTrade/index.html");
+});
+window.onload = function () {
+	document.getElementById('greeting').textContent = getGreetingMessage();
 
-        // Listen for changes in the user's data
-        userRef.on('value', (snapshot) => {
-            const userData = snapshot.val();
-            if (userData) {
-                document.getElementById('wallet').value = userData.wallet;
-                
-                // Display the greeting message using an alert
-                alert(getGreetingMessage() + " " + userData.username);
-            }
-        });
+	function getGreetingMessage() {
+    	const currentDate = new Date();
+    	const currentHour = currentDate.getHours();
+
+    if (currentHour < 12) {
+        return "Good morning";
+    } else if (currentHour < 18) {
+        return "Good afternoon";
+    } else {
+        return "Good evening";
     }
+}
+	
+	var chart = new CanvasJS.Chart("chartContainer", { 
+		title: {},
+		data: [
+		{
+			type: "spline",
+			dataPoints: []
+		}
+		]
+	});
+	chart.render();	
 
-            var chart = new CanvasJS.Chart("chartContainer", {
-            title: {},
-            data: [{
-                type: "spline",
-                dataPoints: []
-            }]
-        });
-        chart.render();
+	$("#buy").click(function () {
 
-        $("#buy").click(function () {
-            var length = chart.options.data[0].dataPoints.length;
-            var gen = parseInt(document.getElementById("currprice").value);
-            chart.options.data[0].dataPoints.push({ y: gen });
-            chart.render();
-        });
+	var length = chart.options.data[0].dataPoints.length;
+    	var gen= parseInt(document.getElementById("currprice").value);
+	chart.options.data[0].dataPoints.push({ y:gen});
+	chart.render();
 
-        $("#sell").click(function () {
-            var length = chart.options.data[0].dataPoints.length;
-            var gen = parseInt(document.getElementById("currprice").value);
-            chart.options.data[0].dataPoints.push({ y: gen });
-            chart.render();
-        });
-    }
+	});
 
-    function generate() {
-        document.getElementById("currprice").value = (Math.random() * 100).toFixed(2);
-        document.getElementById("hidden").value = document.getElementById("currprice").value;
-    }
+	$("#sell").click(function () {
 
-    function buy() {
-        document.getElementById("wallet").value = ((document.getElementById("wallet").value) - ((document.getElementById("currprice").value) * parseFloat(document.getElementById("buyamount").value)));
+	var length = chart.options.data[0].dataPoints.length;
+    	var gen= parseInt(document.getElementById("currprice").value);
+	chart.options.data[0].dataPoints.push({ y:gen});
+	chart.render();
+
+	});
+	function generate(){
+    	document.getElementById("currprice").value= (Math.random() * 100).toFixed(2);
+		document.getElementById("hidden").value=document.getElementById("currprice").value;
+    }   
+    function buy(){
+    	document.getElementById("wallet").value=((document.getElementById("wallet").value)-((document.getElementById("currprice").value)*parseFloat(document.getElementById("buyamount").value)));
         generate();
     }
-
-    function sell() {
-        (document.getElementById("wallet").value) = (parseFloat(document.getElementById("wallet").value) + (parseFloat(document.getElementById("currprice").value) * parseFloat(document.getElementById("sellamount").value)));
-        generate();
-    }
-
-    function buyplus() {
-        (document.getElementById("buyamount").value) = (parseInt(document.getElementById("buyamount").value)) + 1;
-    }
-
-    function buyminus() {
-        (document.getElementById("buyamount").value) = (parseInt(document.getElementById("buyamount").value)) - 1;
-    }
-
-    function sellplus() {
-        (document.getElementById("sellamount").value) = (parseInt(document.getElementById("sellamount").value)) + 1;
-    }
-
-    function sellminus() {
-        (document.getElementById("sellamount").value) = (parseInt(document.getElementById("sellamount").value)) - 1;
+    
+    function sell(){
+    	(document.getElementById("wallet").value)= (parseFloat(document.getElementById("wallet").value)+ (parseFloat(document.getElementById("currprice").value)*parseFloat(document.getElementById("sellamount").value)));
+    	generate();
     }
     
-    function getGreetingMessage() {
-        const currentDate = new Date();
-        const currentHour = currentDate.getHours();
-
-        if (currentHour < 12) {
-            return "Good morning";
-        } else if (currentHour < 18) {
-            return "Good afternoon";
-        } else {
-            return "Good evening";
-        }
+    function buyplus(){
+    	(document.getElementById("buyamount").value)=(parseInt(document.getElementById("buyamount").value))+1;
     }
+    function buyminus(){
+    	(document.getElementById("buyamount").value)=(parseInt(document.getElementById("buyamount").value))-1;
+    }
+    function sellplus(){
+    	(document.getElementById("sellamount").value)=(parseInt(document.getElementById("sellamount").value))+1;
+    }
+    function sellminus(){
+    	(document.getElementById("sellamount").value)=(parseInt(document.getElementById("sellamount").value))-1;
+    }
+}
 </script>
-
-<!--<div class="tradingview-widget-container">  
-    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>
-    {
-        "width": "100%",
-        "height": "610",
-        "symbol": "NASDAQ:AAPL",
-        "interval": "D",
-        "timezone": "Asia/Kolkata",
-        "theme": "light",
-        "style": "2",
-        "locale": "in",
-        "enable_publishing": false,
-        "withdateranges": true,
-        "allow_symbol_change": true,
-        "watchlist": [
-            "NASDAQ:GOOGL",
-            "NASDAQ:AMZN",
-            "NASDAQ:MSFT"
-        ],
-        "details": true,
-        "calendar": false,
-        "support_host": "https://www.tradingview.com"
-    }
-    </script>-->
-</div>
-
+	
+<div class="tradingview-widget-container">  
+  <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>
+  {
+  "width": "100%",
+  "height": "610",
+  "symbol": "NASDAQ:AAPL",
+  "interval": "D",
+  "timezone": "Asia/Kolkata",
+  "theme": "light",
+  "style": "2",
+  "locale": "in",
+  "enable_publishing": false,
+  "withdateranges": true,
+  "allow_symbol_change": true,
+  "watchlist": [
+    "NASDAQ:GOOGL",
+    "NASDAQ:AMZN",
+    "NASDAQ:MSFT"
+  ],
+  "details": true,
+  "calendar": false,
+  "support_host": "https://www.tradingview.com"
+}
+  </script>
 </body>
 </html>
