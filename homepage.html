@@ -215,7 +215,7 @@ window.onload = function () {
 	});
 	function generate(){
     	document.getElementById("currprice").value= (Math.random() * 100).toFixed(2);
-		document.getElementById("hidden").value=document.getElementById("currprice").value;
+	document.getElementById("hidden").value=document.getElementById("currprice").value;
     }   
     function buy(){
     	document.getElementById("wallet").value=((document.getElementById("wallet").value)-((document.getElementById("currprice").value)*parseFloat(document.getElementById("buyamount").value)));
@@ -240,9 +240,17 @@ window.onload = function () {
     	(document.getElementById("sellamount").value)=(parseInt(document.getElementById("sellamount").value))-1;
     }
 }
+// Button interactions
+document.getElementById("generateBtn").addEventListener("click", generate);
+document.getElementById("buyBtn").addEventListener("click", buy);
+document.getElementById("sellBtn").addEventListener("click", sell);
+document.getElementById("buyplusBtn").addEventListener("click", buyplus);
+document.getElementById("buyminusBtn").addEventListener("click", buyminus);
+document.getElementById("sellplusBtn").addEventListener("click", sellplus);
+document.getElementById("sellminusBtn").addEventListener("click", sellminus);	
 </script>
 	
-<div class="tradingview-widget-container">  
+<!--<div class="tradingview-widget-container">  
   <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>
   {
   "width": "100%",
@@ -265,6 +273,6 @@ window.onload = function () {
   "calendar": false,
   "support_host": "https://www.tradingview.com"
 }
-  </script>
+  </script>-->
 </body>
 </html>
