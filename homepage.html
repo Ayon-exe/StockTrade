@@ -236,16 +236,19 @@ logout.addEventListener('click',(e) => {
   	});
    window.location.replace("https://ayon-exe.github.io/StockTrade/index.html");
 });  
-
-// Get the current user
-  let user = firebase.auth().currentUser;
-
-  // Get the wallet balance from the Firebase database
-  const dbRef = ref(database, 'users/' + user.uid + '/wallet');
-alert("tada "+user.uid);
-  dbRef.on('value', snap => {
-    // Set the value of the textbox to the wallet balance
-    document.getElementById('wallet').value = snap.val();
+// Check if the user is signed in
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      // Get the wallet balance from the Firebase database
+      const dbRef = ref(database, 'users/' + user.uid + '/wallet');
+      dbRef.on('value', snap => {
+        // Set the value of the textbox to the wallet balance
+        document.getElementById('wallet').value = snap.val();
+      });
+    } else {
+      // User is signed out
+      // You can redirect the user to the login page here
+    }
   });
 </script>
 
