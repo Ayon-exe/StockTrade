@@ -245,9 +245,8 @@ function buy(){
     function sellminus(){
     	(document.getElementById("sellamount").value)=(parseInt(document.getElementById("sellamount").value))-1;
     }
-
-	logout.addEventListener('click',(e) => {
-	signOut(auth).then(() => {
+    function logout(){
+    	signOut(auth).then(() => {
   	// Sign-out successful.
 	alert('user Signed out');
 	})
@@ -257,7 +256,7 @@ function buy(){
 	alert(errorMessage);
   	});
 	window.location.replace("https://ayon-exe.github.io/StockTrade/index.html");
-});
+    }
 // Button interactions
 document.getElementById("generateBtn").addEventListener("click", generate);
 document.getElementById("buyBtn").addEventListener("click", buy);
@@ -266,6 +265,7 @@ document.getElementById("buyplusBtn").addEventListener("click", buyplus);
 document.getElementById("buyminusBtn").addEventListener("click", buyminus);
 document.getElementById("sellplusBtn").addEventListener("click", sellplus);
 document.getElementById("sellminusBtn").addEventListener("click", sellminus);	
+document.getElementById("logout").addEventListener("click", logout);
 </script>
 	
 <!--<div class="tradingview-widget-container">  
