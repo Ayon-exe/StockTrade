@@ -15,7 +15,7 @@
 	<script type="text/javascript" src="https://cdn.canvasjs.com/canvasjs.min.js"></script>
 </head>
 <body>
-<nav class="navbar navbar-expand-lg bg-body-tertiary">
+<!--<nav class="navbar navbar-expand-lg bg-body-tertiary">
   <div class="container-fluid">
     <a class="navbar-brand" href="#">STOCKS!</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -39,13 +39,13 @@
           <ul class="dropdown-menu">
             <li><a class="dropdown-item" href="#">A</a></li>
             <li><a class="dropdown-item" href="#">B</a></li>
-            <!--<li><hr class="dropdown-divider"></li>-->
+            <!--<li><hr class="dropdown-divider"></li>-@->
             <li><a class="dropdown-item" href="#">C</a></li>
           </ul>
         </li>
         <!--<li class="nav-item">
           <a class="nav-link disabled" aria-disabled="true">Disabled</a>
-        </li>-->
+        </li>-@->
       </ul>
       <form class="d-flex" role="search">
         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
@@ -54,7 +54,9 @@
        <button id="logout" href="./index.html" class="btn btn-outline-success">Logout</button>
     </div>
   </div>
-</nav>  
+</nav> 
+-->
+<button id="logout">Logout</button>
 <marquee>
 	Sensex Today | Market Close Highlights : Sensex ends up 335pts, Nifty over 22,140; Oil & Gas, Metal, IT, top gainers ||
 	An $80 billion crash in smallcaps flashes warning signs|| 
@@ -137,21 +139,21 @@
 <button id="sellplus" class=".btn-default" onclick=sellplus() >+</button> <input id="sellamount" size="4" value="1"> <button id="sellminus" class=".btn-default" onclick=sellminus()>-</button> <button id="sell" onclick="sell()">sell</button>
 
 <script type="module">
-  window.onload = function () {
+window.onload = function () {
     // Import the functions you need from the SDKs you need
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
     import { getDatabase, ref, get } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
-    import { getAuth, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+    import { getAuth } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
     const firebaseConfig = {
-      apiKey: "AIzaSyD4wlA68qZp41M_CfUf1j93oYn41CoN5eo",
-      authDomain: "stocktrade-173c8.firebaseapp.com",
-      databaseURL: "https://stocktrade-173c8-default-rtdb.asia-southeast1.firebasedatabase.app",
-      projectId: "stocktrade-173c8",
-      storageBucket: "stocktrade-173c8.appspot.com",
-      messagingSenderId: "58004670302",
-      appId: "1:58004670302:web:e942b65ba9ccdaec9d71cf",
-      measurementId: "G-BJTP6ZD69S"
+	apiKey: "AIzaSyD4wlA68qZp41M_CfUf1j93oYn41CoN5eo",
+	authDomain: "stocktrade-173c8.firebaseapp.com",
+        databaseURL: "https://stocktrade-173c8-default-rtdb.asia-southeast1.firebasedatabase.app",
+        projectId: "stocktrade-173c8",
+        storageBucket: "stocktrade-173c8.appspot.com",
+        messagingSenderId: "58004670302",
+        appId: "1:58004670302:web:e942b65ba9ccdaec9d71cf",
+        measurementId: "G-BJTP6ZD69S"
     };
 
     // Initialize Firebase
@@ -162,80 +164,78 @@
     const user = auth.currentUser;
     let displayName;
     if (user !== null) {
-      const uid = user.uid;
-      displayName = user.displayName;
+        const uid = user.uid;
+        displayName = user.displayName;
 
-      const userRef = ref(database, 'users/' + uid);
-      get(userRef).then((snapshot) => {
-        if (snapshot.exists()) {
-          const userData = snapshot.val();
-          document.getElementById('wallet').value = userData.wallet || 0;
-        } else {
-          console.log("No data available");
-        }
-      }).catch((error) => {
-        console.error("Error getting user data:", error);
-      });
+        const userRef = ref(database, 'users/' + uid);
+        get(userRef).then((snapshot) => {
+            if (snapshot.exists()) {
+                const userData = snapshot.val();
+                document.getElementById('wallet').value = userData.wallet || 0;
+            } else {
+                console.log("No data available");
+            }
+        }).catch((error) => {
+            console.error("Error getting user data:", error);
+        });
 
-      document.getElementById('greeting').textContent = getGreetingMessage() + displayName;
+        document.getElementById('greeting').textContent = getGreetingMessage() + displayName;
     }
 
     function getGreetingMessage() {
-      const currentDate = new Date();
-      const currentHour = currentDate.getHours();
+        const currentDate = new Date();
+        const currentHour = currentDate.getHours();
 
-      if (currentHour < 12) {
-        return "Good morning, ";
-      } else if (currentHour < 18) {
-        return "Good afternoon, ";
-      } else {
-        return "Good evening, ";
-      }
+        if (currentHour < 12) {
+            return "Good morning, ";
+        } else if (currentHour < 18) {
+            return "Good afternoon, ";
+        } else {
+            return "Good evening, ";
+        }
     }
 
     function generate() {
-      const randomPrice = (Math.random() * 100).toFixed(2);
-      document.getElementById("currprice").value = randomPrice;
-      document.getElementById("hidden").value = randomPrice;
+        const randomPrice = (Math.random() * 100).toFixed(2);
+        document.getElementById("currprice").value = randomPrice;
+        document.getElementById("hidden").value = randomPrice;
     }
 
     function buy() {
-      document.getElementById("wallet").value = ((document.getElementById("wallet").value) - ((document.getElementById("currprice").value) * parseFloat(document.getElementById("buyamount").value)));
-      generate();
+        document.getElementById("wallet").value = ((document.getElementById("wallet").value) - ((document.getElementById("currprice").value) * parseFloat(document.getElementById("buyamount").value)));
+        generate();
     }
 
     function sell() {
-      document.getElementById("wallet").value = (parseFloat(document.getElementById("wallet").value) + (parseFloat(document.getElementById("currprice").value) * parseFloat(document.getElementById("sellamount").value)));
-      generate();
+        document.getElementById("wallet").value = (parseFloat(document.getElementById("wallet").value) + (parseFloat(document.getElementById("currprice").value) * parseFloat(document.getElementById("sellamount").value)));
+        generate();
     }
 
     function buyplus() {
-      document.getElementById("buyamount").value = (parseInt(document.getElementById("buyamount").value)) + 1;
+        document.getElementById("buyamount").value = (parseInt(document.getElementById("buyamount").value)) + 1;
     }
 
     function buyminus() {
-      document.getElementById("buyamount").value = (parseInt(document.getElementById("buyamount").value)) - 1;
+        document.getElementById("buyamount").value = (parseInt(document.getElementById("buyamount").value)) - 1;
     }
 
     function sellplus() {
-      document.getElementById("sellamount").value = (parseInt(document.getElementById("sellamount").value)) + 1;
+        document.getElementById("sellamount").value = (parseInt(document.getElementById("sellamount").value)) + 1;
     }
 
     function sellminus() {
-      document.getElementById("sellamount").value = (parseInt(document.getElementById("sellamount").value)) - 1;
+        document.getElementById("sellamount").value = (parseInt(document.getElementById("sellamount").value)) - 1;
     }
 
     function logout() {
-      signOut(auth).then(() => {
-        // Sign-out successful.
-        alert('user Signed out');
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        alert(errorMessage);
-      });
-      window.location.replace("https://ayon-exe.github.io/StockTrade/index.html");
+        signOut(auth).then(() => {
+            // Sign-out successful.
+            alert('User Signed out');
+        }).catch((error) => {
+            // An error happened.
+            alert(error.message);
+        });
+        window.location.replace("https://ayon-exe.github.io/StockTrade/index.html");
     }
 
     // Button interactions
@@ -245,9 +245,10 @@
     document.getElementById("buyplusBtn").addEventListener("click", buyplus);
     document.getElementById("buyminusBtn").addEventListener("click", buyminus);
     document.getElementById("sellplusBtn").addEventListener("click", sellplus);
-    document.getElementById("sellminusBtn").addEventListener("click", sellminus); 
-    document.getElementById("logout").addEventListener("click", logout); // Added this line
-  }
+    document.getElementById("sellminusBtn").addEventListener("click", sellminus);
+    document.getElementById("logout").addEventListener("click", logout);
+}
+
 </script>
 
 
