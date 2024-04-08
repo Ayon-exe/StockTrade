@@ -222,27 +222,8 @@ import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, on
 
   // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-const db = getDatabase(app);
+const database = getDatabase(app);
 const auth = getAuth();
-const uid= firebase.auth().currentUser.uid;
-alert('haha '+uid);
-
-let uid;
-		firebase.auth().onAuthStateChanged(user => {
-			if (user) {
-				uid = user.uid;
-				readWallet();
-			}
-		});
-
-		function readWallet() {
-			const dbRef = firebase.database().ref('users/' + uid + '/wallet');
-			dbRef.on('value', snap => {
-				document.getElementById('wallet').value = snap.val();
-			});
-		}
-
-
 logout.addEventListener('click',(e) => {
 	signOut(auth).then(() => {
   	// Sign-out successful.
@@ -254,62 +235,18 @@ logout.addEventListener('click',(e) => {
 	alert(errorMessage);
   	});
    window.location.replace("https://ayon-exe.github.io/StockTrade/index.html");
-});
-	
-window.onload = () => {
-  onAuthStateChanged(auth, (user) => {
-    if (user) {
-      // User is signed in.
-      uid = user.uid;
-      alert('The UID is: ' + uid);
-      // You can also access other user properties here, such as user.emailVerified, user.isAnonymous, etc.
-    } else {
-      // User is signed out.
-      // ...
-    }
+});  
+
+// Get the current user
+  let user = firebase.auth().currentUser;
+
+  // Get the wallet balance from the Firebase database
+  const dbRef = ref(database, 'users/' + user.uid + '/wallet');
+alert("tada "+user.uid);
+  dbRef.on('value', snap => {
+    // Set the value of the textbox to the wallet balance
+    document.getElementById('wallet').value = snap.val();
   });
-};
-const walletRef = ref(db, 'users/' + uid + '/wallet');
-
-// Function to update the wallet value in the database
-function updateWallet(newWalletValue) {
-  update(walletRef, {
-    wallet: newWalletValue
-  });
-}
-
-// Function to read the wallet value from the database and display it in the textbox
-function readWallet() {
-  get(walletRef).then((snapshot) => {
-    if (snapshot.exists()) {
-      document.getElementById('wallet').value = snapshot.val().wallet;
-    } else {
-      console.log('No data available');
-    }
-  }).catch((error) => {
-    console.error(error);
-  });
-}
-
-// Call the readWallet function when the window loads
-window.onload = readWallet();
-	
-read.addEventListener('click',(e) => {
-	alert("haha");
-	readWallet();
-});
-	
-	
-// Call the updateWallet function when the buy or sell button is clicked
-buy.addEventListener('click', () => {
-  const newWalletValue = parseFloat(document.getElementById('wallet').value) - parseFloat(document.getElementById('currprice').value) * parseFloat(document.getElementById('buyamount').value);
-  updateWallet(newWalletValue);
-});
-
-sell.addEventListener('click', () => {
-  const newWalletValue = parseFloat(document.getElementById('wallet').value) + parseFloat(document.getElementById('currprice').value) * parseFloat(document.getElementById('sellamount').value);
-  updateWallet(newWalletValue);
-});   
 </script>
 
 <!--<div class="tradingview-widget-container">  
