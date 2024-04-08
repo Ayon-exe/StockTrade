@@ -140,11 +140,11 @@
   window.onload = function () {
     // Import the functions you need from the SDKs you need
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-    import { getDatabase, set, ref, update } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+    import { getDatabase, set, ref, update, get } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
     import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
     const firebaseConfig = {
-      apiKey: "AIzaSyD4wlA68qZp41M_CfUf1j93oYn41CoN5eo",
+      apiKey: "YOUR_API_KEY",
       authDomain: "stocktrade-173c8.firebaseapp.com",
       databaseURL: "https://stocktrade-173c8-default-rtdb.asia-southeast1.firebasedatabase.app",
       projectId: "stocktrade-173c8",
@@ -160,9 +160,10 @@
     const auth = getAuth();
 
     const user = auth.currentUser;
+    let displayName;
     if (user !== null) {
       const uid = user.uid;
-      const displayName = user.displayName;
+      displayName = user.displayName;
 
       const userRef = ref(database, 'users/' + uid);
       get(userRef).then((snapshot) => {
@@ -204,8 +205,9 @@
     chart.render(); 
 
     function generate() {
-      document.getElementById("currprice").value = (Math.random() * 100).toFixed(2);
-      document.getElementById("hidden").value = document.getElementById("currprice").value;
+      const randomPrice = (Math.random() * 100).toFixed(2);
+      document.getElementById("currprice").value = randomPrice;
+      document.getElementById("hidden").value = randomPrice;
     }
 
     function buy() {
@@ -258,6 +260,7 @@
     document.getElementById("logout").addEventListener("click", logout);
   }
 </script>
+
 
 	
 <!--<div class="tradingview-widget-container">  
