@@ -244,6 +244,7 @@ window.onload = function() {
       // https://firebase.google.com/docs/reference/js/auth.user
       uid = user.uid;
       alert('the uid is' + uid);
+	const walletRef = ref(db, 'users/' + uid + '/wallet');
       // ...
     } else {
       // User is signed out
