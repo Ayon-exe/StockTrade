@@ -117,22 +117,23 @@ const app = initializeApp(firebaseConfig);
 const database = getDatabase(app);
 const auth = getAuth();
 
-    window.onload = function () {
-        // Fetch the user's data from Firebase and display the wallet value
+   window.onload = function () {
+    const user = auth.currentUser;
+    
+    if (user) {
+        const userRef = database.ref('users/' + user.uid);
 
-        const user = auth.currentUser;
-        if (user) {
-            const userRef = database.ref('users/' + user.uid);
-            
-            // Listen for changes in the user's data
-            userRef.on('value', (snapshot) => {
-                const userData = snapshot.val();
-                if (userData) {
-                    document.getElementById('wallet').value = userData.wallet;
-                    document.getElementById('greeting').textContent = getGreetingMessage() + " " + userData.username;
-                }
-            });
-        }
+        // Listen for changes in the user's data
+        userRef.on('value', (snapshot) => {
+            const userData = snapshot.val();
+            if (userData) {
+                document.getElementById('wallet').value = userData.wallet;
+                
+                // Display the greeting message using an alert
+                alert(getGreetingMessage() + " " + userData.username);
+            }
+        });
+    }
 
             var chart = new CanvasJS.Chart("chartContainer", {
             title: {},
