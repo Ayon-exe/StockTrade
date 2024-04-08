@@ -184,7 +184,6 @@ window.onload = function () {
         return "Good evening";
     }
 }
-	
 	var chart = new CanvasJS.Chart("chartContainer", { 
 		title: {},
 		data: [
@@ -213,6 +212,7 @@ window.onload = function () {
 	chart.render();
 
 	});
+	
 	function generate(){
     	document.getElementById("currprice").value= (Math.random() * 100).toFixed(2);
 	document.getElementById("hidden").value=document.getElementById("currprice").value;
