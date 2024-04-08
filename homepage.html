@@ -227,6 +227,22 @@ const auth = getAuth();
 const uid= firebase.auth().currentUser.uid;
 alert('haha '+uid);
 
+let uid;
+		firebase.auth().onAuthStateChanged(user => {
+			if (user) {
+				uid = user.uid;
+				readWallet();
+			}
+		});
+
+		function readWallet() {
+			const dbRef = firebase.database().ref('users/' + uid + '/wallet');
+			dbRef.on('value', snap => {
+				document.getElementById('wallet').value = snap.val();
+			});
+		}
+
+
 logout.addEventListener('click',(e) => {
 	signOut(auth).then(() => {
   	// Sign-out successful.
@@ -295,11 +311,6 @@ sell.addEventListener('click', () => {
   updateWallet(newWalletValue);
 });   
 </script>
-	
-	
-	
-
-
 
 <!--<div class="tradingview-widget-container">  
   <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>
