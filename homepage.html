@@ -217,7 +217,8 @@ window.onload = function () {
     	document.getElementById("currprice").value= (Math.random() * 100).toFixed(2);
 	document.getElementById("hidden").value=document.getElementById("currprice").value;
     }   
-    function buy(){
+}
+function buy(){
     	document.getElementById("wallet").value=((document.getElementById("wallet").value)-((document.getElementById("currprice").value)*parseFloat(document.getElementById("buyamount").value)));
         generate();
     }
@@ -239,7 +240,6 @@ window.onload = function () {
     function sellminus(){
     	(document.getElementById("sellamount").value)=(parseInt(document.getElementById("sellamount").value))-1;
     }
-}
 // Button interactions
 document.getElementById("generateBtn").addEventListener("click", generate);
 document.getElementById("buyBtn").addEventListener("click", buy);
