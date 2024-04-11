@@ -13,6 +13,68 @@
 	<script src="myscript.js"></script>
 	<script type="text/javascript" src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
 	<script type="text/javascript" src="https://cdn.canvasjs.com/canvasjs.min.js"></script>
+
+	<script type="text/javascript">
+	window.onload = function () {
+	var chart = new CanvasJS.Chart("chartContainer", { 
+		title: {},
+		data: [
+		{
+			type: "spline",
+			dataPoints: []
+		}
+		]
+	});
+	chart.render();	
+
+	$("#buy").click(function () {
+
+	var length = chart.options.data[0].dataPoints.length;
+    	var gen= parseInt(document.getElementById("currprice").value);
+	chart.options.data[0].dataPoints.push({ y:gen});
+	chart.render();
+
+	});
+
+	$("#sell").click(function () {
+
+	var length = chart.options.data[0].dataPoints.length;
+    	var gen= parseInt(document.getElementById("currprice").value);
+	chart.options.data[0].dataPoints.push({ y:gen});
+	chart.render();
+
+	});
+}
+</script>
+<script>
+	function generate(){
+    	document.getElementById("currprice").value= (Math.random() * 100).toFixed(2);
+		document.getElementById("hidden").value=document.getElementById("currprice").value;
+    }   
+    	function buy(){
+    	document.getElementById("wallet").value=((document.getElementById("wallet").value)-((document.getElementById("currprice").value)*parseFloat(document.getElementById("buyamount").value)));
+        generate();
+    }
+    
+    	function sell(){
+    	(document.getElementById("wallet").value)= (parseFloat(document.getElementById("wallet").value)+ (parseFloat(document.getElementById("currprice").value)*parseFloat(document.getElementById("sellamount").value)));
+    	generate();
+    }
+    
+    	function buyplus(){
+    	(document.getElementById("buyamount").value)=(parseInt(document.getElementById("buyamount").value))+1;
+    }
+    	function buyminus(){
+    	(document.getElementById("buyamount").value)=(parseInt(document.getElementById("buyamount").value))-1;
+    }
+    	function sellplus(){
+    	(document.getElementById("sellamount").value)=(parseInt(document.getElementById("sellamount").value))+1;
+    }
+    	function sellminus(){
+    	(document.getElementById("sellamount").value)=(parseInt(document.getElementById("sellamount").value))-1;
+    }
+    
+</script>
 </head>
 <body>
 <nav class="navbar navbar-expand-lg bg-body-tertiary">
@@ -217,67 +279,7 @@ logout.addEventListener('click',(e) => {
   "calendar": false,
   "support_host": "https://www.tradingview.com"
 }
+</script>
 <div id="chartContainer" style="width:100%; height:280px"></div>
-<script type="text/javascript">
-	window.onload = function () {
-	var chart = new CanvasJS.Chart("chartContainer", { 
-		title: {},
-		data: [
-		{
-			type: "spline",
-			dataPoints: []
-		}
-		]
-	});
-	chart.render();	
-
-	$("#buy").click(function () {
-
-	var length = chart.options.data[0].dataPoints.length;
-    	var gen= parseInt(document.getElementById("currprice").value);
-	chart.options.data[0].dataPoints.push({ y:gen});
-	chart.render();
-
-	});
-
-	$("#sell").click(function () {
-
-	var length = chart.options.data[0].dataPoints.length;
-    	var gen= parseInt(document.getElementById("currprice").value);
-	chart.options.data[0].dataPoints.push({ y:gen});
-	chart.render();
-
-	});
-}
-</script>
-<script>
-	function generate(){
-    	document.getElementById("currprice").value= (Math.random() * 100).toFixed(2);
-		document.getElementById("hidden").value=document.getElementById("currprice").value;
-    }   
-    	function buy(){
-    	document.getElementById("wallet").value=((document.getElementById("wallet").value)-((document.getElementById("currprice").value)*parseFloat(document.getElementById("buyamount").value)));
-        generate();
-    }
-    
-    	function sell(){
-    	(document.getElementById("wallet").value)= (parseFloat(document.getElementById("wallet").value)+ (parseFloat(document.getElementById("currprice").value)*parseFloat(document.getElementById("sellamount").value)));
-    	generate();
-    }
-    
-    	function buyplus(){
-    	(document.getElementById("buyamount").value)=(parseInt(document.getElementById("buyamount").value))+1;
-    }
-    	function buyminus(){
-    	(document.getElementById("buyamount").value)=(parseInt(document.getElementById("buyamount").value))-1;
-    }
-    	function sellplus(){
-    	(document.getElementById("sellamount").value)=(parseInt(document.getElementById("sellamount").value))+1;
-    }
-    	function sellminus(){
-    	(document.getElementById("sellamount").value)=(parseInt(document.getElementById("sellamount").value))-1;
-    }
-    
-</script>
 </body>
 </html>
