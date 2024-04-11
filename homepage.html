@@ -217,6 +217,7 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth();
 const database = getDatabase(app);
 var uid = 0;
+var greeting='';
 greeting();
 updatewallet();
 
@@ -247,7 +248,6 @@ function greeting(){
             const greetData = snapshot.val();
 		const date = new Date();
     		const hour = date.getHours();
-		var greeting;
 		if (hour < 12) {
 		      greeting = "Good Morning!";
 		} else if (hour < 18) {
@@ -255,7 +255,7 @@ function greeting(){
 		} else {
 		      greeting = "Good Evening!";
 		}
-            document.getElementById('greetings').value = greeting + ' ' + greetData;
+            document.getElementById('greetings').value = (greeting + ' ' + greetData);
 	});
 		
 	onAuthStateChanged(auth, (user) => {
