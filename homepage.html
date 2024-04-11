@@ -89,28 +89,22 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth();
 const database = getDatabase(app);
 var uid = 0;
-refresh.addEventListener('click',(e) => {
 onAuthStateChanged(auth, (user) => {
-  if (user) {
-    // User is signed in, see docs for a list of available properties
-    // https://firebase.google.com/docs/reference/js/auth.user
-	uid = user.uid;
-	alert(uid);
+    if (user) {
+        // User is signed in
+        const uid = user.uid;
+        
+        // Reference to the wallet data
+        const walletRef = ref(database, 'users/' + uid + '/wallet');
 
-	// Reference to the wallet data
-    const walletRef = database.ref('users/' + uid + '/wallet');
-
-    // Read the wallet data from Firebase and display it in the textbox
-    walletRef.on('value', (snapshot) => {
-        const walletData = snapshot.val();
-        document.getElementById('wallet').value = walletData;
-    });
-    // ...
-  } else {
-    // User is signed out
-    // ...
-  }
-});
+        // Read the wallet data from Firebase and display it in the textbox
+        walletRef.on('value', (snapshot) => {
+            const walletData = snapshot.val();
+            document.getElementById('wallet').value = walletData;
+        });
+    } else {
+        // User is signed out
+    }
 });
 	
 logout.addEventListener('click',(e) => {
