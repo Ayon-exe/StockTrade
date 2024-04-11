@@ -86,7 +86,7 @@ const firebaseConfig = {
   // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const auth = getAuth();
-uid = 0;
+var uid = 0;
 refresh.addEventListener('click',(e) => {
 onAuthStateChanged(auth, (user) => {
   if (user) {
