@@ -128,7 +128,7 @@
 
 <div id="chartContainer" style="width:100%; height:280px"></div>	
 
-<label id='greet'></label>
+<input id="greet" type="text" value="0">
 
 <!--<h1>Stock Prices</h1>
   <p id="AAPLstockPrice"></p>
@@ -220,8 +220,8 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth();
 const database = getDatabase(app);
-var walletRef = ref(database, 'users/' + uid + '/wallet');
-var greetRef = ref(database, 'users/' + uid + '/username');
+const walletRef = ref(database, 'users/' + uid + '/wallet');
+const greetRef = ref(database, 'users/' + uid + '/username');
 var uid = 0;
 var greetings='';
 var buyAmount=0;
