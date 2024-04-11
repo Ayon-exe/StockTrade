@@ -125,6 +125,8 @@
 <a href="./account.html">
     <button id="account" class=".btn-default" style="float: right;">Account</button>
 </a>
+	
+<h3 id='greetings'></h3>
 
 <h1>Stock Prices</h1>
   <p id="AAPLstockPrice"></p>
@@ -215,6 +217,7 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth();
 const database = getDatabase(app);
 var uid = 0;
+greeting();
 updatewallet();
 
 function updatewallet()
@@ -232,6 +235,34 @@ function updatewallet()
 	});
     } else {
         console.log('no data found for wallet');
+    }
+});
+}
+
+function greeting(){
+	onAuthStateChanged(auth, (user) => {
+    if (user) {
+        // User is signed in
+        const uid = user.uid;
+        // Reference to the wallet data
+        const greetRef = ref(database, 'users/' + uid + '/username');
+        // Read the wallet data from Firebase and display it in the textbox
+        onValue(greetRef, (snapshot) => {
+            const greetData = snapshot.val();
+		const date = new Date();
+    		const hour = date.getHours();
+		var greeting;
+		if (hour < 12) {
+		      greeting = "Good Morning!";
+		} else if (hour < 18) {
+		      greeting = "Good Afternoon!";
+		} else {
+		      greeting = "Good Evening!";
+		}
+            document.getElementById('wallet').value = greeting + ' ' + greetData;
+	});
+    } else {
+        console.log('no data found for username');
     }
 });
 }
