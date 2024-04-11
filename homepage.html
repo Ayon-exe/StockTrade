@@ -194,8 +194,10 @@
 <label>Current price</label> <input id="currprice" type="text" value="0" readonly>
 <br><br>
 <button id="buyplus" class=".btn-default" onclick=buyplus()>+</button> <input id="buyamount" size="4" value="1"> <button id="buyminus" class=".btn-default" onclick=buyminus()>-</button> <button id="buy" onclick="buy()">buy</button> 
+<button id='buy1'>Buy1</button>
 <br><br>
 <button id="sellplus" class=".btn-default" onclick=sellplus() >+</button> <input id="sellamount" size="4" value="1"> <button id="sellminus" class=".btn-default" onclick=sellminus()>-</button> <button id="sell" onclick="sell()">sell</button>
+<button id='sell1'>Sell1</button>
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
@@ -218,6 +220,12 @@ const auth = getAuth();
 const database = getDatabase(app);
 var uid = 0;
 var greeting='';
+var buyamount;
+var sellamount;
+
+const currentWallet;
+const updatedWallet;
+
 greeting();
 updatewallet();
 
@@ -287,7 +295,27 @@ function greeting(){
 
 refresh.addEventListener('click',(e) => {
 	updatewallet();
-});	
+});
+
+buy1.addEventListener('click',(e) => {
+	buyAmount = parseInt(document.getElementById('buyamount').value, 10);
+        // Update the wallet data in Firebase
+        onValue(walletRef, (snapshot) => {
+        currentWallet = snapshot.val();
+        updatedWallet = currentWallet + buyAmount;
+        set(walletRef, updatedWallet);
+        });
+});
+
+sell1.addEventListener('click',(e) => {
+	sellAmount = parseInt(document.getElementById('sellamount').value, 10);   
+        // Update the wallet data in Firebase
+        onValue(walletRef, (snapshot) => {
+        currentWallet = snapshot.val();
+        updatedWallet = currentWallet - sellAmount;
+        set(walletRef, updatedWallet);
+        });
+});
 
 logout.addEventListener('click',(e) => {
 	signOut(auth).then(() => {
