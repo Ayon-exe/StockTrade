@@ -14,7 +14,7 @@
 	<script type="text/javascript" src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
 	<script type="text/javascript" src="https://cdn.canvasjs.com/canvasjs.min.js"></script>
 
-	<!--<script type="text/javascript">
+	<script type="text/javascript">
 	window.onload = function () {
 	var chart = new CanvasJS.Chart("chartContainer", { 
 		title: {},
@@ -72,7 +72,7 @@
     		(document.getElementById("sellamount").value)=(parseInt(document.getElementById("sellamount").value))-1;
     	}
     
-</script>-->
+</script>
 </head>
 <body>
 <nav class="navbar navbar-expand-lg bg-body-tertiary">
@@ -125,8 +125,10 @@
 <a href="./account.html">
     <button id="account" class=".btn-default" style="float: right;">Account</button>
 </a>
-	
-<h3 id='greetings'></h3>
+
+<div id="chartContainer" style="width:100%; height:280px"></div>	
+
+<label id='greet'></label>
 
 <h1>Stock Prices</h1>
   <p id="AAPLstockPrice"></p>
@@ -218,6 +220,8 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth();
 const database = getDatabase(app);
+const walletRef = ref(database, 'users/' + uid + '/wallet');
+const greetRef = ref(database, 'users/' + uid + '/username');
 var uid = 0;
 var greetings='';
 var buyAmount=0;
@@ -233,9 +237,7 @@ function updatewallet()
 	onAuthStateChanged(auth, (user) => {
     if (user) {
         // User is signed in
-        const uid = user.uid;
-        // Reference to the wallet data
-        const walletRef = ref(database, 'users/' + uid + '/wallet');
+        uid = user.uid;
         // Read the wallet data from Firebase and display it in the textbox
         onValue(walletRef, (snapshot) => {
             const walletData = snapshot.val();
@@ -248,9 +250,7 @@ function updatewallet()
 }
 
 function greeting(){
-	// Reference to the wallet data
-        const greetRef = ref(database, 'users/' + uid + '/username');
-        // Read the wallet data from Firebase and display it in the textbox
+        // Read the username data from Firebase and display it in greetings
         onValue(greetRef, (snapshot) => {
             const greetData = snapshot.val();
 		const date = new Date();
@@ -262,7 +262,7 @@ function greeting(){
 		} else {
 		      greetings = "Good Evening!";
 		}
-            document.getElementById('greetings').value = (greetings + ' ' + greetData);
+            document.getElementById('greet').value = (greetings + ' ' + greetData);
 	});
 		
 	onAuthStateChanged(auth, (user) => {
@@ -270,7 +270,7 @@ function greeting(){
         // User is signed in
         const uid = user.uid;
         // Reference to the wallet data
-        const greetRef = ref(database, 'users/' + uid + '/username');
+        greetRef = ref(database, 'users/' + uid + '/username');
         // Read the wallet data from Firebase and display it in the textbox
         onValue(greetRef, (snapshot) => {
             const greetData = snapshot.val();
@@ -355,7 +355,6 @@ logout.addEventListener('click',(e) => {
   "calendar": false,
   "support_host": "https://www.tradingview.com"
 }
-</script>
-<div id="chartContainer" style="width:100%; height:280px"></div>-->
+</script>-->
 </body>
 </html>
