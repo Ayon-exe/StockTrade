@@ -220,8 +220,8 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth();
 const database = getDatabase(app);
-const walletRef = ref(database, 'users/' + uid + '/wallet');
-const greetRef = ref(database, 'users/' + uid + '/username');
+var walletRef = ref(database, 'users/' + uid + '/wallet');
+var greetRef = ref(database, 'users/' + uid + '/username');
 var uid = 0;
 var greetings='';
 var buyAmount=0;
@@ -268,7 +268,7 @@ function greeting(){
 	onAuthStateChanged(auth, (user) => {
     if (user) {
         // User is signed in
-        const uid = user.uid;
+        uid = user.uid;
         // Reference to the wallet data
         greetRef = ref(database, 'users/' + uid + '/username');
         // Read the wallet data from Firebase and display it in the textbox
