@@ -145,9 +145,9 @@ refresh.addEventListener('click',(e) => {
 });
 
 generate.addEventListener('click',(e) => {
-    generate();
+    gen();
 });
-function generate(){
+function gen(){
     	document.getElementById("currprice").value= (Math.random() * 100).toFixed(2);
 	    xvalues.push(document.getElementById("currprice").value);
 	} 
@@ -166,7 +166,7 @@ buy.addEventListener('click',(e) => {
                 });
             }
         });
-        generate();
+        gen();
 });
 sell.addEventListener('click',(e) => {
     var sellAmount = parseInt(document.getElementById("sellamount").value);
@@ -183,7 +183,7 @@ sell.addEventListener('click',(e) => {
                 });
             }
         });
-        generate();
+        gen();
 });
 buyplus.addEventListener('click',(e) => {
     document.getElementById("buyamount").value = (parseInt(document.getElementById("buyamount").value))+1;
