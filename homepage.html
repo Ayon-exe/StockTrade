@@ -262,34 +262,8 @@ function greeting(){
 		} else {
 		      greetings = "Good Evening!";
 		}
-            document.getElementById('greet').value = (greetings + ' ' + greetData);
+            document.getElementById('greet').value = greetData;
 	});
-		
-	onAuthStateChanged(auth, (user) => {
-    if (user) {
-        // User is signed in
-        uid = user.uid;
-        // Reference to the wallet data
-        greetRef = ref(database, 'users/' + uid + '/username');
-        // Read the wallet data from Firebase and display it in the textbox
-        onValue(greetRef, (snapshot) => {
-            	greetData = snapshot.val();
-		const date = new Date();
-    		const hour = date.getHours();
-		var greeting;
-		if (hour < 12) {
-		      greeting = "Good Morning!";
-		} else if (hour < 18) {
-		      greeting = "Good Afternoon!";
-		} else {
-		      greeting = "Good Evening!";
-		}
-            document.getElementById('greetings').value = greeting + ' ' + greetData;
-	});
-    } else {
-        console.log('no data found for username');
-    }
-});
 }
 
 refresh.addEventListener('click',(e) => {
