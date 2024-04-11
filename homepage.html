@@ -240,7 +240,8 @@ function updatewallet()
 }
 
 function greeting(){
-	const greetRef = ref(database, 'users/' + uid + '/username');
+	// Reference to the wallet data
+        const greetRef = ref(database, 'users/' + uid + '/username');
         // Read the wallet data from Firebase and display it in the textbox
         onValue(greetRef, (snapshot) => {
             const greetData = snapshot.val();
@@ -255,6 +256,7 @@ function greeting(){
 		      greeting = "Good Evening!";
 		}
             document.getElementById('greetings').value = greeting + ' ' + greetData;
+	});
 		
 	onAuthStateChanged(auth, (user) => {
     if (user) {
