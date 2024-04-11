@@ -72,6 +72,7 @@
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
 import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+import { getDatabase, set, ref, update } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 const firebaseConfig = {
 	apiKey: "AIzaSyD4wlA68qZp41M_CfUf1j93oYn41CoN5eo",
     	authDomain: "stocktrade-173c8.firebaseapp.com",
@@ -86,6 +87,7 @@ const firebaseConfig = {
   // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const auth = getAuth();
+const db = getDatabase(app);
 var uid = 0;
 refresh.addEventListener('click',(e) => {
 onAuthStateChanged(auth, (user) => {
@@ -94,6 +96,15 @@ onAuthStateChanged(auth, (user) => {
     // https://firebase.google.com/docs/reference/js/auth.user
 	uid = user.uid;
 	alert(uid);
+
+	// Reference to the wallet data
+    const walletRef = database.ref('users/' + uid + '/wallet');
+
+    // Read the wallet data from Firebase and display it in the textbox
+    walletRef.on('value', (snapshot) => {
+        const walletData = snapshot.val();
+        document.getElementById('wallet').value = walletData;
+    });
     // ...
   } else {
     // User is signed out
