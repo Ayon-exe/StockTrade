@@ -98,7 +98,7 @@ onAuthStateChanged(auth, (user) => {
 	alert(uid);
 
 	// Reference to the wallet data
-    const walletRef = database.ref('users/' + uid + '/wallet');
+    const walletRef = db.ref('users/' + uid + '/wallet');
 
     // Read the wallet data from Firebase and display it in the textbox
     walletRef.on('value', (snapshot) => {
