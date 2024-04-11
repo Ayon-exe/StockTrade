@@ -89,24 +89,37 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth();
 const database = getDatabase(app);
 var uid = 0;
+
 onAuthStateChanged(auth, (user) => {
     if (user) {
         // User is signed in
         const uid = user.uid;
-        
         // Reference to the wallet data
         const walletRef = ref(database, 'users/' + uid + '/wallet');
-
         // Read the wallet data from Firebase and display it in the textbox
         onValue(walletRef, (snapshot) => {
             const walletData = snapshot.val();
             document.getElementById('wallet').value = walletData;
 	});
     } else {
-        // User is signed out
+        console.log('no data found for wallet');
     }
 });
-	
+
+function updatewallet()
+{
+	const walletRef = ref(database, 'users/' + uid + '/wallet');
+        // Read the wallet data from Firebase and display it in the textbox
+        onValue(walletRef, (snapshot) => {
+            const walletData = snapshot.val();
+            document.getElementById('wallet').value = walletData;
+	});
+}
+
+refresh.addEventListener('click',(e) => {
+	updatewallet();
+});	
+
 logout.addEventListener('click',(e) => {
 	signOut(auth).then(() => {
   	// Sign-out successful.
