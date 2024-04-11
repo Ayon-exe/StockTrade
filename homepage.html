@@ -59,7 +59,8 @@
     <button id="account" class=".btn-default" style="float: right;">Account</button>
 </a>
 
-<label>wallet</label> <input id="wallet" type="text" value="0">
+<label>wallet</label> <input id="wallet" type="text" value="0">  <button id="refresh" class="btn btn-outline-success">Refresh</button>
+    </div>
 <br>
 <button onclick="generate()">Generate price</button>  
 <label>Current price</label> <input id="currprice" type="text" value="0" readonly>
@@ -86,6 +87,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth();
 const uid = 0;
+refresh.addEventListener('click',(e) => {
 onAuthStateChanged(auth, (user) => {
   if (user) {
     // User is signed in, see docs for a list of available properties
@@ -97,6 +99,7 @@ onAuthStateChanged(auth, (user) => {
     // User is signed out
     // ...
   }
+});
 });
 	
 logout.addEventListener('click',(e) => {
