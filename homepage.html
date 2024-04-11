@@ -200,7 +200,7 @@
 <script type="module">
 window.onload = function() {
 	import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-	import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+	import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
  	const firebaseConfig = {
     	apiKey: "AIzaSyD4wlA68qZp41M_CfUf1j93oYn41CoN5eo",
     	authDomain: "stocktrade-173c8.firebaseapp.com",
@@ -215,7 +215,7 @@ window.onload = function() {
   // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const auth = getAuth();
-if (firebase.auth().currentUser !== null) 
+if (auth().currentUser !== null) 
         console.log("user id: " + auth().currentUser.uid);
 }
 logout.addEventListener('click',(e) => {
