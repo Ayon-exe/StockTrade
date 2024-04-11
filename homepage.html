@@ -192,9 +192,9 @@ window.onload = function () {
         });
     }
     function generate(){
-        document.getElementById("currprice").value= (Math.random() * 100).toFixed(2);
-        document.getElementById("hidden").value=document.getElementById("currprice").value;
-    }   
+    	document.getElementById("currprice").value= (Math.random() * 100).toFixed(2);
+	    xvalues.push(document.getElementById("currprice").value);
+	}
     function buy(){
         var buyAmount = parseInt(document.getElementById("buyamount").value);
         onAuthStateChanged(auth, (user) => {
