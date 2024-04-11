@@ -141,15 +141,16 @@ function greeting() {
 }
 
 refresh.addEventListener('click',(e) => {
-    updatewallet();
+	updatewallet();
 });
 
 generate.addEventListener('click',(e) => {
-    gen();
+	alert('generate button pressed');
+	gen();
 });
 function gen(){
-    	document.getElementById("currprice").value= (Math.random() * 100).toFixed(2);
-	    xvalues.push(document.getElementById("currprice").value);
+	document.getElementById("currprice").value= (Math.random() * 100).toFixed(2);
+	xvalues.push(document.getElementById("currprice").value);
 	} 
 buy.addEventListener('click',(e) => {
     var buyAmount = parseInt(document.getElementById("buyamount").value);
@@ -210,10 +211,9 @@ logout.addEventListener('click',(e) => {
     window.location.replace("https://ayon-exe.github.io/StockTrade/index.html");
 });
 
-const xValues = [];
-const yValues = [10,20,30,40,50,60,70,80,,90,100];
-
 window.onload = function () {
+	const xValues = [];
+	const yValues = [10,20,30,40,50,60,70,80,,90,100];
         var chart = new CanvasJS.Chart("chartContainer", { 
             title: {},
             data: [
