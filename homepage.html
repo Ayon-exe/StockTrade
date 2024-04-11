@@ -183,6 +183,7 @@ const database = getDatabase(app);
 var uid = 0;
 var walletRef;
 var greetRef;
+var greetings;
 
 onAuthStateChanged(auth, (user) => {
     if (user) {
