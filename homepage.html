@@ -13,67 +13,6 @@
 	<script src="myscript.js"></script>
 	<script type="text/javascript" src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
 	<script type="text/javascript" src="https://cdn.canvasjs.com/canvasjs.min.js"></script>
-	<script type="text/javascript">
-	window.onload = function () {
-	var chart = new CanvasJS.Chart("chartContainer", { 
-		title: {},
-		data: [
-		{
-			type: "spline",
-			dataPoints: []
-		}
-		]
-	});
-	chart.render();	
-
-	$("#buy").click(function () {
-
-	var length = chart.options.data[0].dataPoints.length;
-    	var gen= parseInt(document.getElementById("currprice").value);
-	chart.options.data[0].dataPoints.push({ y:gen});
-	chart.render();
-
-	});
-
-	$("#sell").click(function () {
-
-	var length = chart.options.data[0].dataPoints.length;
-    	var gen= parseInt(document.getElementById("currprice").value);
-	chart.options.data[0].dataPoints.push({ y:gen});
-	chart.render();
-
-	});
-}
-</script>
-<script>
-	function generate(){
-    	document.getElementById("currprice").value= (Math.random() * 100).toFixed(2);
-		document.getElementById("hidden").value=document.getElementById("currprice").value;
-    }   
-    function buy(){
-    	document.getElementById("wallet").value=((document.getElementById("wallet").value)-((document.getElementById("currprice").value)*parseFloat(document.getElementById("buyamount").value)));
-        generate();
-    }
-    
-    function sell(){
-    	(document.getElementById("wallet").value)= (parseFloat(document.getElementById("wallet").value)+ (parseFloat(document.getElementById("currprice").value)*parseFloat(document.getElementById("sellamount").value)));
-    	generate();
-    }
-    
-    function buyplus(){
-    	(document.getElementById("buyamount").value)=(parseInt(document.getElementById("buyamount").value))+1;
-    }
-    function buyminus(){
-    	(document.getElementById("buyamount").value)=(parseInt(document.getElementById("buyamount").value))-1;
-    }
-    function sellplus(){
-    	(document.getElementById("sellamount").value)=(parseInt(document.getElementById("sellamount").value))+1;
-    }
-    function sellminus(){
-    	(document.getElementById("sellamount").value)=(parseInt(document.getElementById("sellamount").value))-1;
-    }
-    
-</script>
 </head>
 <body>
 <nav class="navbar navbar-expand-lg bg-body-tertiary">
@@ -116,77 +55,9 @@
     </div>
   </div>
 </nav>  
-<marquee>
-	Sensex Today | Market Close Highlights : Sensex ends up 335pts, Nifty over 22,140; Oil & Gas, Metal, IT, top gainers ||
-	An $80 billion crash in smallcaps flashes warning signs|| 
-	Railway stocks bounce back; IRFC, Railtel, RVNL, others surge up to 11%||
-	Adani Green Energy zooms 7% on subsidiary's power purchase deal with SECI|| 
-	Paytm extends losses, falls 3% ahead of payments bank March 15 deadline
-</marquee>
 <a href="./account.html">
     <button id="account" class=".btn-default" style="float: right;">Account</button>
-</a>	
-
-
-<h1>Stock Prices</h1>
-  <p id="AAPLstockPrice"></p>
-  <p id="GOOGLstockPrice"></p>
-  <p id="AMZNstockPrice"></p>
-  <p id="MSFTstockPrice"></p>
-
-  <script>
-    // Make an HTTP request to the Alpha Vantage API
-    fetch('https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=AAPL&apikey=YOUR_API_KEY')
-      .then(response => response.json())
-      .then(data => {
-        // Extract the stock price from the API response
-        const stockPrice1 = data['Global Quote']['05. price'];
-        
-        // Display the stock price
-        document.getElementById('AAPLstockPrice').textContent = 'Apple Stock Price: ' + stockPrice1;
-      })
-      .catch(error => {
-        console.log('Error fetching stock price:', error);
-      });
-      fetch('https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=GOOGL&apikey=YOUR_API_KEY')
-      .then(response => response.json())
-      .then(data => {
-        // Extract the stock price from the API response
-        const stockPrice2 = data['Global Quote']['05. price'];
-        
-        // Display the stock price
-        document.getElementById('GOOGLstockPrice').textContent = 'Google Stock Price: ' + stockPrice2;
-      })
-      .catch(error => {
-        console.log('Error fetching stock price:', error);
-      });
-      fetch('https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=AMZN&apikey=YOUR_API_KEY')
-      .then(response => response.json())
-      .then(data => {
-        // Extract the stock price from the API response
-        const stockPrice3 = data['Global Quote']['05. price'];
-        
-        // Display the stock price
-        document.getElementById('AMZNstockPrice').textContent = 'Amazon Stock Price: ' + stockPrice3;
-      })
-      .catch(error => {
-        console.log('Error fetching stock price:', error);
-      });
-      fetch('https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=MSFT&apikey=YOUR_API_KEY')
-      .then(response => response.json())
-      .then(data => {
-        // Extract the stock price from the API response
-        const stockPrice4 = data['Global Quote']['05. price'];
-        
-        // Display the stock price
-        document.getElementById('MSFTstockPrice').textContent = 'Microsoft Stock Price: ' + stockPrice4;
-      })
-      .catch(error => {
-        console.log('Error fetching stock price:', error);
-      });
-  </script>
-
-<div id="chartContainer" style="width:100%; height:280px"></div>
+</a>
 
 <label>wallet</label> <input id="wallet" type="text" value="0">
 <br>
@@ -198,11 +69,10 @@
 <button id="sellplus" class=".btn-default" onclick=sellplus() >+</button> <input id="sellamount" size="4" value="1"> <button id="sellminus" class=".btn-default" onclick=sellminus()>-</button> <button id="sell" onclick="sell()">sell</button>
 
 <script type="module">
-window.onload = function() {
-	import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-	import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
- 	const firebaseConfig = {
-    	apiKey: "AIzaSyD4wlA68qZp41M_CfUf1j93oYn41CoN5eo",
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+const firebaseConfig = {
+	apiKey: "AIzaSyD4wlA68qZp41M_CfUf1j93oYn41CoN5eo",
     	authDomain: "stocktrade-173c8.firebaseapp.com",
     	databaseURL: "https://stocktrade-173c8-default-rtdb.asia-southeast1.firebasedatabase.app",
     	projectId: "stocktrade-173c8",
@@ -215,9 +85,20 @@ window.onload = function() {
   // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const auth = getAuth();
-if (auth().currentUser !== null) 
-        console.log("user id: " + auth().currentUser.uid);
-}
+const uid = 0;
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    // User is signed in, see docs for a list of available properties
+    // https://firebase.google.com/docs/reference/js/auth.user
+	uid = user.uid;
+	alert(uid);
+    // ...
+  } else {
+    // User is signed out
+    // ...
+  }
+});
+	
 logout.addEventListener('click',(e) => {
 	signOut(auth).then(() => {
   	// Sign-out successful.
@@ -231,33 +112,5 @@ logout.addEventListener('click',(e) => {
    window.location.replace("https://ayon-exe.github.io/StockTrade/index.html");
 });
 </script>
-
-
-<div class="tradingview-widget-container">  
-  <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>
-  {
-  "width": "100%",
-  "height": "610",
-  "symbol": "NASDAQ:AAPL",
-  "interval": "D",
-  "timezone": "Asia/Kolkata",
-  "theme": "light",
-  "style": "2",
-  "locale": "in",
-  "enable_publishing": false,
-  "withdateranges": true,
-  "allow_symbol_change": true,
-  "watchlist": [
-    "NASDAQ:GOOGL",
-    "NASDAQ:AMZN",
-    "NASDAQ:MSFT"
-  ],
-  "details": true,
-  "calendar": false,
-  "support_host": "https://www.tradingview.com"
-}
-  </script>
-  
-  
 </body>
 </html>
