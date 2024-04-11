@@ -1,196 +1,156 @@
-<!-- homepage.html -->
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1" />
-	<title>StockTrade</title>
-        <link rel="icon" type="image/x-icon" href="./images/favicon.ico">
-	<link rel="stylesheet" href="style.css">
-	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
-	<script src="myscript.js"></script>
-	<script type="text/javascript" src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
-	<script type="text/javascript" src="https://cdn.canvasjs.com/canvasjs.min.js"></script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>StockTrade</title>
+    <link rel="icon" type="image/x-icon" href="./images/favicon.ico">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <script src="myscript.js"></script>
+    <script type="text/javascript" src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="https://cdn.canvasjs.com/canvasjs.min.js"></script>
 
-	<script type="text/javascript">
-	window.onload = function () {
-	var chart = new CanvasJS.Chart("chartContainer", { 
-		title: {},
-		data: [
-		{
-			type: "spline",
-			dataPoints: []
-		}
-		]
-	});
-	chart.render();	
+    <script type="text/javascript">
+    window.onload = function () {
+        var chart = new CanvasJS.Chart("chartContainer", { 
+            title: {},
+            data: [
+            {
+                type: "spline",
+                dataPoints: []
+            }
+            ]
+        });
+        chart.render();   
 
-	$("#buy").click(function () {
+        $("#buy").click(function () {
+            var length = chart.options.data[0].dataPoints.length;
+            var gen= parseInt(document.getElementById("currprice").value);
+            chart.options.data[0].dataPoints.push({ y:gen});
+            chart.render();
+        });
 
-	var length = chart.options.data[0].dataPoints.length;
-    	var gen= parseInt(document.getElementById("currprice").value);
-	chart.options.data[0].dataPoints.push({ y:gen});
-	chart.render();
+        $("#sell").click(function () {
+            var length = chart.options.data[0].dataPoints.length;
+            var gen= parseInt(document.getElementById("currprice").value);
+            chart.options.data[0].dataPoints.push({ y:gen});
+            chart.render();
+        });
+    }
+    function generate(){
+        document.getElementById("currprice").value= (Math.random() * 100).toFixed(2);
+        document.getElementById("hidden").value=document.getElementById("currprice").value;
+    }   
+    function buy(){
+        var buyAmount = parseInt(document.getElementById("buyamount").value);
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                const uid = user.uid;
+                const walletRef = ref(database, 'users/' + uid + '/wallet');
 
-	});
-
-	$("#sell").click(function () {
-
-	var length = chart.options.data[0].dataPoints.length;
-    	var gen= parseInt(document.getElementById("currprice").value);
-	chart.options.data[0].dataPoints.push({ y:gen});
-	chart.render();
-
-	});
-}
-	function generate(){
-    		document.getElementById("currprice").value= (Math.random() * 100).toFixed(2);
-		document.getElementById("hidden").value=document.getElementById("currprice").value;
-    	}   
-    	function buy(){
-    		document.getElementById("wallet").value=((document.getElementById("wallet").value)-((document.getElementById("currprice").value)*parseFloat(document.getElementById("buyamount").value)));
-        	generate();
-    	}
+                // Update the wallet data in Firebase
+                onValue(walletRef, (snapshot) => {
+                    const currentWallet = snapshot.val();
+                    const updatedWallet = currentWallet - (parseFloat(document.getElementById("currprice").value) * buyAmount);
+                    set(walletRef, updatedWallet);
+                });
+            }
+        });
+        generate();
+    }
     
-    	function sell(){
-    		(document.getElementById("wallet").value)= (parseFloat(document.getElementById("wallet").value)+ (parseFloat(document.getElementById("currprice").value)*parseFloat(document.getElementById("sellamount").value)));
-    		generate();
-	}
-	    
-    	function buyplus(){
-	    	(document.getElementById("buyamount").value)=(parseInt(document.getElementById("buyamount").value))+1;
-	}
-    	function buyminus(){
-	    	(document.getElementById("buyamount").value)=(parseInt(document.getElementById("buyamount").value))-1;
-	}
-    	function sellplus(){
-    		(document.getElementById("sellamount").value)=(parseInt(document.getElementById("sellamount").value))+1;
-    	}
-    	function sellminus(){
-    		(document.getElementById("sellamount").value)=(parseInt(document.getElementById("sellamount").value))-1;
-    	}
+    function sell(){
+        var sellAmount = parseInt(document.getElementById("sellamount").value);
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                const uid = user.uid;
+                const walletRef = ref(database, 'users/' + uid + '/wallet');
+
+                // Update the wallet data in Firebase
+                onValue(walletRef, (snapshot) => {
+                    const currentWallet = snapshot.val();
+                    const updatedWallet = currentWallet + (parseFloat(document.getElementById("currprice").value) * sellAmount);
+                    set(walletRef, updatedWallet);
+                });
+            }
+        });
+        generate();
+    }
     
-</script>
+    function buyplus(){
+        document.getElementById("buyamount").value = (parseInt(document.getElementById("buyamount").value))+1;
+    }
+    function buyminus(){
+        document.getElementById("buyamount").value = (parseInt(document.getElementById("buyamount").value))-1;
+    }
+    function sellplus(){
+        document.getElementById("sellamount").value = (parseInt(document.getElementById("sellamount").value))+1;
+    }
+    function sellminus(){
+        document.getElementById("sellamount").value = (parseInt(document.getElementById("sellamount").value))-1;
+    }
+    
+    </script>
 </head>
 <body>
 <nav class="navbar navbar-expand-lg bg-body-tertiary">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="#">STOCKS!</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="./about.html">About Us</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="index.html">Login</a>
-        </li>
-	<li class="nav-item">
-          <a class="nav-link" href="howto.html">How to Use</a>
-        </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Dropdown
-          </a>
-          <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="#">A</a></li>
-            <li><a class="dropdown-item" href="#">B</a></li>
-            <!--<li><hr class="dropdown-divider"></li>-->
-            <li><a class="dropdown-item" href="#">C</a></li>
-          </ul>
-        </li>
-        <!--<li class="nav-item">
-          <a class="nav-link disabled" aria-disabled="true">Disabled</a>
-        </li>-->
-      </ul>
-      <form class="d-flex" role="search">
-        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-success" type="submit">Search</button>
-      </form>
-       <button id="logout" href="./index.html" class="btn btn-outline-success">Logout</button>
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">STOCKS!</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="./about.html">About Us</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="index.html">Login</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="howto.html">How to Use</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Dropdown
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#">A</a></li>
+                        <li><a class="dropdown-item" href="#">B</a></li>
+                        <!--<li><hr class="dropdown-divider"></li>-->
+                        <li><a class="dropdown-item" href="#">C</a></li>
+                    </ul>
+                </li>
+                <!--<li class="nav-item">
+                    <a class="nav-link disabled" aria-disabled="true">Disabled</a>
+                </li>-->
+            </ul>
+            <form class="d-flex" role="search">
+                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success" type="submit">Search</button>
+            </form>
+            <button id="logout" href="./index.html" class="btn btn-outline-success">Logout</button>
+        </div>
     </div>
-  </div>
 </nav>  
 <marquee>
-	Sensex Today | Market Close Highlights : Sensex ends up 335pts, Nifty over 22,140; Oil & Gas, Metal, IT, top gainers ||
-	An $80 billion crash in smallcaps flashes warning signs|| 
-	Railway stocks bounce back; IRFC, Railtel, RVNL, others surge up to 11%||
-	Adani Green Energy zooms 7% on subsidiary's power purchase deal with SECI|| 
-	Paytm extends losses, falls 3% ahead of payments bank March 15 deadline
+    Sensex Today | Market Close Highlights : Sensex ends up 335pts, Nifty over 22,140; Oil & Gas, Metal, IT, top gainers ||
+    An $80 billion crash in smallcaps flashes warning signs|| 
+    Railway stocks bounce back; IRFC, Railtel, RVNL, others surge up to 11%||
+    Adani Green Energy zooms 7% on subsidiary's power purchase deal with SECI|| 
+    Paytm extends losses, falls 3% ahead of payments bank March 15 deadline
 </marquee>
 <a href="./account.html">
     <button id="account" class=".btn-default" style="float: right;">Account</button>
 </a>
 
-<div id="chartContainer" style="width:100%; height:280px"></div>	
+<div id="chartContainer" style="width:100%; height:280px"></div>   
 
 <input id="greet" type="text" value="0">
 
-<!--<h1>Stock Prices</h1>
-  <p id="AAPLstockPrice"></p>
-  <p id="GOOGLstockPrice"></p>
-  <p id="AMZNstockPrice"></p>
-  <p id="MSFTstockPrice"></p>
-
-  <script>
-    // Make an HTTP request to the Alpha Vantage API
-    fetch('https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=AAPL&apikey=YOUR_API_KEY')
-      .then(response => response.json())
-      .then(data => {
-        // Extract the stock price from the API response
-        const stockPrice1 = data['Global Quote']['05. price'];
-        
-        // Display the stock price
-        document.getElementById('AAPLstockPrice').textContent = 'Apple Stock Price: ' + stockPrice1;
-      })
-      .catch(error => {
-        console.log('Error fetching stock price:', error);
-      });
-      fetch('https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=GOOGL&apikey=YOUR_API_KEY')
-      .then(response => response.json())
-      .then(data => {
-        // Extract the stock price from the API response
-        const stockPrice2 = data['Global Quote']['05. price'];
-        
-        // Display the stock price
-        document.getElementById('GOOGLstockPrice').textContent = 'Google Stock Price: ' + stockPrice2;
-      })
-      .catch(error => {
-        console.log('Error fetching stock price:', error);
-      });
-      fetch('https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=AMZN&apikey=YOUR_API_KEY')
-      .then(response => response.json())
-      .then(data => {
-        // Extract the stock price from the API response
-        const stockPrice3 = data['Global Quote']['05. price'];
-        
-        // Display the stock price
-        document.getElementById('AMZNstockPrice').textContent = 'Amazon Stock Price: ' + stockPrice3;
-      })
-      .catch(error => {
-        console.log('Error fetching stock price:', error);
-      });
-      fetch('https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=MSFT&apikey=YOUR_API_KEY')
-      .then(response => response.json())
-      .then(data => {
-        // Extract the stock price from the API response
-        const stockPrice4 = data['Global Quote']['05. price'];
-        
-        // Display the stock price
-        document.getElementById('MSFTstockPrice').textContent = 'Microsoft Stock Price: ' + stockPrice4;
-      })
-      .catch(error => {
-        console.log('Error fetching stock price:', error);
-      });
-  </script>-->
-
-	
 <label>wallet</label> <input id="wallet" type="text" value="0">  <button id="refresh" class="btn btn-outline-success">Refresh</button>
-    </div>
 <br>
 <button onclick="generate()">Generate price</button>  
 <label>Current price</label> <input id="currprice" type="text" value="0" readonly>
@@ -206,130 +166,81 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebas
 import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 import { getDatabase, set, ref, update, onValue  } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 const firebaseConfig = {
-	apiKey: "AIzaSyD4wlA68qZp41M_CfUf1j93oYn41CoN5eo",
-    	authDomain: "stocktrade-173c8.firebaseapp.com",
-    	databaseURL: "https://stocktrade-173c8-default-rtdb.asia-southeast1.firebasedatabase.app",
-    	projectId: "stocktrade-173c8",
-    	storageBucket: "stocktrade-173c8.appspot.com",
-    	messagingSenderId: "58004670302",
-    	appId: "1:58004670302:web:e942b65ba9ccdaec9d71cf",
-    	measurementId: "G-BJTP6ZD69S"
- 	};
+    apiKey: "AIzaSyD4wlA68qZp41M_CfUf1j93oYn41CoN5eo",
+    authDomain: "stocktrade-173c8.firebaseapp.com",
+    databaseURL: "https://stocktrade-173c8-default-rtdb.asia-southeast1.firebasedatabase.app",
+    projectId: "stocktrade-173c8",
+    storageBucket: "stocktrade-173c8.appspot.com",
+    messagingSenderId: "58004670302",
+    appId: "1:58004670302:web:e942b65ba9ccdaec9d71cf",
+    measurementId: "G-BJTP6ZD69S"
+};
 
-  // Initialize Firebase
+// Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const auth = getAuth();
 const database = getDatabase(app);
-const walletRef = ref(database, 'users/' + uid + '/wallet');
-const greetRef = ref(database, 'users/' + uid + '/username');
 var uid = 0;
-var greetings='';
-var buyAmount=0;
-var sellAmount=0;
-var currentWallet=0;
-var updatedWallet=0;
+var walletRef;
+var greetRef;
 
-greeting();
-updatewallet();
-
-function updatewallet()
-{
-	onAuthStateChanged(auth, (user) => {
+onAuthStateChanged(auth, (user) => {
     if (user) {
-        // User is signed in
         uid = user.uid;
-        // Read the wallet data from Firebase and display it in the textbox
-        onValue(walletRef, (snapshot) => {
-            const walletData = snapshot.val();
-            document.getElementById('wallet').value = walletData;
-	});
-    } else {
-        console.log('no data found for wallet');
+        walletRef = ref(database, 'users/' + uid + '/wallet');
+        greetRef = ref(database, 'users/' + uid + '/username');
+        greeting();
+        updatewallet();
     }
 });
+
+function updatewallet() {
+    onValue(walletRef, (snapshot) => {
+        const walletData = snapshot.val();
+        document.getElementById('wallet').value = walletData;
+    });
 }
 
-function greeting(){
-        // Read the username data from Firebase and display it in greetings
-        onValue(greetRef, (snapshot) => {
-            const greetData = snapshot.val();
-		const date = new Date();
-    		const hour = date.getHours();
-		if (hour < 12) {
-		      greetings = "Good Morning!";
-		} else if (hour < 18) {
-		      greetings = "Good Afternoon!";
-		} else {
-		      greetings = "Good Evening!";
-		}
-	alert(greetData);
-            document.getElementById('greet').value = greetData;
-	});
+function greeting() {
+    onValue(greetRef, (snapshot) => {
+        const greetData = snapshot.val();
+        const date = new Date();
+        const hour = date.getHours();
+        if (hour < 12) {
+            greetings = "Good Morning!";
+        } else if (hour < 18) {
+            greetings = "Good Afternoon!";
+        } else {
+            greetings = "Good Evening!";
+        }
+        document.getElementById('greet').value = greetings + ' ' + greetData;
+    });
 }
 
 refresh.addEventListener('click',(e) => {
-	updatewallet();
+    updatewallet();
 });
 
 buy1.addEventListener('click',(e) => {
-	buyAmount = document.getElementById('buyamount').value;
-        // Update the wallet data in Firebase
-        onValue(walletRef, (snapshot) => {
-        currentWallet = snapshot.val();
-        updatedWallet = currentWallet + buyAmount;
-        set(walletRef, updatedWallet);
-        });
-	updatewallet();
+    buy();
 });
 
 sell1.addEventListener('click',(e) => {
-	sellAmount = document.getElementById('sellamount').value;   
-        // Update the wallet data in Firebase
-        onValue(walletRef, (snapshot) => {
-        currentWallet = snapshot.val();
-        updatedWallet = currentWallet - sellAmount;
-        set(walletRef, updatedWallet);
-        });
-	updatewallet();
+    sell();
 });
 
 logout.addEventListener('click',(e) => {
-	signOut(auth).then(() => {
-  	// Sign-out successful.
-	alert('user Signed out');
-	})
-	.catch((error) => {
-    	const errorCode = error.code;
-    	const errorMessage = error.message;
-	alert(errorMessage);
-  	});
-   window.location.replace("https://ayon-exe.github.io/StockTrade/index.html");
+    signOut(auth).then(() => {
+        alert('user Signed out');
+    })
+    .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        alert(errorMessage);
+    });
+    window.location.replace("https://ayon-exe.github.io/StockTrade/index.html");
 });
 </script>
 
-<!--<div class="tradingview-widget-container">  
-  <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>
-  {
-  "width": "100%",
-  "height": "610",
-  "symbol": "NASDAQ:AAPL",
-  "interval": "D",
-  "timezone": "Asia/Kolkata",
-  "theme": "light",
-  "style": "2",
-  "locale": "in",
-  "enable_publishing": false,
-  "withdateranges": true,
-  "allow_symbol_change": true,
-  "watchlist": [
-    "NASDAQ:GOOGL",
-    "NASDAQ:AMZN",
-    "NASDAQ:MSFT"
-  ],
-  "details": true,
-  "calendar": false,
-  "support_host": "https://www.tradingview.com"
-}
-</script>-->
 </body>
 </html>
