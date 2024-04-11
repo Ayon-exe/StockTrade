@@ -130,7 +130,7 @@
 
 <label id='greet'></label>
 
-<h1>Stock Prices</h1>
+<!--<h1>Stock Prices</h1>
   <p id="AAPLstockPrice"></p>
   <p id="GOOGLstockPrice"></p>
   <p id="AMZNstockPrice"></p>
@@ -186,7 +186,7 @@
       .catch(error => {
         console.log('Error fetching stock price:', error);
       });
-  </script>
+  </script>-->
 
 	
 <label>wallet</label> <input id="wallet" type="text" value="0">  <button id="refresh" class="btn btn-outline-success">Refresh</button>
@@ -273,7 +273,7 @@ function greeting(){
         greetRef = ref(database, 'users/' + uid + '/username');
         // Read the wallet data from Firebase and display it in the textbox
         onValue(greetRef, (snapshot) => {
-            const greetData = snapshot.val();
+            	greetData = snapshot.val();
 		const date = new Date();
     		const hour = date.getHours();
 		var greeting;
