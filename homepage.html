@@ -11,10 +11,6 @@
     <!--<script src="myscript.js"></script>-->
     <script type="text/javascript" src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
     <script type="text/javascript" src="https://cdn.canvasjs.com/canvasjs.min.js"></script>
-
-    <script type="text/javascript">
-    
-    </script>
 </head>
 <body>
 <nav class="navbar navbar-expand-lg bg-body-tertiary">
@@ -133,7 +129,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebas
 import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 import { getDatabase, set, ref, update, onValue  } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
-window.onload = function () {
+ window.onload = function () {
 	const xValues = [];
 	const yValues = [10,20,30,40,50,60,70,80,,90,100];
         var chart = new CanvasJS.Chart("chartContainer", { 
@@ -146,7 +142,7 @@ window.onload = function () {
             ]
         });
         chart.render();
-    }  
+    }
 
 const firebaseConfig = {
     apiKey: "AIzaSyD4wlA68qZp41M_CfUf1j93oYn41CoN5eo",
