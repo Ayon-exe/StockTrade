@@ -68,7 +68,7 @@
 <a href="./account.html">
     <button id="account" class="btn btn-primary" style="float: right;">Account</button>
 </a>
-
+<button id="account1" class="btn btn-primary" style="float: right;">Account</button>
 <div id="chartContainer" style="width:100%; height:280px"></div>   
 
 <h3 id="greet"></h3>
@@ -83,20 +83,21 @@
 <button id="sellplus" class=".btn-default">+</button> <input id="sellamount" size="4" value="1"> <button id="sellminus" class=".btn-default" onclick=sellminus()>-</button> <button id="sell" class="btn btn-danger" onclick="sell()">sell</button>
 
 <select name="company" id="company" onChange="combo(this);">
-  <option value="Apple">Apple</option>
-  <option value="Google">Google</option>
-  <option value="Microsoft">Microsoft</option>
-  <option value="FaceBook">FaceBook</option>
+	<option value="AAPL">Apple</option>
+	<option value="GOOG">Google</option>
+	<option value="MSFT">Microsoft</option>
+	<option value="FaceBook">FaceBook</option>
+	<option value="AMZN">Amazon</option>
 </select>
 <label id="com"></label>
+<h1>Stock Prices</h1>
+  <p id="stockPrice"></p>
+
+
 <script type="text/javascript">
-	function combo(t) 
-        {
-        	var y=document.getElementById("com");
-        	y.value = t.value;
-        }
+
 </script>
-	
+
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
 import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
@@ -147,7 +148,40 @@ onAuthStateChanged(auth, (user) => {
 	gen();
     }
 });
+function combo(t) {
+    // Update the value of the element with id 'com'
+    var y = document.getElementById("com");
+    y.value = t.value;
 
+    // Replace 'YOUR_API_KEY' with your actual Alpha Vantage API key
+    const apiKey = 'YOUR_API_KEY';
+
+    // Get the stock symbol from the input element
+    const stockSymbol = t.value;
+
+    // Make an HTTP request to the Alpha Vantage API with the dynamic stock symbol
+    fetch(`https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=${stockSymbol}&apikey=${apiKey}`)
+        .then(response => response.json())
+        .then(data => {
+            // Check if the API response contains the expected data
+            if (data && data['Global Quote']) {
+                // Extract the stock price from the API response
+                const stockPrice = data['Global Quote']['05. price'];
+
+                // Display the stock price
+                document.getElementById('stockPrice').textContent = 'Stock Price: ' + stockPrice;
+            } else {
+                // Handle the case where the API response doesn't contain the expected data
+                console.log('Error: Invalid API response');
+            }
+        })
+        .catch(error => {
+            // Handle any errors that occur during the API request
+            console.log('Error fetching stock price:', error);
+        });
+}
+
+	
 function updatewallet() {
     onValue(walletRef, (snapshot) => {
         const walletData = snapshot.val();
