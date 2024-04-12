@@ -93,9 +93,39 @@
 <h1>Stock Prices</h1>
   <p id="stockPrice"></p>
 
-
 <script type="text/javascript">
+function combo(t) {
+    // Update the value of the element with id 'com'
+    var y = document.getElementById("com");
+    y.value = t.value;
 
+    // Replace 'YOUR_API_KEY' with your actual Alpha Vantage API key
+    const apiKey = 'YOUR_API_KEY';
+
+    // Get the stock symbol from the input element
+    const stockSymbol = t.value;
+
+    // Make an HTTP request to the Alpha Vantage API with the dynamic stock symbol
+    fetch(`https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=${stockSymbol}&apikey=${apiKey}`)
+        .then(response => response.json())
+        .then(data => {
+            // Check if the API response contains the expected data
+            if (data && data['Global Quote']) {
+                // Extract the stock price from the API response
+                const stockPrice = data['Global Quote']['05. price'];
+
+                // Display the stock price
+                document.getElementById('stockPrice').textContent = 'Stock Price: ' + stockPrice;
+            } else {
+                // Handle the case where the API response doesn't contain the expected data
+                console.log('Error: Invalid API response');
+            }
+        })
+        .catch(error => {
+            // Handle any errors that occur during the API request
+            console.log('Error fetching stock price:', error);
+        });
+}
 </script>
 
 <script type="module">
@@ -148,39 +178,6 @@ onAuthStateChanged(auth, (user) => {
 	gen();
     }
 });
-function combo(t) {
-    // Update the value of the element with id 'com'
-    var y = document.getElementById("com");
-    y.value = t.value;
-
-    // Replace 'YOUR_API_KEY' with your actual Alpha Vantage API key
-    const apiKey = 'YOUR_API_KEY';
-
-    // Get the stock symbol from the input element
-    const stockSymbol = t.value;
-
-    // Make an HTTP request to the Alpha Vantage API with the dynamic stock symbol
-    fetch(`https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=${stockSymbol}&apikey=${apiKey}`)
-        .then(response => response.json())
-        .then(data => {
-            // Check if the API response contains the expected data
-            if (data && data['Global Quote']) {
-                // Extract the stock price from the API response
-                const stockPrice = data['Global Quote']['05. price'];
-
-                // Display the stock price
-                document.getElementById('stockPrice').textContent = 'Stock Price: ' + stockPrice;
-            } else {
-                // Handle the case where the API response doesn't contain the expected data
-                console.log('Error: Invalid API response');
-            }
-        })
-        .catch(error => {
-            // Handle any errors that occur during the API request
-            console.log('Error fetching stock price:', error);
-        });
-}
-
 	
 function updatewallet() {
     onValue(walletRef, (snapshot) => {
