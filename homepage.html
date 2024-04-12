@@ -74,15 +74,20 @@
 
 <label>wallet</label> <input id="wallet" type="text" value="0">  <button id="refresh" class="btn btn-outline-success">Refresh</button>
 <br>
-<button id="generate">Generate price</button>  
+<button id="generate" class="btn btn-primary">Generate price</button>  
 <label>Current price</label> <input id="currprice" type="text" value="0" readonly>
 <br><br>
 <button id="buyplus" class=".btn-default">+</button> <input id="buyamount" size="4" value="1"> <button id="buyminus" class=".btn-default" onclick=buyminus()>-</button> <button id="buy" onclick="buy()">buy</button> 
-<button id='buy1'>Buy1</button>
 <br><br>
-<button id="sellplus" class=".btn-default">+</button> <input id="sellamount" size="4" value="1"> <button id="sellminus" class=".btn-default" onclick=sellminus()>-</button> <button id="sell" onclick="sell()">sell</button>
-<button id='sell1'>Sell1</button>
+<button id="sellplus" class=".btn-default">+</button> <input id="sellamount" size="4" value="1"> <button id="sellminus" class=".btn-default" onclick=sellminus()>-</button> <button id="sell" class="btn btn-danger" onclick="sell()">sell</button>
 
+<select name="company" id="company">
+  <option value="Apple">Apple</option>
+  <option value="Google">Google</option>
+  <option value="Microsoft">Microsoft</option>
+  <option value="FaceBook">FaceBook</option>
+</select>
+<label id="com"></label>
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
 import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
@@ -130,6 +135,7 @@ onAuthStateChanged(auth, (user) => {
         greetRef = ref(database, 'users/' + uid + '/username');
         greeting();
         updatewallet();
+	gen();
     }
 });
 
@@ -161,7 +167,6 @@ refresh.addEventListener('click',(e) => {
 });
 
 generate.addEventListener('click',(e) => {
-	alert('generate button pressed');
 	gen();
 });
 function gen(){
@@ -169,6 +174,10 @@ function gen(){
 	xvalues.push(document.getElementById("currprice").value);
 	} 
 buy.addEventListener('click',(e) => {
+	var length = chart.options.data[0].dataPoints.length;
+        var gen= parseInt(document.getElementById("currprice").value);
+        chart.options.data[0].dataPoints.push({ y:gen});
+        chart.render();
     var buyAmount = parseInt(document.getElementById("buyamount").value);
         onAuthStateChanged(auth, (user) => {
             if (user) {
@@ -183,13 +192,13 @@ buy.addEventListener('click',(e) => {
                 });
             }
         });
-	 var length = chart.options.data[0].dataPoints.length;
-            var gen= parseInt(document.getElementById("currprice").value);
-            chart.options.data[0].dataPoints.push({ y:gen});
-            chart.render();
         gen();
 });
 sell.addEventListener('click',(e) => {
+	var length = chart.options.data[0].dataPoints.length;
+        var gen= parseInt(document.getElementById("currprice").value);
+        chart.options.data[0].dataPoints.push({ y:gen});
+        chart.render();
     var sellAmount = parseInt(document.getElementById("sellamount").value);
         onAuthStateChanged(auth, (user) => {
             if (user) {
@@ -204,10 +213,6 @@ sell.addEventListener('click',(e) => {
                 });
             }
         });
-	var length = chart.options.data[0].dataPoints.length;
-            var gen= parseInt(document.getElementById("currprice").value);
-            chart.options.data[0].dataPoints.push({ y:gen});
-            chart.render();
         gen();
 });
 buyplus.addEventListener('click',(e) => {
