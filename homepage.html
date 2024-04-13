@@ -87,11 +87,6 @@
 	<span class="input-group-text" id="">Current Price</span>
 	<input id="currprice" type="text" value="0" readonly>
 </div>
-<br><br>
-<button id="buyplus" class="btn btn-dark">+</button> <input id="buyamount" size="4" value="1"> <button id="buyminus" class="btn btn-dark">-</button> <button id="buy" class="btn btn-success">Buy</button> 
-<br><br>
-<button id="sellplus" class="btn btn-dark">+</button> <input id="sellamount" size="4" value="1"> <button id="sellminus" class="btn btn-dark">-</button> <button id="sell" class="btn btn-danger">Sell</button>
-
 <select name="company" id="company" onChange="combo(this);">
 	<option value="AAPL">Apple</option>
 	<option value="GOOG">Google</option>
@@ -99,15 +94,8 @@
 	<option value="META">FaceBook</option>
 	<option value="AMZN">Amazon</option>
 </select>
-<label id="com"></label>
-<h1>Stock Prices</h1>
-  <p id="stockPrice"></p>
-
 <script type="text/javascript">
 function combo(t) {
-    // Update the value of the element with id 'com'
-    var y = document.getElementById("com");
-    y.value = t.value;
 
     // Replace 'YOUR_API_KEY' with your actual Alpha Vantage API key
     const apiKey = 'YOUR_API_KEY';
@@ -125,7 +113,6 @@ function combo(t) {
                 const stockPrice = data['Global Quote']['05. price'];
 
                 // Display the stock price
-                document.getElementById('stockPrice').textContent = 'Stock Price: ' + stockPrice;
 		document.getElementById('currprice').value = stockPrice;
             } else {
                 // Handle the case where the API response doesn't contain the expected data
@@ -138,6 +125,10 @@ function combo(t) {
         });
 }
 </script>
+<br><br>
+<button id="buyplus" class="btn btn-dark">+</button> <input id="buyamount" size="4" value="1"> <button id="buyminus" class="btn btn-dark">-</button> <button id="buy" class="btn btn-success">Buy</button> 
+<br><br>
+<button id="sellplus" class="btn btn-dark">+</button> <input id="sellamount" size="4" value="1"> <button id="sellminus" class="btn btn-dark">-</button> <button id="sell" class="btn btn-danger">Sell</button>
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
@@ -225,15 +216,11 @@ buy.addEventListener('click', (e) => {
     
     onAuthStateChanged(auth, (user) => {
         if (user) {
-            const uid = user.uid;
-            const walletRef = ref(database, 'users/' + uid + '/wallet');
-
             // Update the wallet data in Firebase
             get(walletRef).then((snapshot) => {
                 const currentWallet = snapshot.val();
                 const updatedWallet = currentWallet - (parseFloat(document.getElementById("currprice").value) * buyAmount);
                 set(walletRef, updatedWallet);
-
                 // Record the buy transaction
                 recordTransaction('buy', buyAmount, parseFloat(document.getElementById("currprice").value));
             });
@@ -249,9 +236,6 @@ sell.addEventListener('click', (e) => {
 
     onAuthStateChanged(auth, (user) => {
         if (user) {
-            const uid = user.uid;
-            const walletRef = ref(database, 'users/' + uid + '/wallet');
-
             // Update the wallet data in Firebase
             get(walletRef).then((snapshot) => {
                 const currentWallet = snapshot.val();
