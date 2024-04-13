@@ -75,7 +75,9 @@
         </table>
     </div>
 <script type="module">
-    // ... (import statements remain unchanged) ...
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+import { getDatabase, get, set, ref, update, onValue  } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
     // Initialize Firebase
     const app = initializeApp(firebaseConfig);
