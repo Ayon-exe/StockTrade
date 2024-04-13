@@ -86,14 +86,14 @@
 <div class="input-group mb-3">
 	<span class="input-group-text" id="">Current Price</span>
 	<input id="currprice" type="text" value="0" readonly>
+	<select name="company" id="company" onChange="combo(this);">
+		<option value="AAPL">Apple</option>
+		<option value="GOOG">Google</option>
+		<option value="MSFT">Microsoft</option>
+		<option value="META">FaceBook</option>
+		<option value="AMZN">Amazon</option>
+	</select>
 </div>
-<select name="company" id="company" onChange="combo(this);">
-	<option value="AAPL">Apple</option>
-	<option value="GOOG">Google</option>
-	<option value="MSFT">Microsoft</option>
-	<option value="META">FaceBook</option>
-	<option value="AMZN">Amazon</option>
-</select>
 <script type="text/javascript">
 function combo(t) {
 
