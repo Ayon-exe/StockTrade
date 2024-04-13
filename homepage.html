@@ -144,7 +144,7 @@ import { getDatabase, set, ref, update, onValue  } from "https://www.gstatic.com
  window.onload = function () {
 	const xValues = [];
 	const yValues = [10,20,30,40,50,60,70,80,,90,100];
-        var chart = new CanvasJS.Chart("chartContainer", { 
+        chart = new CanvasJS.Chart("chartContainer", { 
             title: {},
             data: [
             {
@@ -175,6 +175,7 @@ var uid = 0;
 var walletRef;
 var greetRef;
 var greetings;
+var chart;
 
 onAuthStateChanged(auth, (user) => {
     if (user) {
