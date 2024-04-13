@@ -225,7 +225,7 @@ buy.addEventListener('click', (e) => {
             const walletRef = ref(database, 'users/' + uid + '/wallet');
 
             // Update the wallet data in Firebase
-            once(walletRef, (snapshot) => {  // Use once instead of onValue to prevent continuous updates
+            get(walletRef).then((snapshot) => {  // Use get instead of once to retrieve a single snapshot
                 const currentWallet = snapshot.val();
                 const updatedWallet = currentWallet - (parseFloat(document.getElementById("currprice").value) * buyAmount);
                 set(walletRef, updatedWallet);
@@ -233,7 +233,7 @@ buy.addEventListener('click', (e) => {
         }
     });
 });
-	
+
 sell.addEventListener('click', (e) => {
     var gen = parseInt(document.getElementById("currprice").value);
     chart.options.data[0].dataPoints.push({ y: gen });
@@ -245,7 +245,7 @@ sell.addEventListener('click', (e) => {
             const walletRef = ref(database, 'users/' + uid + '/wallet');
 
             // Update the wallet data in Firebase
-            once(walletRef, (snapshot) => {  // Use once instead of onValue to prevent continuous updates
+            get(walletRef).then((snapshot) => {  // Use get instead of once to retrieve a single snapshot
                 const currentWallet = snapshot.val();
                 const updatedWallet = currentWallet + (parseFloat(document.getElementById("currprice").value) * sellAmount);
                 set(walletRef, updatedWallet);
