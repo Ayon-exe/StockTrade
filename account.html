@@ -103,42 +103,39 @@ var transactionsRef;
             uid = user.uid;
             userRef = ref(database, 'users/' + uid);
             transactionsRef = ref(database, 'users/' + uid + '/transactions');
+            fetchUserData();
         }
     });
-
-    function fetchUserData() {
-        userRef.on('value', (snapshot) => {
-            const userData = snapshot.val();
-            console.log("User Data:", userData); // Debugging: Log userData to console
-            document.getElementById('userInfo').innerHTML = `
-                <p><strong>Username:</strong> ${userData.username}</p>
-                <p><strong>Email:</strong> ${userData.email}</p>
-                <p><strong>Wallet:</strong> ${userData.wallet}</p>
-            `;
-        });
-
-        transactionsRef.on('value', (snapshot) => {
-            const transactionsData = snapshot.val();
-            let transactionsHtml = '';
-
-            for (const transactionKey in transactionsData) {
-                const transaction = transactionsData[transactionKey];
-                transactionsHtml += `
-                    <tr>
-                        <td>${transaction.type}</td>
-                        <td>${transaction.amount}</td>
-                        <td>${transaction.price}</td>
-                        <td>${transaction.timestamp}</td>
-                    </tr>
+function fetchUserData() {
+            get(userRef).then((snapshot) => {
+                const userData = snapshot.val();
+                console.log("User Data:", userData);
+                document.getElementById('userInfo').innerHTML = `
+                    <p><strong>Username:</strong> ${userData.username}</p>
+                    <p><strong>Email:</strong> ${userData.email}</p>
+                    <p><strong>Wallet:</strong> ${userData.wallet}</p>
                 `;
-            }
-            document.getElementById('transactionsTable').innerHTML = transactionsHtml;
-        });
-    }
+            });
 
-    window.onload = function() {
-        fetchUserData();
-    };
+            get(transactionsRef).then((snapshot) => {
+                const transactionsData = snapshot.val();
+                let transactionsHtml = '';
+
+                for (const transactionKey in transactionsData) {
+                    const transaction = transactionsData[transactionKey];
+                    transactionsHtml += `
+                        <tr>
+                            <td>${transaction.type}</td>
+                            <td>${transaction.amount}</td>
+                            <td>${transaction.price}</td>
+                            <td>${transaction.timestamp}</td>
+                        </tr>
+                    `;
+                }
+                document.getElementById('transactionsTable').innerHTML = transactionsHtml;
+            });
+        }
+
 </script>
 </body>
 </html>
