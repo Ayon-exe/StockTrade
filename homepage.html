@@ -279,9 +279,7 @@ sellminus.addEventListener('click',(e) => {
 });
 
 function recordTransaction(type, amount, price) {
-    const uid = auth.currentUser.uid;
     const transactionRef = ref(database, 'users/' + uid + '/transactions');
-    
     const newTransactionRef = push(transactionRef); // Create a new child node
     const timestamp = new Date().toISOString(); // Get current timestamp
     
@@ -291,6 +289,9 @@ function recordTransaction(type, amount, price) {
         amount: amount,
         price: price,
         timestamp: timestamp
+    })
+    .catch((error) => {
+        console.error('Error recording transaction:', error);
     });
 }
 
