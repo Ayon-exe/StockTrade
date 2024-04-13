@@ -222,16 +222,20 @@ buy.addEventListener('click', (e) => {
     chart.options.data[0].dataPoints.push({ y: gen });
     chart.render();
     var buyAmount = parseInt(document.getElementById("buyamount").value);
+    
     onAuthStateChanged(auth, (user) => {
         if (user) {
             const uid = user.uid;
             const walletRef = ref(database, 'users/' + uid + '/wallet');
 
             // Update the wallet data in Firebase
-            get(walletRef).then((snapshot) => {  // Use get instead of once to retrieve a single snapshot
+            get(walletRef).then((snapshot) => {
                 const currentWallet = snapshot.val();
                 const updatedWallet = currentWallet - (parseFloat(document.getElementById("currprice").value) * buyAmount);
                 set(walletRef, updatedWallet);
+
+                // Record the buy transaction
+                recordTransaction('buy', buyAmount, parseFloat(document.getElementById("currprice").value));
             });
         }
     });
@@ -242,16 +246,20 @@ sell.addEventListener('click', (e) => {
     chart.options.data[0].dataPoints.push({ y: gen });
     chart.render();
     var sellAmount = parseInt(document.getElementById("sellamount").value);
+
     onAuthStateChanged(auth, (user) => {
         if (user) {
             const uid = user.uid;
             const walletRef = ref(database, 'users/' + uid + '/wallet');
 
             // Update the wallet data in Firebase
-            get(walletRef).then((snapshot) => {  // Use get instead of once to retrieve a single snapshot
+            get(walletRef).then((snapshot) => {
                 const currentWallet = snapshot.val();
                 const updatedWallet = currentWallet + (parseFloat(document.getElementById("currprice").value) * sellAmount);
                 set(walletRef, updatedWallet);
+
+                // Record the sell transaction
+                recordTransaction('sell', sellAmount, parseFloat(document.getElementById("currprice").value));
             });
         }
     });
@@ -269,6 +277,22 @@ sellplus.addEventListener('click',(e) => {
 sellminus.addEventListener('click',(e) => {
     document.getElementById("sellamount").value = (parseInt(document.getElementById("sellamount").value))-1;
 });
+
+function recordTransaction(type, amount, price) {
+    const uid = auth.currentUser.uid;
+    const transactionRef = ref(database, 'users/' + uid + '/transactions');
+    
+    const newTransactionRef = push(transactionRef); // Create a new child node
+    const timestamp = new Date().toISOString(); // Get current timestamp
+    
+    // Set transaction data
+    set(newTransactionRef, {
+        type: type,
+        amount: amount,
+        price: price,
+        timestamp: timestamp
+    });
+}
 
 logout.addEventListener('click',(e) => {
     signOut(auth).then(() => {
