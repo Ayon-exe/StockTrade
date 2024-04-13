@@ -214,47 +214,46 @@ refresh.addEventListener('click',(e) => {
 	updatewallet();
 });
 
-buy.addEventListener('click',(e) => {
-	var length = chart.options.data[0].dataPoints.length;
-        var gen= parseInt(document.getElementById("currprice").value);
-        chart.options.data[0].dataPoints.push({ y:gen});
-        chart.render();
-    	var buyAmount = parseInt(document.getElementById("buyamount").value);
-        onAuthStateChanged(auth, (user) => {
-            if (user) {
-                const uid = user.uid;
-                const walletRef = ref(database, 'users/' + uid + '/wallet');
+buy.addEventListener('click', (e) => {
+    var gen = parseInt(document.getElementById("currprice").value);
+    chart.options.data[0].dataPoints.push({ y: gen });
+    chart.render();
+    var buyAmount = parseInt(document.getElementById("buyamount").value);
+    onAuthStateChanged(auth, (user) => {
+        if (user) {
+            const uid = user.uid;
+            const walletRef = ref(database, 'users/' + uid + '/wallet');
 
-                // Update the wallet data in Firebase
-                onValue(walletRef, (snapshot) => {
-                    const currentWallet = snapshot.val();
-                    const updatedWallet = currentWallet - (parseFloat(document.getElementById("currprice").value) * buyAmount);
-                    set(walletRef, updatedWallet);
-                });
-            }
-        });
+            // Update the wallet data in Firebase
+            once(walletRef, (snapshot) => {  // Use once instead of onValue to prevent continuous updates
+                const currentWallet = snapshot.val();
+                const updatedWallet = currentWallet - (parseFloat(document.getElementById("currprice").value) * buyAmount);
+                set(walletRef, updatedWallet);
+            });
+        }
+    });
 });
 	
-sell.addEventListener('click',(e) => {
-	var length = chart.options.data[0].dataPoints.length;
-        var gen= parseInt(document.getElementById("currprice").value);
-        chart.options.data[0].dataPoints.push({ y:gen});
-        chart.render();
+sell.addEventListener('click', (e) => {
+    var gen = parseInt(document.getElementById("currprice").value);
+    chart.options.data[0].dataPoints.push({ y: gen });
+    chart.render();
     var sellAmount = parseInt(document.getElementById("sellamount").value);
-        onAuthStateChanged(auth, (user) => {
-            if (user) {
-                const uid = user.uid;
-                const walletRef = ref(database, 'users/' + uid + '/wallet');
+    onAuthStateChanged(auth, (user) => {
+        if (user) {
+            const uid = user.uid;
+            const walletRef = ref(database, 'users/' + uid + '/wallet');
 
-                // Update the wallet data in Firebase
-                onValue(walletRef, (snapshot) => {
-                    const currentWallet = snapshot.val();
-                    const updatedWallet = currentWallet + (parseFloat(document.getElementById("currprice").value) * sellAmount);
-                    set(walletRef, updatedWallet);
-                });
-            }
-        });
+            // Update the wallet data in Firebase
+            once(walletRef, (snapshot) => {  // Use once instead of onValue to prevent continuous updates
+                const currentWallet = snapshot.val();
+                const updatedWallet = currentWallet + (parseFloat(document.getElementById("currprice").value) * sellAmount);
+                set(walletRef, updatedWallet);
+            });
+        }
+    });
 });
+
 buyplus.addEventListener('click',(e) => {
     document.getElementById("buyamount").value = (parseInt(document.getElementById("buyamount").value))+1;
 });
