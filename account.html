@@ -79,11 +79,22 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebas
 import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 import { getDatabase, get, set, ref, update, onValue  } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
-    // Initialize Firebase
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth();
-    const database = getDatabase(app);
-    var uid = 0;
+const firebaseConfig = {
+    apiKey: "AIzaSyD4wlA68qZp41M_CfUf1j93oYn41CoN5eo",
+    authDomain: "stocktrade-173c8.firebaseapp.com",
+    databaseURL: "https://stocktrade-173c8-default-rtdb.asia-southeast1.firebasedatabase.app",
+    projectId: "stocktrade-173c8",
+    storageBucket: "stocktrade-173c8.appspot.com",
+    messagingSenderId: "58004670302",
+    appId: "1:58004670302:web:e942b65ba9ccdaec9d71cf",
+    measurementId: "G-BJTP6ZD69S"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const auth = getAuth();
+const database = getDatabase(app);
+var uid = 0;
 
     onAuthStateChanged(auth, (user) => {
         if (user) {
