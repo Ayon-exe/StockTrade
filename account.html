@@ -95,18 +95,18 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth();
 const database = getDatabase(app);
 var uid = 0;
-
+var userRef;
+var transactionsRef;
+    
     onAuthStateChanged(auth, (user) => {
         if (user) {
             uid = user.uid;
-            console.log("UID:", uid); // Debugging: Log UID to console
+            userRef = ref(database, 'users/' + uid);
+            transactionsRef = ref(database, 'users/' + uid + '/transactions');
         }
     });
 
     function fetchUserData() {
-        const userRef = database.ref('users/' + uid);
-        const transactionsRef = database.ref('users/' + uid + '/transactions');
-
         userRef.on('value', (snapshot) => {
             const userData = snapshot.val();
             console.log("User Data:", userData); // Debugging: Log userData to console
@@ -132,7 +132,6 @@ var uid = 0;
                     </tr>
                 `;
             }
-
             document.getElementById('transactionsTable').innerHTML = transactionsHtml;
         });
     }
