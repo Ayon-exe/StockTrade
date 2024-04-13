@@ -119,6 +119,7 @@ function combo(t) {
 
                 // Display the stock price
                 document.getElementById('stockPrice').textContent = 'Stock Price: ' + stockPrice;
+		document.getElementById('currprice').value = stockPrice;
             } else {
                 // Handle the case where the API response doesn't contain the expected data
                 console.log('Error: Invalid API response');
