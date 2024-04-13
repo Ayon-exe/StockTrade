@@ -70,7 +70,6 @@
         <div class="col-md-4">
             <a href="./account.html">
                 <button id="account" class="btn btn-primary" style="float: right;"><i class="fa fa-user-circle"></i> Account</button>
-		<button class="btn"><i class="fa fa-home"></i> Home</button>
             </a>
         </div>
     </div>
@@ -212,13 +211,6 @@ refresh.addEventListener('click',(e) => {
 	updatewallet();
 });
 
-generate.addEventListener('click',(e) => {
-	gen();
-});
-function gen(){
-	document.getElementById("currprice").value= (Math.random() * 100).toFixed(2);
-	xvalues.push(document.getElementById("currprice").value);
-	} 
 buy.addEventListener('click',(e) => {
 	var length = chart.options.data[0].dataPoints.length;
         var gen= parseInt(document.getElementById("currprice").value);
@@ -238,7 +230,6 @@ buy.addEventListener('click',(e) => {
                 });
             }
         });
-        gen();
 });
 	
 sell.addEventListener('click',(e) => {
@@ -260,7 +251,6 @@ sell.addEventListener('click',(e) => {
                 });
             }
         });
-        gen();
 });
 buyplus.addEventListener('click',(e) => {
     document.getElementById("buyamount").value = (parseInt(document.getElementById("buyamount").value))+1;
