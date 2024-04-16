@@ -16,7 +16,7 @@
 <body>
 <nav class="navbar navbar-expand-lg bg-body-tertiary">
     <div class="container-fluid">
-        <a class="navbar-brand" href="#">BrewStock</a>
+        <a class="navbar-brand" href="#">BrewStocks</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -26,32 +26,32 @@
                     <a class="nav-link active" aria-current="page" href="./about.html">About Us</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="index.html">Login</a>
+                    <a class="nav-link" href="predict.html">Predict</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="howto.html">How to Use</a>
                 </li>
-                <li class="nav-item dropdown">
+                <!--<li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         Dropdown
                     </a>
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" href="#">A</a></li>
                         <li><a class="dropdown-item" href="#">B</a></li>
-                        <!--<li><hr class="dropdown-divider"></li>-->
+                        <!--<li><hr class="dropdown-divider"></li>--#>
                         <li><a class="dropdown-item" href="#">C</a></li>
                     </ul>
                 </li>
                 <!--<li class="nav-item">
                     <a class="nav-link disabled" aria-disabled="true">Disabled</a>
-                </li>-->
-            </ul>
+                </li>--#>
+            </ul>-->
             <form class="d-flex" role="search">
                 <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
                 <button class="btn btn-outline-success" type="submit">Search</button>
             </form>
-            <button id="logout" href="./index.html" class="btn btn-outline-success">Logout</button>
         </div>
+	    <button id="logout" href="./index.html" class="btn btn-outline-success">Logout</button>
     </div>
 </nav>
 <marquee>
@@ -65,7 +65,43 @@
 <div class="container mt-4">
     <div class="row">
         <div class="col-md-8">
-            <div id="chartContainer" style="width:100%; height:280px"></div>
+            <!--<div id="chartContainer" style="width:100%; height:280px"></div>-->
+		<div class="tradingview-widget-container">
+		  <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-symbol-overview.js" async>
+		  {
+		  "symbols": [
+		    ["NASDAQ:AAPL|ALL|USD"],
+		    ["NASDAQ:GOOGL|ALL|USD"],
+		    ["NASDAQ:MSFT|ALL|USD"],
+		    ["NASDAQ:META|ALL|USD"],
+		    ["NASDAQ:AMZN|ALL|USD"]
+		  ],
+		  "chartOnly": false,
+		  "width": 550,
+		  "height": 400,
+		  "locale": "en",
+		  "colorTheme": "light",
+		  "autosize": true,
+		  "showVolume": false,
+		  "showMA": false,
+		  "hideDateRanges": false,
+		  "hideMarketStatus": false,
+		  "hideSymbolLogo": false,
+		  "scalePosition": "right",
+		  "scaleMode": "Normal",
+		  "fontFamily": "-apple-system, BlinkMacSystemFont, Trebuchet MS, Roboto, Ubuntu, sans-serif",
+		  "fontSize": "10",
+		  "noTimeScale": false,
+		  "valuesTracking": "1",
+		  "changeMode": "price-and-percent",
+		  "chartType": "area",
+		  "lineWidth": 2,
+		  "lineType": 0,
+		  "dateRanges": ["1d|1","1m|30","3m|60","12m|1D","60m|1W","all|1M"],
+		  "timeHoursFormat": "12-hours"
+		}
+		  </script>
+		</div>
         </div>
         <div class="col-md-4">
             <a href="./account.html">
@@ -97,7 +133,7 @@
 <script type="text/javascript">
 function combo(t) {
 
-    // Replace 'YOUR_API_KEY' with your actual Alpha Vantage API key
+    //actual Alpha Vantage API key
     const apiKey = 'YOUR_API_KEY';
 
     // Get the stock symbol from the input element
@@ -157,7 +193,7 @@ var greetings;
 var chart;
 
  window.onload = function () {
-	const xValues = [];
+	/*const xValues = [];
 	const yValues = [10,20,30,40,50,60,70,80,,90,100];
         chart = new CanvasJS.Chart("chartContainer", { 
             title: {},
@@ -168,7 +204,7 @@ var chart;
             }
             ]
         });
-        chart.render();
+        chart.render();*/
     }
 
 onAuthStateChanged(auth, (user) => {
@@ -209,10 +245,10 @@ refresh.addEventListener('click',(e) => {
 });
 
 buy.addEventListener('click', (e) => {
-    var gen = parseInt(document.getElementById("currprice").value);
+    /*var gen = parseInt(document.getElementById("currprice").value);
     chart.options.data[0].dataPoints.push({ y: gen });
     chart.render();
-    var buyAmount = parseInt(document.getElementById("buyamount").value);
+    var buyAmount = parseInt(document.getElementById("buyamount").value);*/
     
     onAuthStateChanged(auth, (user) => {
         if (user) {
@@ -229,10 +265,10 @@ buy.addEventListener('click', (e) => {
 });
 
 sell.addEventListener('click', (e) => {
-    var gen = parseInt(document.getElementById("currprice").value);
+    /*var gen = parseInt(document.getElementById("currprice").value);
     chart.options.data[0].dataPoints.push({ y: gen });
     chart.render();
-    var sellAmount = parseInt(document.getElementById("sellamount").value);
+    var sellAmount = parseInt(document.getElementById("sellamount").value);*/
 
     onAuthStateChanged(auth, (user) => {
         if (user) {
