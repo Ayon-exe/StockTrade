@@ -1,8 +1,74 @@
 <!DOCTYPE html>
 <html>
-
+<head>
+    <title>Stock Price Prediction</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@3.12.0/dist/tf.min.js"></script>
+</head>
 <body>
-Prediction code goes here.
-</body>
+    <h1>Stock Price Prediction</h1>
+    <form id="prediction-form">
+        <label for="stock_symbol">Enter Stock Symbol:</label>
+        <input type="text" id="stock_symbol" name="stock_symbol" required>
+        <input type="button" value="Predict" onclick="predict()">
+    </form>
+    <div id="prediction_result"></div>
 
+    <script>
+        // Define your Alpha Vantage API key
+        const apiKey = "IGGELQ7DJC7WW6LA";
+        async function predict() {
+            const stockSymbol = document.getElementById('stock_symbol').value;
+            const predictionResult = await getPrediction(stockSymbol);
+            document.getElementById('prediction_result').innerText = `Prediction Result: ${predictionResult}`;
+        }
+    
+        async function getPrediction(stockSymbol) {
+        // Construct the Alpha Vantage API endpoint URL
+        const apiUrl = `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=${stockSymbol}&apikey=${apiKey}`;
+        
+        // Fetch historical stock data from Alpha Vantage
+        const response = await fetch(apiUrl);
+        const data = await response.json();
+    
+        // Extract relevant data (e.g., closing prices)
+        const closePrices = Object.values(data['Time Series (Daily)']).map(item => parseFloat(item['4. close']));
+    
+        // Ensure we have at least 60 data points
+        if (closePrices.length < 60) {
+            throw new Error(`Insufficient data. Expected at least 60 data points, but got ${closePrices.length}.`);
+        }
+    
+        // Use only the last 60 data points for prediction
+        const inputData = closePrices.slice(-60);
+    
+        // Load the TensorFlow.js model
+        const model = await tf.loadLayersModel('https://Ayon-exe.github.io/StockTrade/tfjs_files/model.json');
+    
+        // Prepare and preprocess the data
+        const normalizedInputData = preprocessData(inputData);
+    
+        // Predict
+        const prediction = model.predict(normalizedInputData);
+        const result = prediction.dataSync()[0] > 0.5 ? 'Positive' : 'Negative';
+    
+        return result;
+    }
+
+    
+        function preprocessData(data) {
+    // Ensure the data length matches the expected sequence length (60)
+    if (data.length !== 60) {
+        throw new Error(`Invalid data length. Expected 60 data points, but got ${data.length}.`);
+    }
+
+    // Normalize and reshape the data
+    const tensor = tf.tensor2d([data]);
+    const normalizedData = tensor.div(tensor.max()).reshape([1, 60, 1]);
+
+    return normalizedData;
+}
+
+    </script>
+
+</body>
 </html>
