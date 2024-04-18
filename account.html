@@ -76,14 +76,7 @@ import { getDatabase, get, set, ref } from "https://www.gstatic.com/firebasejs/1
 
 // Firebase configuration
 const firebaseConfig = {
-    apiKey: "AIzaSyD4wlA68qZp41M_CfUf1j93oYn41CoN5eo",
-    authDomain: "stocktrade-173c8.firebaseapp.com",
-    databaseURL: "https://stocktrade-173c8-default-rtdb.asia-southeast1.firebasedatabase.app",
-    projectId: "stocktrade-173c8",
-    storageBucket: "stocktrade-173c8.appspot.com",
-    messagingSenderId: "58004670302",
-    appId: "1:58004670302:web:e942b65ba9ccdaec9d71cf",
-    measurementId: "G-BJTP6ZD69S"
+    // ... (your config data) ...
 };
 
 // Initialize Firebase
@@ -120,37 +113,42 @@ function fetchUserData() {
         const transactionsData = snapshot.val();
         renderTransactions(transactionsData);
 
-        // Clear transactions
-        document.getElementById('Clear').addEventListener('click', function() {
-            set(transactionsRef, {})
-            .then(() => {
-                console.log("Transactions cleared successfully");
-                document.getElementById('transactionsTable').innerHTML = '';
-            })
-            .catch((error) => {
-                console.error("Error clearing transactions:", error);
-            });
-        });
+        // Add event listeners
+        addEventListeners(transactionsData);
+    });
+}
 
-        // Sort transactions by amount
-        document.getElementById('sortAmount').addEventListener('click', function() {
-            const sortedTransactions = sortTransactionsByAmount(Object.values(transactionsData));
-            renderTransactions(sortedTransactions);
+function addEventListeners(transactionsData) {
+    // Clear transactions
+    document.getElementById('Clear').addEventListener('click', function() {
+        set(transactionsRef, {})
+        .then(() => {
+            console.log("Transactions cleared successfully");
+            document.getElementById('transactionsTable').innerHTML = '';
+        })
+        .catch((error) => {
+            console.error("Error clearing transactions:", error);
         });
+    });
 
-        // Sort transactions by date
-        document.getElementById('sortDate').addEventListener('click', function() {
-            const sortedTransactions = sortTransactionsByDate(Object.values(transactionsData));
-            renderTransactions(sortedTransactions);
-        });
+    // Sort transactions by amount
+    document.getElementById('sortAmount').addEventListener('click', function() {
+        const sortedTransactions = sortTransactionsByAmount(Object.values(transactionsData));
+        renderTransactions(sortedTransactions);
+    });
 
-        // Filter transactions by date range
-        document.getElementById('filterDate').addEventListener('click', function() {
-            const startDate = document.getElementById('startDate').value;
-            const endDate = document.getElementById('endDate').value;
-            const filteredTransactions = filterTransactionsByDate(Object.values(transactionsData), startDate, endDate);
-            renderTransactions(filteredTransactions);
-        });
+    // Sort transactions by date
+    document.getElementById('sortDate').addEventListener('click', function() {
+        const sortedTransactions = sortTransactionsByDate(Object.values(transactionsData));
+        renderTransactions(sortedTransactions);
+    });
+
+    // Filter transactions by date range
+    document.getElementById('filterDate').addEventListener('click', function() {
+        const startDate = document.getElementById('startDate').value;
+        const endDate = document.getElementById('endDate').value;
+        const filteredTransactions = filterTransactionsByDate(Object.values(transactionsData), startDate, endDate);
+        renderTransactions(filteredTransactions);
     });
 }
 
