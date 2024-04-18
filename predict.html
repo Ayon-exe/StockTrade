@@ -39,9 +39,7 @@
     <form id="prediction-form">
             <div class="input-group mb-3">
             <span class="input-group-text" id="">Enter Stock Symbol: </span>
-            <input type="text" id="stock_symbol" name="stock_symbol" required>
-            <button id="predict" class="btn btn-outline-success"><i class="fa fa-magic"></i>  Predict</button>
-	    
+            <input type="text" id="stock_symbol" name="stock_symbol" required>	    
 	    <input type="button" class="btn btn-outline-success" value="Predict" onclick="predict()">
         </div>
         <!--<label for="stock_symbol">Enter Stock Symbol:</label>
@@ -58,7 +56,7 @@
             const predictionResult = await getPrediction(stockSymbol);
             document.getElementById('prediction_result').innerText = `Prediction Result: ${predictionResult}`;
         }
-    
+	
         async function getPrediction(stockSymbol) {
         // Construct the Alpha Vantage API endpoint URL
         const apiUrl = `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=${stockSymbol}&apikey=${apiKey}`;
@@ -104,9 +102,6 @@
 
     return normalizedData;
 }
-    predict.addEventListener('click',(e) => {
-	predict();
-    });
     </script>
 
 </body>
