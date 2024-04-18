@@ -265,7 +265,7 @@ sellminus.addEventListener('click',(e) => {
 function recordTransaction(type, amount, price) {
     const transactionRef = ref(database, 'users/' + uid + '/transactions');
     const newTransactionRef = push(transactionRef); // Create a new child node
-    const timestamp = new Date().toISOString(); // Get current timestamp
+    const timestamp = new Date().toISOString().split('T')[0]; // Get current date in 'YYYY-MM-DD' format
     
     // Set transaction data
     set(newTransactionRef, {
