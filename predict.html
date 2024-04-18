@@ -40,8 +40,9 @@
             <div class="input-group mb-3">
             <span class="input-group-text" id="">Enter Stock Symbol: </span>
             <input type="text" id="stock_symbol" name="stock_symbol" required>
-            <button class="btn btn-outline-success" onclick="predict()"><i class="fa fa-magic"></i>  Predict</button>
-	    <input type="button" class="btn btn-outline-success" value="Predict" onclick="predict()"><i class="fa fa-magic"></i></input>
+            <button id="predict" class="btn btn-outline-success"><i class="fa fa-magic"></i>  Predict</button>
+	    
+	    <input type="button" class="btn btn-outline-success" value="Predict" onclick="predict()">
         </div>
         <!--<label for="stock_symbol">Enter Stock Symbol:</label>
         <input type="text" id="stock_symbol" name="stock_symbol" required>
@@ -103,7 +104,9 @@
 
     return normalizedData;
 }
-
+    predict.addEventListener('click',(e) => {
+	predict();
+    });
     </script>
 
 </body>
