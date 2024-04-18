@@ -68,13 +68,11 @@
             </tbody>
         </table>
     </div>
-</body>
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-import { getDatabase, get, set, ref } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+import { getDatabase, get, set, ref, update, onValue  } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
-// Firebase configuration
 const firebaseConfig = {
     apiKey: "AIzaSyD4wlA68qZp41M_CfUf1j93oYn41CoN5eo",
     authDomain: "stocktrade-173c8.firebaseapp.com",
@@ -90,11 +88,10 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth();
 const database = getDatabase(app);
-let uid = 0;
-let userRef;
-let transactionsRef;
-
-// Check authentication state
+var uid = 0;
+var userRef;
+var transactionsRef;
+    
 onAuthStateChanged(auth, (user) => {
     if (user) {
         uid = user.uid;
@@ -103,11 +100,11 @@ onAuthStateChanged(auth, (user) => {
         fetchUserData();
     }
 });
-
+    
 function fetchUserData() {
-    // Fetch user data
     get(userRef).then((snapshot) => {
         const userData = snapshot.val();
+        console.log("User Data:", userData);
         document.getElementById('userInfo').innerHTML = `
             <p><strong>Username:</strong> ${userData.username}</p>
             <p><strong>Email:</strong> ${userData.email}</p>
@@ -115,22 +112,30 @@ function fetchUserData() {
         `;
     });
 
-    // Fetch transactions data
     get(transactionsRef).then((snapshot) => {
         const transactionsData = snapshot.val();
-        renderTransactions(transactionsData);
+        let transactionsHtml = '';
 
-        // Add event listeners
-        addEventListeners(transactionsData);
+        for (const transactionKey in transactionsData) {
+            const transaction = transactionsData[transactionKey];
+            transactionsHtml += `
+                <tr>
+                    <td>${transaction.type}</td>
+                    <td>${transaction.amount}</td>
+                    <td>${transaction.price}</td>
+                    <td>${transaction.timestamp}</td>
+                </tr>
+            `;
+        }
+        document.getElementById('transactionsTable').innerHTML = transactionsHtml;
     });
-}
-
-function addEventListeners(transactionsData) {
-    // Clear transactions
+    
     document.getElementById('Clear').addEventListener('click', function() {
+        // Clear all transactions
         set(transactionsRef, {})
         .then(() => {
             console.log("Transactions cleared successfully");
+            // Update the transactions table to reflect the cleared transactions
             document.getElementById('transactionsTable').innerHTML = '';
         })
         .catch((error) => {
@@ -138,59 +143,59 @@ function addEventListeners(transactionsData) {
         });
     });
 
-    // Sort transactions by amount
+    // Function to sort transactions by amount
+    function sortTransactionsByAmount(transactionsData) {
+        return transactionsData.sort((a, b) => a.amount - b.amount);
+    }
+    
+    // Function to sort transactions by date
+    function sortTransactionsByDate(transactionsData) {
+        return transactionsData.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+    }
+    
+    // Sorting buttons
     document.getElementById('sortAmount').addEventListener('click', function() {
         const sortedTransactions = sortTransactionsByAmount(Object.values(transactionsData));
         renderTransactions(sortedTransactions);
     });
-
-    // Sort transactions by date
+    
     document.getElementById('sortDate').addEventListener('click', function() {
         const sortedTransactions = sortTransactionsByDate(Object.values(transactionsData));
         renderTransactions(sortedTransactions);
     });
-
-    // Filter transactions by date range
+    
+    // Function to filter transactions by date range
+    function filterTransactionsByDate(transactionsData, startDate, endDate) {
+        return transactionsData.filter(transaction => {
+            const transactionDate = new Date(transaction.timestamp);
+            return transactionDate >= new Date(startDate) && transactionDate <= new Date(endDate);
+        });
+    }
+    
+    // Date range filter button
     document.getElementById('filterDate').addEventListener('click', function() {
         const startDate = document.getElementById('startDate').value;
         const endDate = document.getElementById('endDate').value;
         const filteredTransactions = filterTransactionsByDate(Object.values(transactionsData), startDate, endDate);
         renderTransactions(filteredTransactions);
     });
-}
-
-// Sorting functions
-function sortTransactionsByAmount(transactionsData) {
-    return transactionsData.sort((a, b) => a.amount - b.amount);
-}
-
-function sortTransactionsByDate(transactionsData) {
-    return transactionsData.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
-}
-
-// Filtering function
-function filterTransactionsByDate(transactionsData, startDate, endDate) {
-    return transactionsData.filter(transaction => {
-        const transactionDate = new Date(transaction.timestamp);
-        return transactionDate >= new Date(startDate) && transactionDate <= new Date(endDate);
-    });
-}
-
-// Render transactions
-function renderTransactions(transactions) {
-    let transactionsHtml = '';
-    for (const transactionKey in transactions) {
-        const transaction = transactions[transactionKey];
-        transactionsHtml += `
-            <tr>
-                <td>${transaction.type}</td>
-                <td>${transaction.amount}</td>
-                <td>${transaction.price}</td>
-                <td>${transaction.timestamp}</td>
-            </tr>
-        `;
+    
+    // Function to render transactions
+    function renderTransactions(transactions) {
+        let transactionsHtml = '';
+        for (const transaction of transactions) {
+            transactionsHtml += `
+                <tr>
+                    <td>${transaction.type}</td>
+                    <td>${transaction.amount}</td>
+                    <td>${transaction.price}</td>
+                    <td>${transaction.timestamp}</td>
+                </tr>
+            `;
+        }
+        document.getElementById('transactionsTable').innerHTML = transactionsHtml;
     }
-    document.getElementById('transactionsTable').innerHTML = transactionsHtml;
 }
 </script>
+</body>
 </html>
