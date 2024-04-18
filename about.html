@@ -38,7 +38,7 @@
                 <button class="btn btn-outline-success" type="submit">Search</button>
             </form>
         </div>
-	    <button id="logout" href="./index.html" class="btn btn-outline-success"><i class="fa fa-sign-out"></i>Logout</button>
+	    <button id="logout" href="./index.html" class="btn btn-outline-success"><i class="fa fa-sign-out"></i>  Logout</button>
     </div>
 </nav>
 
@@ -158,5 +158,35 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+import { signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+const firebaseConfig = {
+    apiKey: "AIzaSyD4wlA68qZp41M_CfUf1j93oYn41CoN5eo",
+    authDomain: "stocktrade-173c8.firebaseapp.com",
+    databaseURL: "https://stocktrade-173c8-default-rtdb.asia-southeast1.firebasedatabase.app",
+    projectId: "stocktrade-173c8",
+    storageBucket: "stocktrade-173c8.appspot.com",
+    messagingSenderId: "58004670302",
+    appId: "1:58004670302:web:e942b65ba9ccdaec9d71cf",
+    measurementId: "G-BJTP6ZD69S"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const auth = getAuth();
+
+logout.addEventListener('click',(e) => {
+    signOut(auth).then(() => {
+        alert('user Signed out');
+    })
+    .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        alert(errorMessage);
+    });
+    window.location.replace("https://ayon-exe.github.io/StockTrade/index.html");
+});
+</script>
 </body>
 </html>
