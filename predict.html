@@ -54,6 +54,10 @@
         async function predict() {
             const stockSymbol = document.getElementById('stock_symbol').value;
             const predictionResult = await getPrediction(stockSymbol);
+	    if predictionResult=="Positive"
+		document.getElementById("prediction_result").style.color = "green";
+	    else
+		document.getElementById("prediction_result").style.color = "red";
             document.getElementById('prediction_result').innerText = `Prediction Result: ${predictionResult}`;
         }
 	
