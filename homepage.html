@@ -224,6 +224,7 @@ buy.addEventListener('click', (e) => {
             // Update the wallet data in Firebase
             get(walletRef).then((snapshot) => {
                 const currentWallet = snapshot.val();
+		var buyAmount= document.getElementById("buyAmount").value;
                 const updatedWallet = currentWallet - (parseFloat(document.getElementById("currprice").value) * buyAmount);
                 set(walletRef, updatedWallet);
                 // Record the buy transaction
@@ -239,6 +240,7 @@ sell.addEventListener('click', (e) => {
             // Update the wallet data in Firebase
             get(walletRef).then((snapshot) => {
                 const currentWallet = snapshot.val();
+		var sellAmount= document.getElementById("sellAmount").value;
                 const updatedWallet = currentWallet + (parseFloat(document.getElementById("currprice").value) * sellAmount);
                 set(walletRef, updatedWallet);
 
