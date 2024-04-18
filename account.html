@@ -43,7 +43,16 @@
         <div id="userInfo">
             <!-- User information will be displayed here -->
         </div>
-        
+
+        <!-- Date range filter -->
+        <div>
+            <label for="startDate">Start Date:</label>
+            <input type="date" id="startDate">
+            <label for="endDate">End Date:</label>
+            <input type="date" id="endDate">
+            <button id="filterDate">Apply Filter</button>
+        </div>
+
         <h1>Transactions</h1>
         <table class="table">
             <thead>
@@ -120,18 +129,72 @@ function fetchUserData() {
         }
         document.getElementById('transactionsTable').innerHTML = transactionsHtml;
     });
-document.getElementById('Clear').addEventListener('click', function() {
-    // Clear all transactions
-    set(transactionsRef, {})
-    .then(() => {
-        console.log("Transactions cleared successfully");
-        // Update the transactions table to reflect the cleared transactions
-        document.getElementById('transactionsTable').innerHTML = '';
-    })
-    .catch((error) => {
-        console.error("Error clearing transactions:", error);
+    
+    document.getElementById('Clear').addEventListener('click', function() {
+        // Clear all transactions
+        set(transactionsRef, {})
+        .then(() => {
+            console.log("Transactions cleared successfully");
+            // Update the transactions table to reflect the cleared transactions
+            document.getElementById('transactionsTable').innerHTML = '';
+        })
+        .catch((error) => {
+            console.error("Error clearing transactions:", error);
+        });
     });
-});
+
+    // Function to sort transactions by amount
+    function sortTransactionsByAmount(transactionsData) {
+        return transactionsData.sort((a, b) => a.amount - b.amount);
+    }
+    
+    // Function to sort transactions by date
+    function sortTransactionsByDate(transactionsData) {
+        return transactionsData.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+    }
+    
+    // Sorting buttons
+    document.getElementById('sortAmount').addEventListener('click', function() {
+        const sortedTransactions = sortTransactionsByAmount(Object.values(transactionsData));
+        renderTransactions(sortedTransactions);
+    });
+    
+    document.getElementById('sortDate').addEventListener('click', function() {
+        const sortedTransactions = sortTransactionsByDate(Object.values(transactionsData));
+        renderTransactions(sortedTransactions);
+    });
+    
+    // Function to filter transactions by date range
+    function filterTransactionsByDate(transactionsData, startDate, endDate) {
+        return transactionsData.filter(transaction => {
+            const transactionDate = new Date(transaction.timestamp);
+            return transactionDate >= new Date(startDate) && transactionDate <= new Date(endDate);
+        });
+    }
+    
+    // Date range filter button
+    document.getElementById('filterDate').addEventListener('click', function() {
+        const startDate = document.getElementById('startDate').value;
+        const endDate = document.getElementById('endDate').value;
+        const filteredTransactions = filterTransactionsByDate(Object.values(transactionsData), startDate, endDate);
+        renderTransactions(filteredTransactions);
+    });
+    
+    // Function to render transactions
+    function renderTransactions(transactions) {
+        let transactionsHtml = '';
+        for (const transaction of transactions) {
+            transactionsHtml += `
+                <tr>
+                    <td>${transaction.type}</td>
+                    <td>${transaction.amount}</td>
+                    <td>${transaction.price}</td>
+                    <td>${transaction.timestamp}</td>
+                </tr>
+            `;
+        }
+        document.getElementById('transactionsTable').innerHTML = transactionsHtml;
+    }
 }
 </script>
 </body>
