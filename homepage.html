@@ -92,65 +92,62 @@
         </div>
     </div>
     <div>
-	<h3 id="greet"></h3>
-	<div class="input-group mb-3">
-		<span class="input-group-text" id="">Wallet</span>
-		<input id="wallet" type="text" size=16 value="0">	
-		<button id="refresh" class="btn btn-outline-success"><i class="fa fa-refresh"></i>  Refresh</button>
-	</div>
-	<br>
-	<div class="input-group mb-3">
-		<span class="input-group-text" id="">Current Price</span>
-		<input id="currprice" type="text" size=10 value="0" readonly>
-		<select name="company" class="btn btn-dark dropdown-toggle" id="company" onChange="combo(this);">
-			<option value="AAPL">Apple</option>
-			<option value="GOOG">Google</option>
-			<option value="MSFT">Microsoft</option>
-			<option value="META">FaceBook</option>
-			<option value="AMZN">Amazon</option>
-		</select>
-		<script type="text/javascript">
-			function combo(t) {
-			
-			    //actual Alpha Vantage API key
-			    const apiKey = 'YOUR_API_KEY';
-			
-			    // Get the stock symbol from the input element
-			    const stockSymbol = t.value;
-			
-			    // Make an HTTP request to the Alpha Vantage API with the dynamic stock symbol
-			    fetch(`https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=${stockSymbol}&apikey=${apiKey}`)
-			        .then(response => response.json())
-			        .then(data => {
-			            // Check if the API response contains the expected data
-			            if (data && data['Global Quote']) {
-			                // Extract the stock price from the API response
-			                const stockPrice = data['Global Quote']['05. price'];
-			
-			                // Display the stock price
-					document.getElementById('currprice').value = stockPrice;
-			            } else {
-			                // Handle the case where the API response doesn't contain the expected data
-			                console.log('Error: Invalid API response');
-			            }
-			        })
-			        .catch(error => {
-			            // Handle any errors that occur during the API request
-			            console.log('Error fetching stock price:', error);
-			        });
-			}
-			</script>
-		<br><br>
-		<button id="buyplus" class="btn btn-dark"><i class="fa fa-plus"></i></button>
-		<input id="buyamount" size="4" value="1">
-		<button id="buyminus" class="btn btn-dark"><i class="fa fa-minus"></i></button>
-		<button id="buy" class="btn btn-success">Buy</button> 
-		<br><br>
-		<button id="sellplus" class="btn btn-dark"><i class="fa fa-plus"></i></button>
-		<input id="sellamount" size="4" value="1">
-		<button id="sellminus" class="btn btn-dark"><i class="fa fa-minus"></i></button>
-		<button id="sell" class="btn btn-danger">Sell</button>
-	</div>    
+    	<h3 id="greet"></h3>
+
+        <div class="input-group mb-3">
+            <span class="input-group-text" id="">Wallet</span>
+            <input id="wallet" type="text" size=16 value="0">	
+            <button id="refresh" class="btn btn-outline-success"><i class="fa fa-refresh"></i>  Refresh</button>
+        </div>
+        <br>
+        <div class="input-group mb-3">
+            <span class="input-group-text" id="">Current Price</span>
+            <input id="currprice" type="text" size=10 value="0" readonly>
+            <select name="company" class="btn btn-dark dropdown-toggle" id="company" onChange="combo(this);">
+                <option value="AAPL">Apple</option>
+                <option value="GOOG">Google</option>
+                <option value="MSFT">Microsoft</option>
+                <option value="META">FaceBook</option>
+                <option value="AMZN">Amazon</option>
+            </select>
+        </div>
+	<script type="text/javascript">
+		function combo(t) {
+			//actual Alpha Vantage API key
+			const apiKey = 'YOUR_API_KEY';
+			// Get the stock symbol from the input element
+			const stockSymbol = t.value;
+			// Make an HTTP request to the Alpha Vantage API with the dynamic stock symbol
+			fetch(`https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=${stockSymbol}&apikey=${apiKey}`)
+			.then(response => response.json())
+			.then(data => {
+			        // Check if the API response contains the expected data
+			        if (data && data['Global Quote']) {
+			        // Extract the stock price from the API response
+			        const stockPrice = data['Global Quote']['05. price'];
+			        // Display the stock price
+				document.getElementById('currprice').value = stockPrice;
+			        } else {
+			        // Handle the case where the API response doesn't contain the expected data
+			        console.log('Error: Invalid API response');
+			        }
+			})
+			.catch(error => {
+			// Handle any errors that occur during the API request
+			console.log('Error fetching stock price:', error);
+			});
+		}
+	</script>
+        <br><br>
+        <button id="buyplus" class="btn btn-dark"><i class="fa fa-plus"></i></button>
+	<input id="buyamount" size="4" value="1">
+	<button id="buyminus" class="btn btn-dark"><i class="fa fa-minus"></i></button>
+	<button id="buy" class="btn btn-success">Buy</button> 
+        <br><br>
+        <button id="sellplus" class="btn btn-dark"><i class="fa fa-plus"></i></button>
+	<input id="sellamount" size="4" value="1">
+	<button id="sellminus" class="btn btn-dark"><i class="fa fa-minus"></i></button>
+	<button id="sell" class="btn btn-danger">Sell</button>
     </div>
 </div>
 
