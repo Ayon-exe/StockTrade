@@ -1,25 +1,55 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Stock Price Prediction</title>
     <link rel="icon" type="image/x-icon" href="./images/favicon.ico">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@3.12.0/dist/tf.min.js"></script>
+    <style>
+        body {
+            background-color: #f4f4f4;
+        }
+
+        h1 {
+            text-align: center;
+            margin-top: 50px;
+            margin-bottom: 30px;
+        }
+	.img-fluid {
+    	height: 300px; /* Change this value to your desired height */
+	}
+        #prediction-form {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        #prediction_result {
+            text-align: center;
+            margin-top: 30px;
+        }
+    </style>
 </head>
+
 <body>
-<nav class="navbar navbar-expand-lg bg-body-tertiary">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="./homepage.html">
-            <img src="./images/brewstock.png" alt="BrewStocks Logo" height="30" class="d-inline-block align-text-top">
-            BrewStocks
-        </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="./homepage.html">
+                <img src="./images/brewstock.png" alt="BrewStocks Logo" height="30"
+                    class="d-inline-block align-text-top">
+                BrewStocks
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
                         <a class="nav-link active" href="./landing.html"><i class="fa fa-home"></i> Home</a>
                     </li>
@@ -36,91 +66,79 @@
                         <a class="nav-link active" href="./about.html"><i class="fa fa-users"></i> About Us</a>
                     </li>
                 </ul>
-            <form class="d-flex" role="search">
-                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success" type="submit"></i>Search</button>
-            </form>
+                <form class="d-flex" role="search">
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success" type="submit"></i>Search</button>
+                </form>
+            </div>
+            <button id="logout" href="./index.html" class="btn btn-outline-success"><i
+                    class="fa fa-sign-out"></i> Logout</button>
         </div>
-	    <button id="logout" href="./index.html" class="btn btn-outline-success"><i class="fa fa-sign-out"></i>  Logout</button>
+    </nav>
+
+    <div class="container mt-5">
+        <h1>Stock Price Prediction</h1>
+        <img src="./prediction.jpg" class="img-fluid rounded mx-auto d-block mb-4" alt="Prediction Image">
+        <form id="prediction-form">
+            <div class="input-group mb-3">
+                <span class="input-group-text">Enter Stock Symbol:</span>
+                <input type="text" id="stock_symbol" name="stock_symbol" class="form-control" required>
+                <button type="button" class="btn btn-outline-success" onclick="predict()">Predict</button>
+            </div>
+        </form>
+        <div id="prediction_result" class="alert alert-info"></div>
     </div>
-</nav>
-    <h1>Stock Price Prediction</h1>
-    <form id="prediction-form">
-        <div class="input-group mb-3">
-            <span class="input-group-text" id="">Enter Stock Symbol: </span>
-            <input type="text" id="stock_symbol" name="stock_symbol" required>	    
-	    <input type="button" class="btn btn-outline-success" value="Predict" onclick="predict()">
-        </div>
-        <!--<label for="stock_symbol">Enter Stock Symbol:</label>
-        <input type="text" id="stock_symbol" name="stock_symbol" required>
-        <input type="button" value="Predict" onclick="predict()">-->
-    </form>
-    <div id="prediction_result"></div>
 
     <script>
-        // Define your Alpha Vantage API key (Move to server-side in production)
-	const apiKey = "IGGELQ7DJC7WW6LA";
-	
-	async function predict() {
-	    try {
-	        const stockSymbol = document.getElementById('stock_symbol').value;
-	        const predictionResult = await getPrediction(stockSymbol);
-	        document.getElementById('prediction_result').innerText = `Prediction Result: ${predictionResult}`;
-	    } catch (error) {
-	        document.getElementById('prediction_result').innerText = `Error: ${error.message}`;
-	    }
-	}
-	
-	async function getPrediction(stockSymbol) {
-	    // Construct the Alpha Vantage API endpoint URL
-	    const apiUrl = `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=${stockSymbol}&apikey=${apiKey}`;
-	
-	    // Fetch historical stock data from Alpha Vantage
-	    const response = await fetch(apiUrl);
-	    const data = await response.json();
-	
-	    // Check if the data structure is as expected
-	    if (!data['Time Series (Daily)']) {
-	        throw new Error('Invalid API response structure');
-	    }
-	
-	    // Extract relevant data (e.g., closing prices)
-	    const closePrices = Object.values(data['Time Series (Daily)']).map(item => parseFloat(item['4. close']));
-	
-	    // Ensure we have at least 60 data points
-	    if (closePrices.length < 60) {
-	        throw new Error(`Insufficient data. Expected at least 60 data points, but got ${closePrices.length}.`);
-	    }
-	
-	    // Use only the last 60 data points for prediction
-	    const inputData = closePrices.slice(-60);
-	
-	    // Load the TensorFlow.js model
-	    const model = await tf.loadLayersModel('https://Ayon-exe.github.io/StockTrade/tfjs_files/model.json');
-	
-	    // Prepare and preprocess the data
-	    const normalizedInputData = preprocessData(inputData);
-	
-	    // Predict
-	    const prediction = model.predict(normalizedInputData);
-	    const result = prediction.dataSync()[0] > 0.5 ? 'Positive' : 'Negative';
-	
-	    return result;
-	}
-	
-	function preprocessData(data) {
-	    // Ensure the data length matches the expected sequence length (60)
-	    if (data.length !== 60) {
-	        throw new Error(`Invalid data length. Expected 60 data points, but got ${data.length}.`);
-	    }
-	
-	    // Normalize and reshape the data
-	    const tensor = tf.tensor2d([data]);
-	    const normalizedData = tensor.div(tensor.max()).reshape([1, 60, 1]);
-	
-	    return normalizedData;
-	}
-</script>
+        const apiKey = "IGGELQ7DJC7WW6LA";
+
+        async function predict() {
+            try {
+                const stockSymbol = document.getElementById('stock_symbol').value;
+                const predictionResult = await getPrediction(stockSymbol);
+                document.getElementById('prediction_result').innerHTML = `<strong>Prediction Result:</strong> ${predictionResult}`;
+            } catch (error) {
+                document.getElementById('prediction_result').innerHTML = `<strong>Error:</strong> ${error.message}`;
+            }
+        }
+
+        async function getPrediction(stockSymbol) {
+            const apiUrl = `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=${stockSymbol}&apikey=${apiKey}`;
+            const response = await fetch(apiUrl);
+            const data = await response.json();
+
+            if (!data['Time Series (Daily)']) {
+                throw new Error('Invalid API response structure');
+            }
+
+            const closePrices = Object.values(data['Time Series (Daily)']).map(item => parseFloat(item['4. close']));
+
+            if (closePrices.length < 60) {
+                throw new Error(`Insufficient data. Expected at least 60 data points, but got ${closePrices.length}.`);
+            }
+
+            const inputData = closePrices.slice(-60);
+            const model = await tf.loadLayersModel('https://Ayon-exe.github.io/StockTrade/tfjs_files/model.json');
+            const normalizedInputData = preprocessData(inputData);
+
+            const prediction = model.predict(normalizedInputData);
+            const result = prediction.dataSync()[0] > 0.5 ? 'Positive' : 'Negative';
+
+            return result;
+        }
+
+        function preprocessData(data) {
+            if (data.length !== 60) {
+                throw new Error(`Invalid data length. Expected 60 data points, but got ${data.length}.`);
+            }
+
+            const tensor = tf.tensor2d([data]);
+            const normalizedData = tensor.div(tensor.max()).reshape([1, 60, 1]);
+
+            return normalizedData;
+        }
+    </script>
 
 </body>
+
 </html>
