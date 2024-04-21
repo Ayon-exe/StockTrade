@@ -45,32 +45,41 @@
     </style>
 </head>
 <body>
-
-<!-- Navbar -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
     <div class="container-fluid">
-        <a class="navbar-brand" href="#">Brand</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+	 <a class="navbar-brand" href="./homepage.html">
+            <img src="./images/brewstock.png" alt="BrewStocks Logo" height="30" class="d-inline-block align-text-top">
+            BrewStocks
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="#">Home</a>
+                    <a class="nav-link active" href="./homepage.html"><i class="fa fa-line-chart"></i>  Start Trading</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Features</a>
+                    <a class="nav-link active" href="./about.html"><i class="fa fa-users"></i>  About Us</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Pricing</a>
+                    <a class="nav-link active" href="predict.html"><i class="fa fa-magic"></i>  Predict</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="howto.html"><i class="fa fa-question"></i>  How to Use</a>
                 </li>
             </ul>
+            <form class="d-flex" role="search">
+                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success" type="submit">Search</button>
+            </form>
         </div>
+	    <button id="logout" href="./index.html" class="btn btn-outline-success"><i class="fa fa-sign-out"></i>  Logout</button>
     </div>
 </nav>
 
 <!-- Parallax section for Introduction -->
-<div class="parallax" style="background-image: url('https://source.unsplash.com/random/500x500?intro');"></div>
+<div class="parallax" style="background-image: url('images/intro.png');"></div>
 
 <!-- Introduction section -->
 <div class="section">
@@ -81,7 +90,7 @@
 </div>
 
 <!-- Parallax sections for Features -->
-<div class="parallax" style="background-image: url('https://source.unsplash.com/random/500x500?feature1');"></div>
+<div class="parallax" style="background-image: url('./images/sec1.png');"></div>
 
 <!-- Feature 1 section -->
 <div class="section bg-light">
@@ -92,7 +101,7 @@
 </div>
 
 <!-- Parallax sections for Features -->
-<div class="parallax" style="background-image: url('https://source.unsplash.com/random/500x500?feature2');"></div>
+<div class="parallax" style="background-image: url('./images/sec2.png');"></div>
 
 <!-- Feature 2 section -->
 <div class="section">
@@ -103,7 +112,7 @@
 </div>
 
 <!-- Parallax sections for Features -->
-<div class="parallax" style="background-image: url('https://source.unsplash.com/random/500x500?feature3');"></div>
+<div class="parallax" style="background-image: url('./images/sec3.png');"></div>
 
 <!-- Feature 3 section -->
 <div class="section bg-light">
@@ -118,12 +127,12 @@
     <div class="container">
         <h2 class="section-title">Ready to get started?</h2>
         <p class="section-content">Join us today and explore the world of possibilities!</p>
-        <a href="#" class="btn btn-primary cta-button">Get Started</a>
+        <a href="./homepage.html" class="btn btn-primary cta-button">Get Started</a>
     </div>
 </div>
 
 <!-- Parallax section for Footer -->
-<div class="parallax" style="background-image: url('https://source.unsplash.com/random/500x500?footer');"></div>
+<div class="parallax" style="background-image: url('images/footer.png');"></div>
 
 <!-- Footer -->
 <footer class="bg-dark text-center text-white py-3">
