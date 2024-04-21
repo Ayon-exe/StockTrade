@@ -20,9 +20,11 @@
             margin-top: 50px;
             margin-bottom: 30px;
         }
-	.img-fluid {
-    	height: 300px; /* Change this value to your desired height */
-	}
+
+        .img-fluid {
+            height: 300px; /* Change this value to your desired height */
+        }
+
         #prediction-form {
             max-width: 600px;
             margin: 0 auto;
@@ -87,6 +89,19 @@
             </div>
         </form>
         <div id="prediction_result" class="alert alert-info"></div>
+
+        <!-- Top Stock Symbols Section -->
+        <div class="mt-4">
+            <h3>Top Stock Symbols:</h3>
+            <div class="btn-group" role="group" aria-label="Top Stock Symbols">
+                <button type="button" class="btn btn-secondary" onclick="populateSymbol('AAPL')">AAPL</button>
+                <button type="button" class="btn btn-secondary" onclick="populateSymbol('MSFT')">MSFT</button>
+                <button type="button" class="btn btn-secondary" onclick="populateSymbol('AMZN')">AMZN</button>
+                <button type="button" class="btn btn-secondary" onclick="populateSymbol('GOOGL')">GOOGL</button>
+                <button type="button" class="btn btn-secondary" onclick="populateSymbol('TSLA')">TSLA</button>
+                <!-- Add more stock symbols as needed -->
+            </div>
+        </div>
     </div>
 
     <script>
@@ -136,6 +151,11 @@
             const normalizedData = tensor.div(tensor.max()).reshape([1, 60, 1]);
 
             return normalizedData;
+        }
+
+        // Function to populate the stock symbol input
+        function populateSymbol(symbol) {
+            document.getElementById('stock_symbol').value = symbol;
         }
     </script>
 
