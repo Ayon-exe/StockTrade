@@ -270,13 +270,13 @@ buyminus.addEventListener('click',(e) => {
 	{alert("amount cant be 0 or negative");}
 });
 sellplus.addEventListener('click',(e) => {
-	if ((document.getElementById("sellamount").value) > 1)
-	{document.getElementById("sellamount").value = (parseInt(document.getElementById("sellamount").value))+1;}
-	else
-		{alert("amount cant be 0 or negative");}
+	document.getElementById("sellamount").value = (parseInt(document.getElementById("sellamount").value))+1;
 });
 sellminus.addEventListener('click',(e) => {
-    document.getElementById("sellamount").value = (parseInt(document.getElementById("sellamount").value))-1;
+	if ((document.getElementById("sellamount").value) > 1)
+	{document.getElementById("sellamount").value = (parseInt(document.getElementById("sellamount").value))-1;}
+	else
+		{alert("amount cant be 0 or negative");}
 });
 
 function recordTransaction(type, amount, price) {
