@@ -233,11 +233,11 @@ buy.addEventListener('click', (e) => {
             // Update the wallet data in Firebase
             get(walletRef).then((snapshot) => {
                 const currentWallet = snapshot.val();
-		var buyAmount= document.getElementById("buyamount").value;
+                var buyAmount= document.getElementById("buyamount").value;
                 const updatedWallet = currentWallet - (parseFloat(document.getElementById("currprice").value) * buyAmount);
                 set(walletRef, updatedWallet);
                 // Record the buy transaction
-                recordTransaction('buy', document.getElementById("company").value, buyAmount, parseFloat(document.getElementById("currprice").value));
+                recordTransaction('buy', buyAmount, parseFloat(document.getElementById("currprice").value), document.getElementById("company").value);
             });
         }
     });
@@ -249,16 +249,17 @@ sell.addEventListener('click', (e) => {
             // Update the wallet data in Firebase
             get(walletRef).then((snapshot) => {
                 const currentWallet = snapshot.val();
-		var sellAmount= document.getElementById("sellamount").value;
+                var sellAmount= document.getElementById("sellamount").value;
                 const updatedWallet = currentWallet + (parseFloat(document.getElementById("currprice").value) * sellAmount);
                 set(walletRef, updatedWallet);
 
                 // Record the sell transaction
-                recordTransaction('sell', document.getElementById("company").value, sellAmount, parseFloat(document.getElementById("currprice").value));
+                recordTransaction('sell', sellAmount, parseFloat(document.getElementById("currprice").value), document.getElementById("company").value);
             });
         }
     });
 });
+
 
 buyplus.addEventListener('click',(e) => {
     document.getElementById("buyamount").value = (parseInt(document.getElementById("buyamount").value))+1;
@@ -279,7 +280,7 @@ sellminus.addEventListener('click',(e) => {
 		{alert("amount cant be 0 or negative");}
 });
 
-function recordTransaction(type, amount, price) {
+function recordTransaction(type, amount, price, stockSymbol) {
     const transactionRef = ref(database, 'users/' + uid + '/transactions');
     const newTransactionRef = push(transactionRef); // Create a new child node
     const timestamp = new Date().toISOString().split('T')[0]; // Get current date in 'YYYY-MM-DD' format
@@ -287,7 +288,7 @@ function recordTransaction(type, amount, price) {
     // Set transaction data
     set(newTransactionRef, {
         type: type,
-	stockSymbol: stockSymbol,
+        stockSymbol: stockSymbol,
         amount: amount,
         price: price,
         timestamp: timestamp
