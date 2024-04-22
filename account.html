@@ -61,6 +61,10 @@
             <input type="date" id="endDate">
             <button id="filterDate" class="btn btn-primary"><i class="fa fa-sort"></i>  Apply Filter</button>
         </div>
+        <div id="stockTotals">
+            <!-- Total stocks owned will be displayed here -->
+        </div>
+
 
        <h1>Transactions</h1>
         <table class="table">
@@ -224,7 +228,6 @@ function fetchUserData() {
         }
         document.getElementById('transactionsTable').innerHTML = transactionsHtml;
     }
-}
 </script>
 </body>
 </html>
