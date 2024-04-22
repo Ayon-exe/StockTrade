@@ -181,7 +181,7 @@
 
                 // Add a section to display total stocks owned for each company
                 let stockTotalsHtml = '<h2>Total Stocks Owned</h2><ul>';
-                for (const company in stockTotals) {
+                for (const stockSymbol in stockTotals) {
                     stockTotalsHtml += `<li>${stockSymbol}: ${stockTotals[stockSymbol]}</li>`;
                 }
                 stockTotalsHtml += '</ul>';
