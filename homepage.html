@@ -237,7 +237,7 @@ buy.addEventListener('click', (e) => {
                 const updatedWallet = currentWallet - (parseFloat(document.getElementById("currprice").value) * buyAmount);
                 set(walletRef, updatedWallet);
                 // Record the buy transaction
-                recordTransaction('buy', buyAmount, parseFloat(document.getElementById("currprice").value));
+                recordTransaction('buy', document.getElementById("company").value, buyAmount, parseFloat(document.getElementById("currprice").value));
             });
         }
     });
@@ -254,7 +254,7 @@ sell.addEventListener('click', (e) => {
                 set(walletRef, updatedWallet);
 
                 // Record the sell transaction
-                recordTransaction('sell', sellAmount, parseFloat(document.getElementById("currprice").value));
+                recordTransaction('sell', document.getElementById("company").value, sellAmount, parseFloat(document.getElementById("currprice").value));
             });
         }
     });
@@ -287,6 +287,7 @@ function recordTransaction(type, amount, price) {
     // Set transaction data
     set(newTransactionRef, {
         type: type,
+	stockSymbol: stockSymbol,
         amount: amount,
         price: price,
         timestamp: timestamp
