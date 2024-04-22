@@ -170,10 +170,10 @@
                     `;
 
                     // Update stock totals
-                    if (!stockTotals[transaction.company]) {
-                        stockTotals[transaction.company] = 0;
+                    if (!stockTotals[transaction.stockSymbol]) {
+                        stockTotals[transaction.stockSymbol] = 0;
                     }
-                    stockTotals[transaction.company] += transaction.amount * (transaction.type === 'buy' ? 1 : -1);
+                    stockTotals[transaction.stockSymbol] += transaction.amount * (transaction.type === 'buy' ? 1 : -1);
                 }
 
                 // Display transactions and stock totals on the page
@@ -182,7 +182,7 @@
                 // Add a section to display total stocks owned for each company
                 let stockTotalsHtml = '<h2>Total Stocks Owned</h2><ul>';
                 for (const company in stockTotals) {
-                    stockTotalsHtml += `<li>${company}: ${stockTotals[company]}</li>`;
+                    stockTotalsHtml += `<li>${stockSymbol}: ${stockTotals[stockSymbol]}</li>`;
                 }
                 stockTotalsHtml += '</ul>';
                 document.getElementById('stockTotals').innerHTML = stockTotalsHtml;
@@ -220,7 +220,7 @@
                         <td>${transaction.amount}</td>
                         <td>${transaction.price}</td>
                         <td>${transaction.timestamp}</td>
-                        <td>${transaction.company}</td>
+                        <td>${transaction.stockSymbol}</td>
                         <td>${transaction.amount * (transaction.type === 'buy' ? 1 : -1)}</td>
                     </tr>
                 `;
