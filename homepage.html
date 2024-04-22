@@ -264,7 +264,10 @@ buyplus.addEventListener('click',(e) => {
     document.getElementById("buyamount").value = (parseInt(document.getElementById("buyamount").value))+1;
 });
 buyminus.addEventListener('click',(e) => {
-    document.getElementById("buyamount").value = (parseInt(document.getElementById("buyamount").value))-1;
+	if (document.getElementById("buyamount").value)>1
+    		document.getElementById("buyamount").value = (parseInt(document.getElementById("buyamount").value))-1;
+	else
+		alert("amount cant be 0 or negative");
 });
 sellplus.addEventListener('click',(e) => {
     document.getElementById("sellamount").value = (parseInt(document.getElementById("sellamount").value))+1;
